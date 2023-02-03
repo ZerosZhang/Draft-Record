@@ -1,4 +1,4 @@
-# HSMS Message Format
+# SEMI文档记录
 
 This section deﬁnes the detailed format of the messages used by the procedures in the previous section.
 
