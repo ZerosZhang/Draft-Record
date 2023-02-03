@@ -199,7 +199,9 @@ The separation of connect operations will be the sum of the T5 Connect Separatio
 Entry into the NOT SELECTED state is achieved either by state transition #2 (establishment of a TCP/IP connection). There is a time limit on how long an entity is required to remain in the NOT SELECTED state before either entering the SELECTED state or by returning to the NOT CONNECTED state.
 
 > 进入NOT SELECTED状态是通过建立TCP/IP连接实现的。在进入SELECTED状态或返回NOT CONNECTED状态之前，Entity停在在NOT SELECTED状态是有时间限制的。
-> Some entities, particularly those unable to accept more than a single TCP/IP connection, may be impaired in their operation by remaining in their NOT SELECTED state as they will be unavailable for communications with other entities. Such entities shall disconnect the TCP/IP connection (State Transition Event #3) if communication remains in the NOT SELECTED state for longer than the T7 timeout period.
+
+Some entities, particularly those unable to accept more than a single TCP/IP connection, may be impaired in their operation by remaining in their NOT SELECTED state as they will be unavailable for communications with other entities. Such entities shall disconnect the TCP/IP connection (State Transition Event #3) if communication remains in the NOT SELECTED state for longer than the T7 timeout period.
+
 > 一些entities，尤其是那些不能接受多于一个TCP/IP连接的实体，可能由于保持在它们的NOT SELECTED状态的操作中受到损害，因为它们将不可用于与其他实体的通信。如果通信保持在未选择状态的时间超过T7超时周期，则这些实体应断开TCP/IP连接(状态转换事件#3)。
 
 #### 9.2.3   Network Intercharacter Timeout (T8)
