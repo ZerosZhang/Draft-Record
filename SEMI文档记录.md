@@ -237,9 +237,17 @@ A passive mode entity unable to service more than a single TCP/IP connection for
    > 接受连接，但始终使用“通信已激活”响应代码响应任何后续的HSMS选择过程。对于HSMS状态图，连接过程成功终止(进入CONNECTED状态)，但HSMS通信从未建立(保持在NOT SELECTED子状态)。这是首选选项，因为它可以向远程实体提供关于为什么拒绝连接的大部分信息(参见HSMS选择过程)，但对本地实体提出了额外的实现要求。
    >
 2. Actively reject the connection request. This can be done in a TLI implementation using the t_snddis procedure. This will cause the connect procedure in the remote entity to terminate unsuccessfully. This option may not be available to all implementations because some API’s, notably some implementa- tions of BSD Sockets, do not provide for initiating an active reject. Note, however, that all TCP/IP implementations, including BSD Sockets, properly respond to an active reject from the remote entity.
+
+   > 主动拒绝连接请求。这可以在TLI实现中使用t_snddis过程来完成。这将导致远程实体中的连接过程不成功地终止。此选项可能不适用于所有实现，因为一些API，特别是BSD Sockets的一些实现，不提供主动拒绝的初始化。但是请注意，所有TCP/IP实现，包括BSD Sockets，都正确地响应来自远程实体的活动拒绝。
+   >
 3. Refuse to listen for or accept the connect request. No action is taken in the local entity: the remote entity's connect procedure will eventually time out. This option is permitted, but not recommended, as it can cause considerable delay on the part of the remote entity.  However, it may be the only alterna- tive available to implementations with network resource limitations.
 
+   > 拒绝监听或接受连接请求。本地实体不做任何操作:远程实体的连接过程最终会超时。这个选项是允许的，但不推荐，因为它可能会导致远程实体的相当大的延迟。然而，对于网络资源有限的实现来说，它可能是唯一可用的替代方案。
+   >
+
 The documentation of the passive local entity shall indicate which means it uses to refuse connections.
+
+> 被动本地实体的文件应说明它使用何种方式拒绝连接。
 
 ### 9.3 HSMS-Speciﬁc Considerations
 
