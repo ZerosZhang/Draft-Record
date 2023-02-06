@@ -1,9 +1,103 @@
 # SEMI E5
 
+## 第一章：Introduction
+
+### 1.1 Intent
+
+The SEMI Equipment Communications Standard Part 2 (SECS-II) defines the details of the interpretation of messages exchanged between intelligent equipment and a host. This specification has been developed in cooperation with the Japan Electronic Industry Development Association Committee 12 on Equipment Communications.
+
+> 半设备通信标准第2部分（==SECS-II==）定义了智能设备(Equipment)和主机(Host)之间交换消息的解释的细节。 该规范是与日本电子行业发展协会关于设备通信的12委员会合作开发的。
+
+#### 1.1.1
+
+It is the intent of this standard to be fully compatible with SEMI Equipment Communications Standard E4 (SECS-I). It is also the intent to allow for compatibility with alternative message transfer protocols. The details of the message transfer protocol requirements are contained in Section 3.
+
+> 该标准的目的是与半设备通信标准E4（==SECS-I==）完全兼容。它也是为了允许与替代消息传输协议兼容的目的。消息传输协议要求的详细信息在第3节中包含。
+
+#### 1.1.2  
+
+It is the intent of this standard to define messages to such a level of detail that some consistent host software may be constructed with only minimal knowledge of individual equipment. The equipment, in turn, may be constructed with only minimal knowledge of the host.
+
+> 本标准的目的是将消息定义到如此详细的程度，以至于一些一致的主机软件可能只需要对单个设备有最少的了解就可以构造出来。反过来，这些设备可能只需要对主机有最少的了解就可以构建。
+
+#### 1.1.3  
+
+The messages defined in the standard support the most typical activities required for IC manufacturing. The standard also provides for the definition of equipment-specific messages to support those activities not covered by the standard messages. While certain activities can be handled by common software in the host, it is expected that equipment-specific host software may be required to support the full capabilities of the equipment.
+
+> 标准中定义的消息支持IC制造所需的最典型的活动。该标准还规定了特定于设备的消息的定义，以支持标准消息未涵盖的活动。虽然某些活动可以由主机中的通用软件处理，但预计可能需要特定于设备的主机软件来支持设备的全部功能。
+
+### 1.2 Overview
+
+SECS-II gives fo rm and meaning to messages exchanged between equipment and host using a message transfer protocol, such as SECS-I.
+> SECS-II为使用消息传输协议(如SECS-I)在设备和主机之间交换的消息提供格式和含义。
+
+#### 1.2.1
+
+SECS-II defines the method of conveying information between equipment and host in the form of messages. These messages are organized into categories of activities, called streams, which contain specific messages, called functions. A request for information and the corresponding data transmission is an example of such an activity.
+> SECS-II定义了在设备(Equipment)和主机(Host)之间以消息形式传递信息的方法。这些消息被组织成活动类别(称为Stream)，其中包含特定的消息(称为Function)。信息请求和相应的数据传输就是这种活动的一个例子。
+
+#### 1.2.2
+
+SECS-II defines the structure o f messages into entities called items and lists of items. This structure allows for a self-describing data format to guarantee proper interpretation of the message.
+> SECS-II将消息结构定义为称为==项==(items)和==项列表==(lists of items)的实体。这种结构允许使用自定义的数据格式，以保证消息的正确解析。
+
+#### 1.2.3
+
+The interchange of messages is governed by a set of rules for handling messages called the transaction protocol. The transaction protocol places some minimum requirements on any SECS-II implementation.
+> 消息的交换由一组用于处理消息的规则控制，这些规则称为事务协议(transaction protocol)。事务协议对任何SECS-II实现提出了一些最小的要求。
+
+### 1.3 Application
+
+SECS-II applies to equipment and hosts used in the manufacturing of semiconductor devices. Examples of the activities supported by the standard are: transfer of control programs, material movement information, measurement data, summarized test data, and alarms.
+> SECS-II适用于半导体器件制造中使用的设备和主机。该标准支持的活动示例有:控制程序、材料运动信息、测量数据、汇总测试数据和警报的传递。
+
+#### 1.3.1
+
+The minimum compliance to this standard involves meeting the few constraints outlined in Section 1. It is expected that a given piece of equipment will require only a subset of the functions described in this standard. The number of functions and the selection of functions will depend upon the equipment capabilities and requirements. For each piece of equipment, the exact format for each function provided must be docu- mented according to the form outlined in Section 7.
+> 符合本标准的最低要求包括满足第1节中概述的几个约束条件。预期一个给定的设备只需要本标准中描述的功能的一个子集。功能的数量和功能的选择将取决于设备的能力和要求。对于每一件设备，所提供的每个功能的确切格式必须按照第7节中概述的格式进行记录。
+
+#### 1.3.2  
+
+It is assumed that the equipment will define the messages used in a particular implementation of SECS- II. It is assumed the host will support equipment implementation.
+> 假定设备将定义在SECS-II的特定实现中使用的消息。假定主机将支持设备实现。
+
+### 1.4 Applicable Documents
+
+#### 1.4.1  ANSI
+
+X3.4-1977 — Code for Information Interchange (ASCII)
+
+#### 1.4.2  IEEE
+
+754 — Standard for Binary Floating Point Arithmetic
+
+#### 1.4.3  SEMI Standards
+
+SEMI E4 — SEMI Equipment Communications Standard 1 Message Transfer (SECS-I)
+SEMI E6 — Facilities Interface Specifications Guideline and Format
+
+#### 1.4.4
+
+The Japan Electronic Industry Development Association (JEIDA) has requested that the SECS-II standard incorporate support for the JIS-8 codes for data exchange. This code would allow support for katakana characters in Japanese implementations of SECS-II.
+JIS 8-bit Coded Character Set (JIS-6226) for information Interchange, Japanese Industrial Standards.
+NOTE 1: As listed or revised, all documents cited shall be the latest publications of adopted standards.
+> 参考文档：略
+
+### 1.5
+
+This standard does not purport to address safety issues, if any, associated with its use. It is the responsibility of the users of this standard to establish appropriate safety and health practices and determine the applicability of regulatory limitations prior to use.
+> 本标准并不旨在解决与其使用相关的安全问题。本标准的使用者有责任在使用前建立适当的安全和健康做法，并确定法规限制的适用性。
+
+## 第二章：Selected Definitions
+
+## 第三章：The Message Transfer Protocal
+
+## 第四章：Streams and Functions
+
 ## 第五章：Transaction and Conversation Protocols
->
+
 > 第五章：事务和会话消息
->
+
 ### 5.1 Intent
 
 For an implementation to be in compliance with SECS-II, it must meet the minimum transaction requirements outlined in this section. The conversation protocols serve to further define the use and interaction between transactions.
