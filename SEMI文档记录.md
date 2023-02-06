@@ -235,7 +235,7 @@ A passive mode entity unable to service more than a single TCP/IP connection for
 1. Accept the connection, but always respond to any subsequent HSMS select procedures with the Com- munication Already Active response code. For the purpose of the HSMS State Diagram, the connect procedure terminates successfully (enters CONNECTED state), but HSMS communications are never established (remain in NOT SELECTED substate). This is the preferred option in that it can provide the most information to the remote entity as to why the connection is refused (see HSMS Select Procedure), but places an addition imple- mentation requirement on the local entity.
 
    > 接受连接，但始终使用“通信已激活”响应代码响应任何后续的HSMS选择过程。对于HSMS状态图，连接过程成功终止(进入CONNECTED状态)，但HSMS通信从未建立(保持在NOT SELECTED子状态)。这是首选选项，因为它可以向远程实体提供关于为什么拒绝连接的大部分信息(参见HSMS选择过程)，但对本地实体提出了额外的实现要求。
-   
+
 2. Actively reject the connection request. This can be done in a TLI implementation using the t_snddis procedure. This will cause the connect procedure in the remote entity to terminate unsuccessfully. This option may not be available to all implementations because some API’s, notably some implementa- tions of BSD Sockets, do not provide for initiating an active reject. Note, however, that all TCP/IP implementations, including BSD Sockets, properly respond to an active reject from the remote entity.
 
    > 主动拒绝连接请求。这可以在TLI实现中使用t_snddis过程来完成。这将导致远程实体中的连接过程不成功地终止。此选项可能不适用于所有实现，因为一些API，特别是BSD Sockets的一些实现，不提供主动拒绝的初始化。但是请注意，所有TCP/IP实现，包括BSD Sockets，都正确地响应来自远程实体的活动拒绝。
