@@ -174,3 +174,49 @@ The originator of the request/acknowledge/send/ acknowledge conversation may com
 #### 5.4.3
 
 The key words, request, data, send, acknowledge, inquire, and grant are used in the function names as an aid to understanding the relationship between the messages and the conversation. Single message transactions do not use these words.
+
+## 第六章：Data Structures
+
+### 6.3 List
+
+A list is an ordered set of elements, where an element can be either an item (6.2) or a list. The list header (LH) has the same form as an item header with format type 0. However, the length bytes refer to the number of elements in the list rather than to the number of bytes. The list structure allows grouping items of related information which may have different formats into a useful structure.
+> 列表是元素的有序集合，其中元素可以是项(6.2)或列表。列表标题(Lh)具有与格式类型为0的项目标题相同的形式。但是，长度字节指的是列表中的元素数量，而不是字节数。该列表结构允许将可能具有不同格式的相关信息项分组为有用的结构。
+
+#### 6.3.1
+
+A zero-length in the format byte is illegal and produces an error. A zero-length in the list length bytes has a special meaning, which is defined in the detailed message definitions.
+> 格式字节中的零长度是非法的，并会产生错误。列表长度字节中的零长度具有特殊含义，这在详细的消息定义中定义。
+
+## 第七章: Message Detail
+
+### 7.3 Message Usage
+
+This section discusses message features and where they may be used.
+> 本节讨论消息特性以及它们可以在哪里使用。
+
+#### 7.3.1 Zero Length Items and Lists
+
+> 零长度项和列表
+
+Certain message definitions may use zero length data items and zero length lists as a technique to convey specific information to the receiver of the message. For commands (i.e., “Do Something”) and requests (i.e., “Return Some Data”), it may be used to mean “Use default values for the data item(s) which were not included”. The default may be a specific value or a value chosen by the equipment.
+> 某些消息定义可能使用==零长度数据项和零长度列表==作为向消息接收者传递特定信息的技术。对于命令(如“Do Something”)和请求(如“Return Some Data”)，它可以用来表示“==对未包含的数据项使用默认值==”。默认值可以是一个特定的值，也可以是由设备选择的值。
+
+##### 7.3.1.1
+
+For messages reporting data (either responses to requests or asynchronous reports), the technique may be used to indicate that the desired information is not available or not applicable. In some cases, the fact that data is unavailable may indicate success or failure of a command.
+> 对于报告数据的消息(对请求的响应或异步报告)，可以使用该技术来指示所需的信息不可用或不适用。在某些情况下，数据不可用的事实可能表明命令的成功或失败。
+
+##### 7.3.1.2
+
+Certain message definitions may define a zero length data item or a zero length list to mean “the information is not supplied.” The receiving party should react to this lack of information as it deems appropriate.
+> 某些消息定义可能定义零长度数据项或零长度列表，以表示“不提供信息”。接收方应在其认为适当时对这种缺乏资料的情况作出反应。
+
+### 7.5 Stream 1
+
+This stream provides a means for exchanging information about the status of the equipment, including its current mode, depletion of various consumable items, and the status of transfer operations.
+> 这个Stream提供了一种交换设备状态信息的方法，包括它的当前模式，各种消耗品的消耗，以及转移操作的状态。
+
+#### S1F13 Establish Communications Request(CR)
+
+The purpose of this message is to provide a formal means of initializing communications at a logical application level both on power-up and following a break in communications. It should be the following any period where host and Equipment SECS applications are unable to communicate. An attempt to send an Establish Communications Request (S1,F13) should be repeated at programmable intervals until an Establish Communications Acknowledge(S1,F14) is received within the transaction timeout period with an acknowledgement code accepting the establishment.
+> 此消息的目的是提供一种在逻辑应用程序级别上初始化通信的正式方法，包括启动时和通信中断后。它应该是在主机和设备SECS应用程序无法通信的任何时间段之后。应以可编程间隔重复尝试发送建立通信请求(S1,F13)，直到在事务超时时间内接收到建立通信确认(S1,F14)，并接收确认代码接受建立。
