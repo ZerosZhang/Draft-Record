@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="94W7TybBtprLZWba6eNM" name="HSMS Message">
-        <mxGraphModel dx="1980" dy="1120" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1142" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -70,7 +70,7 @@
                 <mxCell id="bDOfl30Lk7sTRHTIDUXi-17" value="" style="edgeStyle=elbowEdgeStyle;html=1;fontColor=#0000FF;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="bDOfl30Lk7sTRHTIDUXi-18" source="scNVsLxmT9Py_PAUhD3m-42" target="bDOfl30Lk7sTRHTIDUXi-16" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="9" value="" style="group;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" vertex="1" connectable="0" parent="1">
+                <mxCell id="9" value="" style="group;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="1" vertex="1" connectable="0">
                     <mxGeometry x="80" y="120" width="520" height="440" as="geometry"/>
                 </mxCell>
                 <mxCell id="scNVsLxmT9Py_PAUhD3m-17" value="Semi Entity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;fontSize=18;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="9" vertex="1">
@@ -124,22 +124,22 @@
                 <mxCell id="scNVsLxmT9Py_PAUhD3m-18" value="" style="edgeStyle=elbowEdgeStyle;html=1;fontFamily=Comic Sans MS;fontSize=18;fontColor=default;rounded=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="9" source="scNVsLxmT9Py_PAUhD3m-19" target="scNVsLxmT9Py_PAUhD3m-31" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="3" value="BaseSecsEntity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;container=0;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" vertex="1" parent="9">
+                <mxCell id="3" value="BaseSecsEntity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;container=0;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;" parent="9" vertex="1">
                     <mxGeometry y="240" width="120" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="8" style="edgeStyle=elbowEdgeStyle;html=1;shape=flexArrow;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="9" source="scNVsLxmT9Py_PAUhD3m-17" target="3">
+                <mxCell id="8" style="edgeStyle=elbowEdgeStyle;html=1;shape=flexArrow;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="9" source="scNVsLxmT9Py_PAUhD3m-17" target="3" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="4" value="SecsPassiveEntity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;container=0;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="9">
+                <mxCell id="4" value="SecsPassiveEntity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;container=0;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="9" vertex="1">
                     <mxGeometry x="160" y="200" width="120" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="5" value="" style="edgeStyle=elbowEdgeStyle;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="9" source="3" target="4">
+                <mxCell id="5" value="" style="edgeStyle=elbowEdgeStyle;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="9" source="3" target="4" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="6" value="SecsActiveEntity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;container=0;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" vertex="1" parent="9">
+                <mxCell id="6" value="SecsActiveEntity" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;container=0;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;fillColor=#6a00ff;fontColor=#ffffff;strokeColor=#3700CC;" parent="9" vertex="1">
                     <mxGeometry x="160" y="280" width="120" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="7" style="edgeStyle=elbowEdgeStyle;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" edge="1" parent="9" source="3" target="6">
+                <mxCell id="7" style="edgeStyle=elbowEdgeStyle;html=1;movable=0;resizable=0;rotatable=0;deletable=0;editable=0;connectable=0;" parent="9" source="3" target="6" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
             </root>
@@ -205,39 +205,18 @@
         </mxGraphModel>
     </diagram>
     <diagram id="-vGl3Nw6_VDRflxqo71Y" name="会话">
-        <mxGraphModel dx="956" dy="541" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1142" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-8" value="" style="edgeStyle=elbowEdgeStyle;shape=flexArrow;html=1;" edge="1" parent="1" source="Md9S5jCYTjp2OO53vZBE-1" target="Md9S5jCYTjp2OO53vZBE-7">
-                    <mxGeometry relative="1" as="geometry"/>
+                <mxCell id="ek0vPPIYmLBfiLmZ16K9-1" value="发送消息时，会将SystemID加入到等待列表，并开始倒计时" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="40" width="490" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-1" value="发送【主消息】" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="120" y="520" width="120" height="40" as="geometry"/>
+                <mxCell id="ek0vPPIYmLBfiLmZ16K9-2" value="收到次消息时，应首先判断等待列表里是否包含该SystemID，如果不包含，说明该会话已经超时了，此时不会去解析对应的次消息" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="120" width="490" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-5" value="" style="edgeStyle=elbowEdgeStyle;shape=flexArrow;html=1;" edge="1" parent="1" source="Md9S5jCYTjp2OO53vZBE-2" target="Md9S5jCYTjp2OO53vZBE-4">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-2" value="将主消息的Transaction放入字典中" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="40" y="280" width="280" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-6" style="edgeStyle=elbowEdgeStyle;shape=flexArrow;html=1;" edge="1" parent="1" source="Md9S5jCYTjp2OO53vZBE-4" target="Md9S5jCYTjp2OO53vZBE-1">
-                    <mxGeometry relative="1" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-4" value="开启倒计时" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="40" y="400" width="280" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-7" value="BaseTimer倒计时结束的时候，要报出一个超时日志，并且删除字典中对应的项" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="45" y="640" width="270" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-9" value="这里有一个问题，BaseTimer倒计时结束的时候，必须存在一个参数，才能删除对应的项" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="380" y="460" width="340" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-10" value="收到次消息时，根据SystemID结束对应的倒计时，并且删除字典中对应的项" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="360" y="280" width="320" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="Md9S5jCYTjp2OO53vZBE-11" value="需要重构倒计时类：在构造倒计时对象的时候，需要传入一个uint类型" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
-                    <mxGeometry x="360" y="360" width="320" height="40" as="geometry"/>
+                <mxCell id="ek0vPPIYmLBfiLmZ16K9-3" value="等待列表中的倒计时结束的时候，会在等待列表中删除对应的SystemID" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+                    <mxGeometry x="40" y="200" width="520" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
