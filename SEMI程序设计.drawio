@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="94W7TybBtprLZWba6eNM" name="HSMS Message">
-        <mxGraphModel dx="1142" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1066" dy="1634" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -146,7 +146,7 @@
         </mxGraphModel>
     </diagram>
     <diagram id="j7OupbRzkjOBTRSpLezw" name="连接功能">
-        <mxGraphModel dx="1173" dy="664" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="746" dy="1144" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -205,17 +205,17 @@
         </mxGraphModel>
     </diagram>
     <diagram id="-vGl3Nw6_VDRflxqo71Y" name="会话">
-        <mxGraphModel dx="1142" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="746" dy="1144" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
-                <mxCell id="ek0vPPIYmLBfiLmZ16K9-1" value="发送消息时，会将SystemID加入到等待列表，并开始倒计时" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+                <mxCell id="ek0vPPIYmLBfiLmZ16K9-1" value="发送消息时，会将SystemID加入到等待列表，并开始倒计时" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" parent="1" vertex="1">
                     <mxGeometry x="40" y="40" width="490" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="ek0vPPIYmLBfiLmZ16K9-2" value="收到次消息时，应首先判断等待列表里是否包含该SystemID，如果不包含，说明该会话已经超时了，此时不会去解析对应的次消息" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" vertex="1" parent="1">
+                <mxCell id="ek0vPPIYmLBfiLmZ16K9-2" value="收到次消息时，应首先判断等待列表里是否包含该SystemID，如果不包含，说明该会话已经超时了，此时不会去解析对应的次消息" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#d80073;fontColor=#ffffff;strokeColor=#A50040;" parent="1" vertex="1">
                     <mxGeometry x="40" y="120" width="490" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="ek0vPPIYmLBfiLmZ16K9-3" value="等待列表中的倒计时结束的时候，会在等待列表中删除对应的SystemID" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+                <mxCell id="ek0vPPIYmLBfiLmZ16K9-3" value="等待列表中的倒计时结束的时候，会在等待列表中删除对应的SystemID" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;" parent="1" vertex="1">
                     <mxGeometry x="40" y="200" width="520" height="40" as="geometry"/>
                 </mxCell>
             </root>
