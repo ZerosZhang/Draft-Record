@@ -24,9 +24,9 @@
 2053=ECChangeValue,The value of the equipment constant changed by the machine operator.,,DV,Any,,0,0,,,,ECChangeValue
 2060=ECPreviousValue,The value of the equipment constant before it was changed by the machine operator.,,DV,Any,,0,0,,,,ECPreviousValue
 2055=CEDescription,Description of the last collection event triggered.,,DV,A,,0,0,,,,CEDescription
-2008=MDLN,Equipment model type up to 20 characters. The value is constant.,,SV,A,,0,0,A,A,A MODEL,MDLN
+
 2009=PPExecName,Currently selected process program (recipe). This process program (recipe) can not be deleted or overwritten by the host since it is considered to be in use.,,SV,A,,0,0,A,A,A,PPExecName
-2015=SOFTREV,Equipment software revision ID up to 20 characters. The value is constant.,,SV,A,,0,0,A,A,A 00.01,SOFTREV
+
 2027=ALARMSSET,List of all currently SET ALIDs.,,SV,L,,0,0,L,L,L,AlarmsSet
 2030=PREVIOUSPROCESSSTATE,Previous Processing State Machine state.,,SV,U1,,0,0,U1 0,U1 255,U1,PreviousProcessState
 2031=PROCESSSTATE,Current Processing State Machine state.,,SV,U1,,0,0,U1 0,U1 255,U1,ProcessState
