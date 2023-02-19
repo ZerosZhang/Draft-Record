@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.0.1">
+<procedure name="main">
+<interface/>
+<body>
+<c>* 这个例子展示了在具有挑战性的条件下，使用计量模型轻松测量圆和矩形的亚像素精度。 </c>
+<l>dev_update_off ()</l>
+<l>read_image (Image, 'pads')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_close_window ()</l>
+<l>dev_open_window_fit_image (Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>set_display_font (WindowHandle, 14, 'mono', 'true', 'false')</l>
+<c></c>
+<c>* 定义圆圈的近似位置和矩形的近似位置</c>
+<l>RowCircle := [52:89:500]</l>
+<l>CircleInitRow := [RowCircle,RowCircle]</l>
+<l>CircleInitColumn := [gen_tuple_const(6,348),gen_tuple_const(6,438)]</l>
+<l>CircleInitRadius := [gen_tuple_const(6,23),gen_tuple_const(6,23)]</l>
+<l>CircleRadiusTolerance := 12</l>
+<l>gen_cross_contour_xld (Cross1, CircleInitRow, CircleInitColumn, 6, 0.785398)</l>
+<c>* Define the approximate position and the measure</c>
+<c>* tolerance for the rectangles</c>
+<l>RectangleInitRow := [410,410]</l>
+<l>RectangleInitColumn := [215,562]</l>
+<l>RectangleInitPhi := [0,0]</l>
+<l>RectangleInitLength1 := [85,85]</l>
+<l>RectangleInitLength2 := [88,88]</l>
+<l>RectangleTolerance := 10</l>
+<l>gen_cross_contour_xld (Cross2, RectangleInitRow, RectangleInitColumn, 6, 0.785398)</l>
+<l>stop ()</l>
+<c></c>
+<c>* </c>
+<c>* 生成计量模型，并设置图片尺寸，可以加速计算</c>
+<c>* 将计量矩形对象和计量圆形对象添加到模型中。</c>
+<l>create_metrology_model (MetrologyHandle)</l>
+<l>set_metrology_model_image_size (MetrologyHandle, Width, Height)</l>
+<l>add_metrology_object_rectangle2_measure (MetrologyHandle, RectangleInitRow, RectangleInitColumn, RectangleInitPhi, RectangleInitLength1, RectangleInitLength2, RectangleTolerance, 5, .5, 1, [], [], MetrologyRectangleIndices)</l>
+<l>add_metrology_object_circle_measure (MetrologyHandle, CircleInitRow, CircleInitColumn, CircleInitRadius, CircleRadiusTolerance, 5, 1.5, 2, [], [], MetrologyCircleIndices)</l>
+<c>* 设置'num_instances'参数为2，则可以在圆的对象找到两个圆</c>
+<l>set_metrology_object_param (MetrologyHandle, MetrologyCircleIndices, 'num_instances', 2)</l>
+<l>set_metrology_object_param (MetrologyHandle, MetrologyCircleIndices, 'measure_transition', 'uniform')</l>
+<l>set_metrology_object_param (MetrologyHandle, MetrologyCircleIndices, 'min_score', 0.9)</l>
+<l>apply_metrology_model (Image, MetrologyHandle)</l>
+<c></c>
+<c>* 获取2个矩形的参数</c>
+<l>get_metrology_object_result (MetrologyHandle, MetrologyRectangleIndices, 'all', 'result_type', 'all_param', RectangleParameter)</l>
+<l>Sequence := [0:5:|RectangleParameter| - 1]</l>
+<l>RectangleRow := RectangleParameter[Sequence]</l>
+<l>RectangleColumn := RectangleParameter[Sequence + 1]</l>
+<l>RectanglePhi := RectangleParameter[Sequence + 2]</l>
+<l>RectangleLength1 := RectangleParameter[Sequence + 3]</l>
+<l>RectangleLength2 := RectangleParameter[Sequence + 4]</l>
+<c>* 获取12个圆的参数</c>
+<l>get_metrology_object_result (MetrologyHandle, MetrologyCircleIndices, 'all', 'result_type', 'all_param', CircleParameter)</l>
+<l>Sequence := [0:3:|CircleParameter| - 1]</l>
+<l>CircleRow := CircleParameter[Sequence]</l>
+<l>CircleColumn := CircleParameter[Sequence + 1]</l>
+<l>CircleRadius := CircleParameter[Sequence + 2]</l>
+<c></c>
+<c>* 查询测量对象的结果轮廓。</c>
+<l>get_metrology_object_result_contour (Contours, MetrologyHandle, 'all', 'all', 1.5)</l>
+<c>* 得到计量模型中计量对象的测量区域和边缘定位结果。</c>
+<l>get_metrology_object_measures (Contour, MetrologyHandle, 'all', 'all', Row1, Column1)</l>
+<c>* 生成边缘定位结果</c>
+<l>gen_cross_contour_xld (Cross, Row1, Column1, 6, 0.785398)</l>
+<c>* Display everything</c>
+<l>Color := ['gray','cyan','green']</l>
+<l>dev_display (Image)</l>
+<l>dev_set_line_width (1)</l>
+<l>dev_set_color (Color[0])</l>
+<l>dev_display (Contour)</l>
+<l>dev_set_color (Color[1])</l>
+<l>dev_display (Cross)</l>
+<l>dev_set_line_width (2)</l>
+<l>dev_set_color (Color[2])</l>
+<l>dev_display (Contours)</l>
+<l>Message := Color[2] + ': Measurement result'</l>
+<l>Message[1] := Color[1] + ': Edge candidate points'</l>
+<l>Message[2] := Color[0] + ': Measure regions'</l>
+<l>disp_message (WindowHandle, Message, 'window', 12, 12, 'black', 'true')</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

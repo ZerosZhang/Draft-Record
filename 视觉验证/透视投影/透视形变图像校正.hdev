@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.0.1">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (Image, 'C:/Users/ZerosZhang/Downloads/透视变形.png')</l>
+<l>dev_resize_window_fit_image (Image, 0, 0, -1, -1)</l>
+<c></c>
+<c>* 提取轮廓</c>
+<l>threshold (Image, Region, 0, 128)</l>
+<l>dilation_rectangle1 (Region, RegionDilation, 11, 11)</l>
+<l>fill_up (RegionDilation, RegionFillUp)</l>
+<l>erosion_rectangle1 (RegionFillUp, RegionErosion, 11, 11)</l>
+<l>gen_contour_region_xld (RegionErosion, Contours, 'border')</l>
+<c></c>
+<c>* 分割轮廓，并将轮廓拟合为直线</c>
+<l>segment_contours_xld (Contours, ContoursSplit, 'lines_circles', 5, 7, 7)</l>
+<l>select_shape_xld (ContoursSplit, SelectedXLD, 'contlength', 'and', 50, 99999)</l>
+<l>sort_contours_xld(SelectedXLD, SortedContours, 'character', 'true', 'row')</l>
+<l>gen_empty_obj(EmptyObject)</l>
+<l>count_obj(SortedContours, Number)</l>
+<l>RowBegin_totall:=[]</l>
+<l>RowEnd_totall:=[]</l>
+<l>ColBegin_totall:=[]</l>
+<l>ColEnd_totall:=[]</l>
+<l>for i:=1 to Number by 1</l>
+<l>    select_obj(SortedContours, ObjectSelected, i)</l>
+<l>    fit_line_contour_xld(ObjectSelected, 'tukey', -1, 0, 5, 2, RowBegin, ColBegin, RowEnd, ColEnd, Nr, Nc, Dist)</l>
+<l>    gen_contour_polygon_xld (Line1, [RowBegin,RowEnd], [ColBegin,ColEnd])</l>
+<l>    RowBegin_totall:=[RowBegin_totall,RowBegin]</l>
+<l>    RowEnd_totall:=[RowEnd_totall,RowEnd]</l>
+<l>    ColBegin_totall:=[ColBegin_totall,ColBegin]</l>
+<l>    ColEnd_totall:=[ColEnd_totall,ColEnd]</l>
+<l>    concat_obj(EmptyObject, Line1, EmptyObject)</l>
+<l>endfor</l>
+<c></c>
+<c></c>
+<c>*求线的交点</c>
+<l>intersection_lines (RowBegin_totall[0], ColBegin_totall[0], RowEnd_totall[0], ColEnd_totall[0], \
+                    RowBegin_totall[1], ColBegin_totall[1], RowEnd_totall[1], ColEnd_totall[1], RowUL, ColUL, IsOverlapping)</l>
+<l>Corner_one:=[RowUL,ColUL]</l>
+<l>intersection_lines (RowBegin_totall[0], ColBegin_totall[0], RowEnd_totall[0], ColEnd_totall[0], \
+                    RowBegin_totall[2], ColBegin_totall[2], RowEnd_totall[2], ColEnd_totall[2], RowUL, ColUL, IsOverlapping)</l>
+<l>Corner_two:=[RowUL,ColUL]</l>
+<l>intersection_lines (RowBegin_totall[1], ColBegin_totall[1], RowEnd_totall[1], ColEnd_totall[1], \
+                    RowBegin_totall[3], ColBegin_totall[3], RowEnd_totall[3], ColEnd_totall[3], RowUL, ColUL, IsOverlapping)</l>
+<l>Corner_three:=[RowUL,ColUL]</l>
+<l>intersection_lines (RowBegin_totall[2], ColBegin_totall[2], RowEnd_totall[2], ColEnd_totall[2], \
+                    RowBegin_totall[3], ColBegin_totall[3], RowEnd_totall[3], ColEnd_totall[3], RowUL, ColUL, IsOverlapping)</l>
+<l>Corner_four:=[RowUL,ColUL]</l>
+<c></c>
+<l>dev_set_color ('green')</l>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_image(Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<l>gen_cross_contour_xld(Cross, Corner_one[0], Corner_one[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<l>gen_cross_contour_xld(Cross, Corner_two[0], Corner_two[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<l>gen_cross_contour_xld(Cross, Corner_three[0], Corner_three[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<l>gen_cross_contour_xld(Cross, Corner_four[0], Corner_four[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<c></c>
+<c>* 这里是计算校正后角点对应的坐标</c>
+<l>Cornertrans_one:=[Corner_three[0],Corner_one[1]]</l>
+<l>Cornertrans_two:=[Corner_four[0],Corner_one[1]]</l>
+<l>Cornertrans_three:=[Corner_three[0],Corner_four[1]]</l>
+<l>Cornertrans_four:=[Corner_four[0],Corner_four[1]]</l>
+<c></c>
+<l>dev_close_window()</l>
+<l>dev_open_window_fit_image(Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>dev_display(Image)</l>
+<l>gen_cross_contour_xld(Cross, Cornertrans_one[0], Cornertrans_one[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<l>gen_cross_contour_xld(Cross, Cornertrans_two[0], Cornertrans_two[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<l>gen_cross_contour_xld(Cross, Cornertrans_three[0], Cornertrans_three[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<l>gen_cross_contour_xld(Cross, Cornertrans_four[0], Cornertrans_four[1], 6, 0)</l>
+<l>dev_display(Cross)</l>
+<c></c>
+<c></c>
+<c>*计算校正矩阵</c>
+<l>ROWS:=[Corner_one[0],Corner_two[0],Corner_three[0],Corner_four[0]]</l>
+<l>COLUMS:=[Corner_one[1],Corner_two[1],Corner_three[1],Corner_four[1]]</l>
+<l>ROWS_TRANS:=[Cornertrans_one[0],Cornertrans_two[0],Cornertrans_three[0],Cornertrans_four[0]]</l>
+<l>COLUMS_TRANS:=[Cornertrans_one[1],Cornertrans_two[1],Cornertrans_three[1],Cornertrans_four[1]]</l>
+<l>hom_vector_to_proj_hom_mat2d(ROWS,COLUMS, [1,1,1,1], ROWS_TRANS, COLUMS_TRANS,  [1,1,1,1], 'normalized_dlt', HomMat2D)</l>
+<c>*投影变换</c>
+<l>projective_trans_image(Image, TransImage, HomMat2D, 'bilinear', 'false', 'false')</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>
