@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="94W7TybBtprLZWba6eNM" name="HSMS Message">
-        <mxGraphModel dx="1715" dy="1144" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1038" dy="967" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -166,13 +166,13 @@
                 <mxCell id="34" style="edgeStyle=elbowEdgeStyle;html=1;" parent="35" source="10" target="14" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="15" value="mDeviceID_ByteArray[2字节]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontSize=16;" parent="35" vertex="1">
+                <mxCell id="15" value="mDeviceID_ByteArray[2字节]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;fontSize=16;" parent="35" vertex="1">
                     <mxGeometry x="560" width="280" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="16" value="" style="edgeStyle=elbowEdgeStyle;html=1;" parent="35" source="13" target="15" edge="1">
                     <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" value="mSystemID_ByteArray[4字节]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontSize=16;" parent="35" vertex="1">
+                <mxCell id="17" value="mSystemID_ByteArray[4字节]" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Comic Sans MS;fillColor=#60a917;fontColor=#ffffff;strokeColor=#2D7600;fontSize=16;" parent="35" vertex="1">
                     <mxGeometry x="560" y="480" width="280" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="18" style="edgeStyle=elbowEdgeStyle;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="35" source="13" target="17" edge="1">
