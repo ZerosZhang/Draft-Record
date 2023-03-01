@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.0.1">
+<procedure name="main">
+<interface/>
+<body>
+<l>read_image (ImageOrig, 'blister/blister_reference')</l>
+<c>* 提取出胶囊板的区域</c>
+<l>access_channel (ImageOrig, Image1, 1)</l>
+<l>threshold (Image1, Region, 90, 255)</l>
+<l>shape_trans (Region, Blister, 'convex')</l>
+<c>* 将胶囊板转至0度 || 将图片转至0度生成矩形区域，作为模板。HomMat2D表示将模板图像旋转至0度的矩阵。</c>
+<l>orientation_region (Blister, Phi)</l>
+<l>area_center (Blister, Area1, Row, Column)</l>
+<l>vector_angle_to_rigid (Row, Column, Phi, Row, Column, 0, HomMat2D)</l>
+<l>gen_empty_obj (Chambers)</l>
+<l>for I := 0 to 4 by 1</l>
+<l>    Row := 88 + I * 70</l>
+<l>    for J := 0 to 2 by 1</l>
+<l>        Column := 163 + J * 150</l>
+<l>        gen_rectangle2 (Rectangle, Row, Column, 0, 64, 30)</l>
+<l>        concat_obj (Chambers, Rectangle, Chambers)</l>
+<l>    endfor</l>
+<l>endfor</l>
+<l>affine_trans_region (Blister, Blister, HomMat2D, 'nearest_neighbor')</l>
+<l>union1 (Chambers, ChambersUnion)</l>
+<c>* 记录作为模板的胶囊板子的角度与位置，这里的PhiRef可以理解为0度</c>
+<l>orientation_region (Blister, PhiRef)</l>
+<l>PhiRef := rad(180) + PhiRef</l>
+<l>area_center (Blister, Area2, RowRef, ColumnRef)</l>
+<c></c>
+<l>stop()</l>
+<c></c>
+<c>* 实际检测</c>
+<l>Count := 6</l>
+<l>for Index := 1 to Count by 1</l>
+<c>    * 读取图片，并旋转角度到PhiRef</c>
+<l>    read_image (Image, 'blister/blister_' + Index$'02')</l>
+<l>    threshold (Image, Region, 90, 255)</l>
+<l>    connection (Region, ConnectedRegions)</l>
+<l>    select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 5000, 9999999)</l>
+<l>    shape_trans (SelectedRegions, RegionTrans, 'convex')</l>
+<c></c>
+<l>    orientation_region (RegionTrans, Phi)</l>
+<l>    area_center (RegionTrans, Area3, Row, Column)</l>
+<l>    vector_angle_to_rigid (Row, Column, Phi, RowRef, ColumnRef, PhiRef, HomMat2D)</l>
+<c>    * 提取待检测区域</c>
+<l>    affine_trans_image (Image, ImageAffineTrans, HomMat2D, 'constant', 'false')</l>
+<l>    reduce_domain (ImageAffineTrans, ChambersUnion, ImageReduced)</l>
+<c>    * 对待检测区域进行筛选，提取胶囊区域</c>
+<l>    decompose3 (ImageReduced, ImageR, ImageG, ImageB)</l>
+<l>    var_threshold (ImageB, Region, 7, 7, 0.2, 2, 'dark')</l>
+<l>    connection (Region, ConnectedRegions0)</l>
+<l>    closing_rectangle1 (ConnectedRegions0, ConnectedRegions, 3, 3)</l>
+<l>    fill_up (ConnectedRegions, RegionFillUp)</l>
+<l>    select_shape (RegionFillUp, SelectedRegions, 'area', 'and', 1000, 99999)</l>
+<l>    opening_circle (SelectedRegions, RegionOpening, 4.5)</l>
+<l>    connection (RegionOpening, ConnectedRegions)</l>
+<l>    select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 1000, 99999)</l>
+<l>    shape_trans (SelectedRegions, Pills, 'convex')</l>
+<c>    </c>
+<c>    * 对区域特征进行判断，筛选好坏</c>
+<l>    count_obj (Chambers, Number)</l>
+<l>    gen_empty_obj (WrongPill)</l>
+<l>    gen_empty_obj (MissingPill)</l>
+<l>    for I := 1 to Number by 1</l>
+<c>        * 这里之所以是对Chamber进行操作，而非直接对Pills进行操作，是因为存在漏放的情况</c>
+<c>        * 如果直接select_obj(Pills, Pill, I)则漏放无法检测</c>
+<l>        select_obj (Chambers, Chamber, I)</l>
+<l>        intersection (Chamber, Pills, Pill)</l>
+<l>        area_center (Pill, Area, Row1, Column1)</l>
+<l>        if (Area &gt; 0)</l>
+<l>            min_max_gray (Pill, ImageB, 0, Min, Max, Range)</l>
+<l>            if (Area &lt; 3800 or Min &lt; 60)</l>
+<l>                concat_obj (WrongPill, Pill, WrongPill)</l>
+<l>            endif</l>
+<l>        else</l>
+<l>            concat_obj (MissingPill, Chamber, MissingPill)</l>
+<l>        endif</l>
+<l>    endfor</l>
+<l>    stop()</l>
+<l>endfor</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

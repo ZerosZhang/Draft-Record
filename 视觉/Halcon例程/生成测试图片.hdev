@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.0.1">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_update_off ()</l>
+<c>* 选择第1张图像创建形状模板</c>
+<l>list_image_files ('pen', 'default', [], ImageFiles)</l>
+<l>read_image (Image, ImageFiles)</l>
+<c></c>
+<l>select_obj (Image, SelectImage, 1)</l>
+<c></c>
+<l>read_image (NoiseImage, '001.bmp')</l>
+<l>rgb1_to_gray (NoiseImage, NoiseImage)</l>
+<l>crop_part (NoiseImage, ImagePart, 0, 0, 451, 301)</l>
+<c></c>
+<c></c>
+<l>for Index := 1 to |ImageFiles| by 1</l>
+<l>    select_obj (Image, ObjectSelected, Index)</l>
+<l>    add_image (ObjectSelected, ImagePart, ImageResult, 1, 0)</l>
+<l>    write_image (ImageResult, 'bmp', 0, 'TestData/'+Index+'.bmp')</l>
+<l>endfor</l>
+<l>stop()</l>
+<c></c>
+<c></c>
+<l>gen_image_const(Image, 'byte', 512, 512)//生成一幅图像，用byte格式，默认是黑色</l>
+<l>write_image (Image, 'bmp', 0, '000.bmp')</l>
+<c></c>
+<c></c>
+<l>read_image (Image, 'pen/pen-01')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_close_window ()</l>
+<l>dev_open_window (0, 0, Width, Height, 'black', WindowHandle)</l>
+<l>set_display_font (WindowHandle, 16, 'mono', 'true', 'false')</l>
+<l>dev_set_color ('red')</l>
+<l>dev_display (Image)</l>
+<c>* 把我感兴趣的区域抠出来，原则上范围越小越好，因为这样创建模板时干扰会少很多</c>
+<l>threshold (Image, Region, 100, 255)</l>
+<l>fill_up (Region, RegionFillUp)</l>
+<l>difference (RegionFillUp, Region, RegionDifference)</l>
+<l>shape_trans (RegionDifference, RegionTrans, 'convex')</l>
+<l>dilation_circle (RegionTrans, RegionDilation, 8.5)</l>
+<l>reduce_domain (Image, RegionDilation, ImageReduced)</l>
+<l>inspect_shape_model (ImageReduced, ModelImages, ModelRegions, 1, 20)</l>
+<l>gen_contours_skeleton_xld (ModelRegions, Model, 1, 'filter')</l>
+<c>* 获得抠图区域的中心，这是参考点</c>
+<l>area_center (RegionDilation, Area, RowRef, ColumnRef)</l>
+<c>* 创建形状模板</c>
+<l>create_shape_model (ImageReduced, 5, rad(-10), rad(20), 'auto', 'none', 'use_polarity', 20, 10, ShapeModelID)</l>
+<c>* 创建变化模型（用于和缺陷比较）</c>
+<l>create_variation_model (Width, Height, 'byte', 'standard', VariationModelID)</l>
+<c>* 文件夹中前15张图片是质量良好的，可以用来训练模板</c>
+<l>for I := 1 to 15 by 1</l>
+<l>    read_image (Image, 'pen/pen-' + I$'02d')</l>
+<c>     * 先寻找模板的实例</c>
+<l>    find_shape_model (Image, ShapeModelID, rad(-10), rad(20), 0.5, 1, 0.5, 'least_squares', 0, 0.9, Row, Column, Angle, Score)</l>
+<l>    if (|Score| == 1)</l>
+<c>        * 使用仿射变换，将当前图像平移旋转到与模板图像重合，注意是当前图像转向模板图像</c>
+<l>        vector_angle_to_rigid (Row, Column, Angle, RowRef, ColumnRef, 0, HomMat2D)</l>
+<l>        affine_trans_image (Image, ImageTrans, HomMat2D, 'constant', 'false')</l>
+<c>         * 训练差异模型</c>
+<l>        train_variation_model (ImageTrans, VariationModelID)</l>
+<l>        dev_display (ImageTrans)</l>
+<l>        dev_display (Model)</l>
+<l>    endif</l>
+<l>endfor</l>
+<c>* 获得差异模型</c>
+<l>get_variation_model (MeanImage, VarImage, VariationModelID)</l>
+<c>* 做检测之前可以先用下面这个算子对可变模型进行设参,这是一个经验值,需要调试者调整</c>
+<l>prepare_variation_model (VariationModelID, 20, 3)</l>
+<l>dev_set_draw ('margin')</l>
+<l>NumImages := 30</l>
+<c>* 可变模板训练完成后，我们终于可以进入主题，马上对所有图像进行缺陷检测，思想就是差分</c>
+<c></c>
+<l>stop()</l>
+<l>list_image_files ('C:/Users/ZerosZhang/Downloads/TestData', 'default', [], ImageFiles1)</l>
+<l>read_image (AllImage, ImageFiles1)</l>
+<l>for I := 1 to 30 by 1</l>
+<l>    select_obj (AllImage, Image, I)</l>
+<c>    * 要注意做差分的两幅图像分辨率相同，当然也需要通过仿射变换把待检测的图像转到与模板图像重合</c>
+<c>       * 先寻找模板的实例</c>
+<l>    find_shape_model (Image, ShapeModelID, rad(-10), rad(20), 0.5, 1, 0.5, ['least_squares','max_deformation 5'], 0, 0.9, Row, Column, Angle, Score)</l>
+<l>    if (|Score| == 1)</l>
+<c>         * 使用仿射变换，将当前图像平移旋转到与模板图像重合，注意是当前图像转向模板图像</c>
+<l>        vector_angle_to_rigid (Row, Column, Angle, RowRef, ColumnRef, 0, HomMat2D)</l>
+<l>        affine_trans_image (Image, ImageTrans, HomMat2D, 'constant', 'false')</l>
+<c>        * 抠图</c>
+<l>        reduce_domain (ImageTrans, RegionDilation, ImageReduced)</l>
+<c>        * 差分 （就是检查两幅图像相减，剩下的区域就是不同的地方了，与模板图像不同的地方就是缺陷）</c>
+<c>       * 这里可不能用difference做差分啊，halcon为变形模板提供了专门的差分算子：compare_variation_model</c>
+<l>        compare_variation_model (ImageReduced, RegionDiff, VariationModelID)</l>
+<l>        connection (RegionDiff, ConnectedRegions)</l>
+<c>        * 特征选择：用一些特征来判断这幅图像印刷是否有缺陷，这里使用面积</c>
+<c>       * 其实可以考虑利用区域面积的大小来判断缺陷的严重程度，这里就不过多讨论了</c>
+<l>        select_shape (ConnectedRegions, RegionsError, 'area', 'and', 0, 1000000)</l>
+<l>        count_obj (RegionsError, NumError)</l>
+<l>        dev_clear_window ()</l>
+<l>        dev_display (ImageTrans)</l>
+<l>        dev_set_color ('red')</l>
+<l>        dev_display (RegionsError)</l>
+<l>        set_tposition (WindowHandle, 20, 20)</l>
+<l>        if (NumError == 0)</l>
+<l>            dev_set_color ('green')</l>
+<l>            write_string (WindowHandle, 'Clip OK')</l>
+<l>        else</l>
+<l>            dev_set_color ('red')</l>
+<l>            write_string (WindowHandle, 'Clip not OK')</l>
+<l>        endif</l>
+<l>    else</l>
+<l>        stop()</l>
+<l>    endif</l>
+<l>    if (I &lt; NumImages)</l>
+<l>        disp_continue_message (WindowHandle, 'black', 'true')</l>
+<l>        stop ()</l>
+<l>    endif</l>
+<l>endfor</l>
+<c>* 结语：如果发现前面作为训练变形模板的良好图像也被判定为NG，</c>
+<c>*      可以调整prepare_variation_model参数</c>
+<c>*      或者调整select_shape特征筛选的标准</c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="create_mvtec_logo_broadened">
+<interface>
+<oo>
+<par name="LogoImage" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="Broadening" base_type="ctrl" dimension="0"/>
+<par name="WidthLogo" base_type="ctrl" dimension="0"/>
+<par name="WidthImage" base_type="ctrl" dimension="0"/>
+<par name="HeightImage" base_type="ctrl" dimension="0"/>
+</ic>
+</interface>
+<body>
+<l>Blue := [0,48,117]</l>
+<l>Orange := [255,181,41]</l>
+<c></c>
+<c>* Read the image containing the logo</c>
+<l>read_image (Image, 'pen/pen-01')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<c></c>
+<c>* Segment the logo</c>
+<l>auto_threshold (Image, Regions, 10)</l>
+<l>connection (Regions, Regions)</l>
+<l>select_shape (Regions, SelectedRegions, ['row1','holes_num'], 'and', [80,0], [100,0])</l>
+<l>sort_region (SelectedRegions, SelectedRegions, 'character', 'true', 'row')</l>
+<l>closing_rectangle1 (SelectedRegions, Characters, 3, 3)</l>
+<l>opening_rectangle1 (Characters, Characters, 5, 5)</l>
+<c></c>
+<c>* Extract the contour</c>
+<l>dilation_rectangle1 (Characters, RegionDilation, 5, 5)</l>
+<l>erosion_rectangle1 (Characters, RegionErosion, 5, 5)</l>
+<l>difference (RegionDilation, RegionErosion, RegionDifference)</l>
+<l>count_obj (RegionDifference, Number)</l>
+<l>gen_empty_obj (MVTecContours)</l>
+<l>for Index := 1 to Number by 1</l>
+<l>    select_obj (RegionDifference, ObjectSelected, Index)</l>
+<l>    reduce_domain (Image, ObjectSelected, ImageReduced)</l>
+<l>    edges_sub_pix (ImageReduced, Edges, 'canny', 1.5, 10, 20)</l>
+<l>    union_adjacent_contours_xld (Edges, UnionContours, 5, 1, 'attr_keep')</l>
+<l>    close_contours_xld (UnionContours, ClosedContours)</l>
+<l>    concat_obj (MVTecContours, ClosedContours, MVTecContours)</l>
+<l>endfor</l>
+<c></c>
+<c>* Create the colored image of the logo</c>
+<l>smallest_rectangle1_xld (MVTecContours, Row1, Column1, Row2, Column2)</l>
+<l>Row1 := min(Row1)</l>
+<l>Column1 := min(Column1)</l>
+<l>Row2 := max(Row2)</l>
+<l>Column2 := max(Column2)</l>
+<l>WidthLogoOrig := Column2 - Column1 + 1</l>
+<l>ScaleFactor := real(WidthLogo) / WidthLogoOrig</l>
+<l>hom_mat2d_identity (HomMat2DIdentity)</l>
+<l>hom_mat2d_translate (HomMat2DIdentity, -0.5 * (Row1 + Row2), -0.5 * (Column1 + Column2), HomMat2DTranslate)</l>
+<l>hom_mat2d_scale (HomMat2DTranslate, ScaleFactor, ScaleFactor, 0, 0, HomMat2DScale)</l>
+<l>hom_mat2d_translate (HomMat2DScale, 0.5 * HeightImage, 0.5 * WidthImage, HomMat2DComplete)</l>
+<l>affine_trans_contour_xld (MVTecContours, MVTecContoursTrans, HomMat2DComplete)</l>
+<l>gen_image_const (ImageRed, 'byte', WidthImage, HeightImage)</l>
+<l>gen_image_const (ImageGreen, 'byte', WidthImage, HeightImage)</l>
+<l>gen_image_const (ImageBlue, 'byte', WidthImage, HeightImage)</l>
+<l>compose3 (ImageRed, ImageGreen, ImageBlue, LogoImageTempl)</l>
+<l>paint_xld (MVTecContoursTrans, LogoImageTempl, LogoImage, [Blue,Orange,Blue,Blue,Blue,Blue])</l>
+<c></c>
+<c>* Dilate the original logo</c>
+<l>if (Broadening &gt; 0)</l>
+<l>    gray_dilation_shape (LogoImage, LogoImage, 2 * Broadening + 1, 2 * Broadening + 1, 'octagon')</l>
+<l>elseif (Broadening &lt; 0)</l>
+<l>    gray_erosion_shape (LogoImage, LogoImage, -2 * Broadening + 1, -2 * Broadening + 1, 'octagon')</l>
+<l>endif</l>
+<l>return ()</l>
+</body>
+<docu id="create_mvtec_logo_broadened">
+<short lang="en_US">returns a colored image of the MVTec logo</short>
+<short lang="zh_CN">returns a colored image of the MVTec logo</short>
+<parameters>
+<parameter id="Broadening"/>
+<parameter id="HeightImage"/>
+<parameter id="LogoImage"/>
+<parameter id="WidthImage"/>
+<parameter id="WidthLogo"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="get_hash">
+<interface>
+<io>
+<par name="ImageZoomok" base_type="iconic" dimension="0"/>
+</io>
+<oc>
+<par name="Phash" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<c>*图像DCT过程</c>
+<c>*参考 https://www.cnblogs.com/latencytime/p/10228938.html</c>
+<c>*核心公式:F(u,v)= A f(x,y) AT</c>
+<c>*ImageZoomok:为缩放到32*32的灰度图像</c>
+<c>*Phash:为灰度图像计算出的Phash编码</c>
+<c></c>
+<c>*0.预处理</c>
+<l>zoom_image_size(ImageZoomok, ImageZoomok, 32, 32, 'constant')</l>
+<c>*1.创建A矩阵</c>
+<c>*系数为cos((2x+1)*u*pi/(N*N))</c>
+<l>gen_image_gray_ramp(ImageGrayRamp, 0, 1, 0, 0, 0, 32, 32)</l>
+<l>get_region_points(ImageGrayRamp,Rows1, Columns1)</l>
+<l>get_grayval(ImageGrayRamp, Rows1, Columns1, Grayval)</l>
+<l>Grayval_A:=real(Grayval*2+1)*3.14/(2*32)</l>
+<l>gen_image_gray_ramp(ImageGrayRamp, 1, 0, 0, 0, 0, 32, 32)</l>
+<l>get_grayval(ImageGrayRamp, Rows1, Columns1, Grayval_u)</l>
+<l>Grayval_A:=cos(Grayval_A*Grayval_u)*(sqrt(2.0/32))</l>
+<l>create_matrix(32,32,0,A)</l>
+<l>set_value_matrix(A, Rows1, Columns1, Grayval_A)</l>
+<c></c>
+<c>*2.获取图像矩阵</c>
+<l>get_grayval(ImageZoomok,Rows1, Columns1,Grayval)</l>
+<l>create_matrix(32,32,0,IMG)</l>
+<l>set_value_matrix(IMG, Rows1, Columns1, Grayval)</l>
+<c></c>
+<c>*3.计算DCT图像</c>
+<l>mult_matrix(A, IMG, 'AB',DCT)</l>
+<l>mult_matrix(DCT, A, 'ABT',DCT)</l>
+<l>get_full_matrix(DCT, Values)</l>
+<l>gen_image_const(ImageDCT, 'real',32,32)</l>
+<c></c>
+<c>*4.计算phash指纹</c>
+<l>set_grayval(ImageDCT, Rows1, Columns1, Values)</l>
+<l>gen_rectangle1(Rectangle, 0, 0, 7, 7)</l>
+<l>get_region_points(Rectangle, Rows2, Columns2)</l>
+<l>get_grayval(ImageDCT,Rows2, Columns2, phashcode)</l>
+<l>mean_phash:=mean(phashcode)</l>
+<l>Phash:=[phashcode[&gt;=]mean_phash]</l>
+<l>return ()</l>
+</body>
+<docu id="get_hash">
+<parameters>
+<parameter id="ImageZoomok"/>
+<parameter id="Phash"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
