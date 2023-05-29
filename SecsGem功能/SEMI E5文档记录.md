@@ -28,7 +28,7 @@ The messages defined in the standard support the most typical activities require
 
 ### 1.2 Overview
 
-SECS-II gives fo rm and meaning to messages exchanged between equipment and host using a message transfer protocol, such as SECS-I.
+SECS-II gives form and meaning to messages exchanged between equipment and host using a message transfer protocol, such as SECS-I.
 > SECS-II为使用消息传输协议(如SECS-I)在设备和主机之间交换的消息提供格式和含义。
 
 #### 1.2.1
@@ -38,7 +38,7 @@ SECS-II defines the method of conveying information between equipment and host i
 
 #### 1.2.2
 
-SECS-II defines the structure o f messages into entities called items and lists of items. This structure allows for a self-describing data format to guarantee proper interpretation of the message.
+SECS-II defines the structure of messages into entities called items and lists of items. This structure allows for a self-describing data format to guarantee proper interpretation of the message.
 > SECS-II将消息结构定义为称为==项==(items)和==项列表==(lists of items)的实体。这种结构允许使用自定义的数据格式，以保证消息的正确解析。
 
 #### 1.2.3
@@ -89,6 +89,35 @@ This standard does not purport to address safety issues, if any, associated with
 > 本标准并不旨在解决与其使用相关的安全问题。本标准的使用者有责任在使用前建立适当的安全和健康做法，并确定法规限制的适用性。
 
 ## 第二章：Selected Definitions
+
+2.1 The following brief definitions refer to sections providing further information.
+> 以下简要定义参考了提供进一步信息的章节。
+2.1.1 block — a physical division of a message used by the message transfer protocol (see Section 3.3).
+> block —— 消息传输协议所使用的消息的物理分割
+2.1.2 conversation — a sequence of related messages (see Section 5.4).
+> conversation —— 一系列相关的信息
+2.1.3 conversation timeout — an indication that a conversation has not completed properly (see Section 5.4.1).
+> conversation timeout —— 谈话没有正确结束的指示
+2.1.4 device ID — a number between 0 and 32767 used in identifying the particular piece of equipment communicating with a host (see Section 3.4.1).
+2.1.5 equipment — the intelligent system which communicates with a host.
+2.1.6 function — a specific message for a specific activity within a stream (see Section 4.2).
+2.1.7 host — the intelligent system which communicates with the equipment.
+2.1.8 interpreter — the system that interprets a primary message and generates a reply when requested (see Section 3.2).
+2.1.9 item — a data element within a message (see Section 6.2).
+2.1.10 item format — a code used to identify the data type of an item (see Section 6.2).
+2.1.11  list — a group of items (see Section 6.3).
+2.1.12 message — a complete unit of communication (see Section 3.2).
+2.1.13 message header — informatio n about the message passed by the message transfer protocol (see Section 3.4).
+2.1.14  multi-block message — a message sent in more than one block by the message transfer protocol (see Section 3.3.2).
+2.1.15  originator — the creator of a primary message (see Section 3.2).
+2.1.16 packet — a physical division o f a message used by the message transfer protocol (see Section 3.3).
+2.1.17 primary message — an odd nu mbered message. Also, the first message of a transaction (see Sections 3.2 and 4.2).
+2.1.18 reply — the particular secondary message corresponding to a primary message (see Sections 3.2 and 4.2).
+2.1.19 secondary message — an even-numbered message. Also the second message of a transaction (see Sections 3.2 and 4.2).
+2.1.20  single-block message — a message sent in one block by the message transfer protocol (see Section 3.3.1).
+2.1.21  stream — a category of messages (see Section 4.1).
+2.1.22 transaction — a primary message and its associated secondary message, if any (see Section 5.2).
+2.1.23 transaction timeout — an indication from the message transfer protocol that a transaction has not completed properly (see Section 3.5).
 
 ## 第三章：The Message Transfer Protocal
 
