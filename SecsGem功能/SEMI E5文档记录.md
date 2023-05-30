@@ -139,7 +139,45 @@ This standard does not purport to address safety issues, if any, associated with
 2.1.23 transaction timeout — an indication from the message transfer protocol that a transaction has not completed properly (see Section 3.5).
 > [transaction timeout] —— 表示事务没有正确完成
 
-## 第三章：The Message Transfer Protocal
+## 第三章：The Message Transfer Protocal 消息传输协议
+3.1 Intent — SECS-II is fully compatible with the message transfer protocol defined by SECS-I. It is the intent of this standard to allow for compatibility with alternative message transfer protocols. The purpose of this section is to define the requirements of the interaction between an application using SECS-II and the message transfer protocol. The methods used to implement these requirements are not covered as a part of this standard. The terms used in this standard are those used by SECS-I. Equivalent terms may be different for other message transfer protocols.
+> SECS-II和SECS-I定义的消息传输协议完全兼容。本标准的目的是为了与其他消息传输协议的兼容性，本节的目的是定义使用了SECS-II的程序和通讯协议之间的交互需求，实现这些需求的方法在此不赘述了。
+
+3.2  Messages — The message transfer protocol is used to send messages between equipment and host. The message transfer protocol must be capable of sending a primary message, indicating whether a reply is requested; and, if a reply is requested, it must be capable of associating the corresponding secondary message or reply message with the original primary message. The term originator will refer to the creator of the original primary message. The term interpreter will refer to the entity that interprets the primary message at its destination and generates a reply when requested.
+> 消息传输协议用于在设备和主机之间发送消息。消息传输协议必须能够发送主消息，表明是否要求回复; 如果要求回复，则必须能够将相应的次消息或应答消息与主消息关联起来。发起者将指代主消息的创建者。解释器指的是在设备上解释主消息并在请求时生成应答的实体。
+
+3.3 Blocking Requirements — The message transfer protocol must support the following SECS-II message blocking requirements.
+消息传输协议必须支持以下 SECS-II 消息分块要求。
+
+3.3.1  Single-Block Messages — SECS-II requires that certain messages be sent in a single block or single packet by the message transfer protocol. Those messages defined in this standard as single-block SECS-II messages must be sent in a single-block or packet. The method used by the application software to tell the message transfer protocol that a particular message must be sent as a single block is not covered as part of this standard. For compatibility with SECS-I, the maximum length allowed for a single-block SECS-II message is 244 bytes. The minimum requirement for the message transfer protocol is to be able to send single-block SECS-II messages.
+> 单块消息-SECS-II通过消息传输协议在单个块或单个数据包中发送某条消息。本标准中定义为单块SECS-II消息的消息必须在single-block或packet中发送。应用软件用来告诉消息传输协议特定消息必须作为单个块发送的方法不属于本标准的一部分。为了与SECS-I兼容，单个块SECS-II消息允许的最大长度为244字节。消息传输协议的最低要求是能够发送单块SECS-II消息。
+
+3.3.2 Multi-Block Messages — For compatibility with SECS-I, SECS-II messages that are longer than 244 bytes are referred to as multi-block messages. Also, certain SECS-II messages are allowed to be multi-block messages even if they otherwise meet the single-block length requirements. Certain older implementations may impose application-specific requirements on block sizes for certain incoming messages. Beginning with the 1988 revision of the standard, new applications may not impose application-specific requirements on incoming block sizes. Applications implemented before 1988 may impose such requirements.
+> 为了与 SECS-I 兼容，长于244字节的 SECS-II 消息称为多块消息。另外，允许某些 SECS-II 消息为多块消息，即使它们满足单块长度要求。某些较旧的实现可能会对某些传入消息的块大小施加特定于应用程序的要求。从1988年修订标准开始，新的申请可能不会对进入的块大小施加特定的申请要求。在1988年以前实施的申请可能会施加这些要求。
+
+3.4  Message Header — The message transfer protocol must provide the following information, called the message header, with every message. Only the content of the message header is defined by this standard. The exact format of the message header passed between the application and the message transfer protocol is not covered as part of this standard.
+> 消息传输协议必须为每条消息提供接下来的信息，称为消息头。此标准仅定义消息头的内容。在应用程序和消息传输协议之间传递的消息头的确切格式不作为本标准的一部分。
+
+NOTE 2: In SECS-I, this information is contained in the 10-byte header of each block of a message.
+> 在SECS-I中，该information被包含在消息的每个block的10字节的头中
+
+3.4.1 Device ID — The message transfer protocol must be capable of identifying the device ID (0-32767) which indicates the source or destination of a message.
+> 消息传输协议必须能够识别Device ID (0-32767)，Device ID表示消息的来源或者目的地。
+
+3.4.2 Stream and Function — The message transfer protocol must be capable of identifying to SECS-II a minimum15-bit message identification code. In SECS- II, messages are identified by a stream code (0-127, 7 bits) and a function code (0-255, 8 bits). Each combination of stream and function represents a distinct message identification.
+> 消息传输协议必须能够识别 SECS-II 的最小15位消息识别代码。在 SECS-II 中，消息由一个流代码(0-127,7位)和一个函数代码(0-255,8位)标识。stream和function的每个组合表示一个不同的消息标识。
+
+3.4.3 Reply Requested — The message transfer protocol must be capable of identifying whether a reply is requested to a primary message.
+> 消息传输协议必须能够识别主消息是否要求回复。
+
+3.5 Transaction Timeout — It is presumed that the message transfer protocol will notify SECS-II in the event of failure to receive an expected reply message within a specified transaction timeout period. 
+NOTE 3: In SECS-I, a transaction timeout occurs if either the reply timeout (T3) is exceeded before the first block of a reply message is received or if the inter-block timeout (T4) is exceeded before an expected block of a multi-block message is received.
+> 如果在指定的事务超时时间内未能接收到预期的应答消息，则消息传输协议将通知 SECS-II。
+注3: 在 SECS-I 中，如果在接收到第一个应答消息块之前超过了应答超时(T3) ，或者在接收到多个块消息的预期块之前超过了块间超时(T4) ，则发生事务超时。
+
+3.6 Multiple Open Transactions — This standard allows, but does not require, the support of more than one concurrent open transaction.
+> 该标准允许但不要求支持多个并发打开事务。
+
 
 ## 第四章：Streams and Functions
 
