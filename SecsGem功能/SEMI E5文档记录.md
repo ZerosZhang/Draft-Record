@@ -93,31 +93,51 @@ This standard does not purport to address safety issues, if any, associated with
 2.1 The following brief definitions refer to sections providing further information.
 > 以下简要定义参考了提供进一步信息的章节。
 2.1.1 block — a physical division of a message used by the message transfer protocol (see Section 3.3).
-> block —— 消息传输协议所使用的消息的物理分割
+> [block] —— 消息传输协议所使用的消息的物理分割
 2.1.2 conversation — a sequence of related messages (see Section 5.4).
-> conversation —— 一系列相关的信息
+> [conversation] —— 一系列相关的信息
 2.1.3 conversation timeout — an indication that a conversation has not completed properly (see Section 5.4.1).
-> conversation timeout —— 谈话没有正确结束的指示
+> [conversation timeout] —— 谈话没有正确结束的指示
 2.1.4 device ID — a number between 0 and 32767 used in identifying the particular piece of equipment communicating with a host (see Section 3.4.1).
+> [device ID] —— 一个介于0和32767之间的数字，用于识别与主机通信的特定设备
 2.1.5 equipment — the intelligent system which communicates with a host.
+> [equipment] —— 与主机通信的智能系统。
 2.1.6 function — a specific message for a specific activity within a stream (see Section 4.2).
+> [function] —— 在stream中用于特定活动的特定消息
 2.1.7 host — the intelligent system which communicates with the equipment.
+> [host] —— 和设备通讯的智能系统
 2.1.8 interpreter — the system that interprets a primary message and generates a reply when requested (see Section 3.2).
+> [interpreter] —— 【解释器】用于解析主消息并生成回复的系统
 2.1.9 item — a data element within a message (see Section 6.2).
+> [item] —— 消息中的数据元素（message其实包含了TCP/IP协议中的各种消息头，与SECS相关的只有item，这个是message的实际数据）
 2.1.10 item format — a code used to identify the data type of an item (see Section 6.2).
+> [item format] —— 用于标识item的数据类型的代码
 2.1.11  list — a group of items (see Section 6.3).
+> [list] —— 一组item
 2.1.12 message — a complete unit of communication (see Section 3.2).
-2.1.13 message header — informatio n about the message passed by the message transfer protocol (see Section 3.4).
+> [message] —— 一个完整的通讯单元（包含TCP/IP中的各种消息头）
+2.1.13 message header — information about the message passed by the message transfer protocol (see Section 3.4).
+> [message header] —— 通过消息传输协议传输的消息的相关信息
 2.1.14  multi-block message — a message sent in more than one block by the message transfer protocol (see Section 3.3.2).
+> [multi-block message] —— 通过消息传输协议在多块中发送的消息
 2.1.15  originator — the creator of a primary message (see Section 3.2).
-2.1.16 packet — a physical division o f a message used by the message transfer protocol (see Section 3.3).
-2.1.17 primary message — an odd nu mbered message. Also, the first message of a transaction (see Sections 3.2 and 4.2).
+> [originator] —— 主消息的发起者
+2.1.16 packet — a physical division of a message used by the message transfer protocol (see Section 3.3).
+> [packet] —— 消息传输协议使用的一条消息的物理划分（这个和block是同一个解释）
+2.1.17 primary message — an odd numbered message. Also, the first message of a transaction (see Sections 3.2 and 4.2).
+> [primary message] —— [主消息]奇数消息，同样也是事务的第一条消息。
 2.1.18 reply — the particular secondary message corresponding to a primary message (see Sections 3.2 and 4.2).
+> [reply] —— 对应于[主消息]的特定[次消息]
 2.1.19 secondary message — an even-numbered message. Also the second message of a transaction (see Sections 3.2 and 4.2).
+> [secondary message] —— [次消息]偶数消息，同样也是事务的第二条消息
 2.1.20  single-block message — a message sent in one block by the message transfer protocol (see Section 3.3.1).
+> [single-block message] —— 在同一个block中发送的消息
 2.1.21  stream — a category of messages (see Section 4.1).
+> [stream] —— 一个种类的消息
 2.1.22 transaction — a primary message and its associated secondary message, if any (see Section 5.2).
+> [transaction] —— 主消息和关联的次消息（如果有）
 2.1.23 transaction timeout — an indication from the message transfer protocol that a transaction has not completed properly (see Section 3.5).
+> [transaction timeout] —— 表示事务没有正确完成
 
 ## 第三章：The Message Transfer Protocal
 
