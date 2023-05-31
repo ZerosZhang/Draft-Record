@@ -249,12 +249,24 @@ The appendix provides an example of how an entity may operate alternately in the
 Passive Mode Connect Procedure 被动模式连接过程
 
 The procedure followed by the Passive Local Entity is defined in RFC 793.  It is summarized as follows:
+> 被动模式的local entity连接过程总结如下：
 
 1. Obtain a connection endpoint and bind it to a published port.
+   > 建立socket并绑定端口
 
 2. Listen for an incoming connect request to the published port from a remote entity.
-
+   > 监听remote entity发起的连接请求
 3. Upon receipt of a connect request, acknowledge it and indicate acceptance of the connection. At this point, the connect procedure has completed suc- cessfully, and the CONNECTED state is entered (Section 5).
+   > 接收到连接请求后，确认该请求并接收连接。此时连接过程已经完成，并进入CONNECTED状态
 
 These procedures are carried out through the API of the local entity's implementation of TCP/IP. The appendices provide the API-speciﬁc procedures for the above steps using both TLI and BSD.
+
+> 这个过程是通过local entity的TCP/IP协议提供的API执行的。
+
 Note: A failure may occur during the above steps. The reason for failure may be local entity-speciﬁc or may be due to a lack of any connect request after a local entity-speciﬁc timeout. The action to be taken (for example: return to step 1 to retry) is a local entity-spe- ciﬁc issue.
+
+> 备注：上述步骤可能会失败。失败的原因可能是因为local entiry，也可能是因为remote entity。
+
+Note: See Section 9, Special Considerations, for issues relating to multiple connection requests to the same passive mode entity.
+
+> 备注：有关于同一个处于被动模式下的local entity如何处理多个remote entity请求的问题，参考第九章“特殊注意事项”
