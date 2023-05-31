@@ -179,8 +179,82 @@ The HSMS state machine is illustrated in the diagram below. The behavior describ
 
 5.2.1   NOT CONNECTED — The entity is ready to listen for or initiate TCP/IP connections but either has not yet established any connections or all previously established TCP/IP connections have been terminated.
 
+> 该entity已准备好监听或启动TCP/IP连接。此时要么尚未建立任何连接，要么以前建立的所有TCP/IP连接都已断开。
+
 5.2.2 CONNECTED — A TCP/IP connection has been established. This state has two substates, NOT SELECTED and SELECTED.
+
+> 已建立TCP/IP连接。此状态有两个子节点，NOT SELECTED和SELECTED。
 
 5.2.2.1   NOT SELECTED — A substate of CONNECTED in which no HSMS session has been established or any previously established HSMS session has ended.
 
+> CONNECTED的子状态，该状态下没有建立任何HSMS会话或者之前建立的HSMS会话已经结束。
+
 5.2.2.2   SELECTED — A substate of CONNECTED in which at least one HSMS session has been established. This is the normal "operating" state of HSMS: data messages may be exchanged in this state. It is highlighted by a heavy outline in the state diagram.
+
+> CONNECTED的子状态，至少建立了一个HSMS会话。在这种状态下，数据消息可以进行交换。
+
+### 5.3 状态过渡
+
+![1685523365568](image/SEMIE37文档记录/1685523365568.png)
+
+1. 搭建好entity之间的局域网后，则进入NOT CONNECTED状态
+2. 当前状态为NOT CONNECTED状态时，建立了TCP/IP通讯后，则进入CONNECTED的NOT SELECTED子状态
+3. 当前状态为CONNECTED时（无所谓子状态）断开TCP/IP连接后则进入NOT CONNECTED状态
+4. 当前状态为NOT SELECTED时，成功完成了HSMS的select流程，则进入了SELECTED状态
+5. 当前状态为SELECTED时，成功完成了deselect或者separate流程，则进入了NOT SELECTED状态
+6. 当前状态为NOT SELECTED状态时，在执行select流程过程中出现了T7超时，则进入NOT CORRECTED状态
+
+## TCP/IP的使用
+
+### 6.1 TCP/IP API
+
+The specification of a required TCP Application Program Interface (API) for use in imple- mentations is outside the scope of HSMS. A given HSMS implementation may use any TCP/IP API — sockets, TLI (Transport Layer Interface), etc. — appropriate to the intended hardware and software platform, as long as it provides interoperable TCP/IP streams protocol on the network.
+
+> 本文档并不会介绍怎么去实现TCP/IP的API，而是使用现成的socket
+
+The appendix contains examples of the TCP/IP procedures referenced in this standard and sample scenarios using both the TLI (POSIX standard 1003.12) and the popular BSD socket model for TCP/IP communication.
+
+### 6.2 TCP/IP Network Addressing Conventions TCP/IP网络寻址约定
+
+IP Address
+
+Each physical TCP/IP connection to a given Local Area Network (LAN) must have a unique IP Address. IP Addresses must be assignable at installation time, and an HSMS implementation cannot select a fixed IP Address. A typical IP Address is 192.9.200.1.
+> 给定局域网的每个物理连接都必须具有唯一的IP地址。这部分内容在建立TCP/IP连接部分完成，HSMS协议里不包含选择某个IP地址的方法。一个典型的IP地址为192.168.0.1。
+
+TCP Port Numbers
+
+A TCP Port Number can be considered as an extension of the IP Address.
+> TCP端口号可以视为IP地址的扩展
+
+HSMS implementations should allow conﬁguring TCP Port to the full range of the TCP/IP implementation used. A typical TCP Port Number is 5000.
+> HSMS协议支持TCP/IP协议支持的所有的端口。一个典型的端口为5000。
+
+### 6.3 Establishing a TCP/IP Connection 建立以一个TCP/IP连接
+
+Connect Modes
+
+The procedures for establishing a TCP/IP connection are defined in RFC 793. However, not all the procedures defined by RFC 793 are supported by commonly available APIs. In particular, while RFC 793 permits both entities to initiate the connection simultaneously, this feature is rarely supported in available APIs. Therefore, HSMS restricts an entity to one of the following modes:
+
+> 建立TCP/IP连接的过程在此不赘述，可以参考官方文档。通常TCP/IP分为服务器和客户端，基于这种模式HSMS将entity定义为下面两种模式：
+
+- Passive Mode： The Passive mode is used when the local entity listens for and accepts a connect procedure initiated by the Remote Entity.
+    > 当local entity接收由remote entity发起的连接时，使用被动模式（相当于服务器）
+
+- Active Mode：The Active mode is used when the connect procedure is initiated by the Local Entity.
+    > 当local entity发起连接时，使用主动模式（相当于客户端）
+
+The appendix provides an example of how an entity may operate alternately in the active and passive modes to achieve greater ﬂexibility in establishing communications.
+> 附录提供了一个实体如何以主动和被动方式交替运作的实例，以便在建立通信方面实现更大的灵活性
+
+Passive Mode Connect Procedure 被动模式连接过程
+
+The procedure followed by the Passive Local Entity is defined in RFC 793.  It is summarized as follows:
+
+1. Obtain a connection endpoint and bind it to a published port.
+
+2. Listen for an incoming connect request to the published port from a remote entity.
+
+3. Upon receipt of a connect request, acknowledge it and indicate acceptance of the connection. At this point, the connect procedure has completed suc- cessfully, and the CONNECTED state is entered (Section 5).
+
+These procedures are carried out through the API of the local entity's implementation of TCP/IP. The appendices provide the API-speciﬁc procedures for the above steps using both TLI and BSD.
+Note: A failure may occur during the above steps. The reason for failure may be local entity-speciﬁc or may be due to a lack of any connect request after a local entity-speciﬁc timeout. The action to be taken (for example: return to step 1 to retry) is a local entity-spe- ciﬁc issue.
