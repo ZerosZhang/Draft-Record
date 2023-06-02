@@ -270,3 +270,33 @@ Note: A failure may occur during the above steps. The reason for failure may be 
 Note: See Section 9, Special Considerations, for issues relating to multiple connection requests to the same passive mode entity.
 
 > 备注：有关于同一个处于被动模式下的local entity如何处理多个remote entity请求的问题，参考第九章“特殊注意事项”
+
+Active Mode Connect Procedure 主动模式连接过程
+The procedure followed by the Active Local Entity is defined in RFC 793. It is summarized as follows:
+> 被动模式的local entity连接过程总结如下：
+
+1. Obtain a connection endpoint.
+   > 新建socket
+
+2. Initiate a connection to the published port of a passive mode remote entity.
+   > 连接被动模式的remote entity的对应端口
+
+3. Wait for the receipt of the acknowledge and the acceptance of the connect request from the remote entity. Receipt of the acceptance from the remote entity indicates successful completion of the connect procedure, and the CONNECTED state is entered (Section 5).
+   > 等待从remote entity收到确认并且接受了连接请求，进入CONNECTED状态
+
+These procedures are carried out through the API of the local entity's implementation of TCP/IP. The appendix provides the API-speciﬁc procedures for the above steps using both TLI and BSD.
+> 该过程是通过local entity的TCP/IP协议提供的API来执行的。
+
+Note: A failure may occur during the above steps. The reason for failure may be local entity-speciﬁc or may be due to a lack of any accept message after a local entity-speciﬁc timeout. The action to be taken is a local entity-speciﬁc issue. If, however, the local entity intends to retry the connection, it should do so subject to the T5 connect separation timeout (see "Special Considerations").
+> 注意：上述步骤可能会失败。如果local remote打算重新连接，应该在T5连接分离超时的情况下重新连接。
+
+### 6.4 Terminating a TCP/IP Connection 中止TCP/IP的连接
+Connection termination is the logical inverse of Connection estab- lishment. From the Local Entity's perspective, a TCP/ IP connection may be broken at any time. However, HSMS only permits termination of the connection when the connection is in the NOT SELECTED substate of the CONNECTED state.
+> 从local entity的角度来说，TCP/IP的连接随时可能终端。但是HSMS协议只允许在连接处于CONNECTED状态的NOT SELECTED子状态时中止连接
+
+The procedures for termination of a connection are deﬁned in RFC 793. Either entity may initiate termination of the connection. The NOT CONNECTED state is entered, indicating the end of HSMS communications. The appendix illustrates the procedures for both release and disconnect using the TLI and BSD APIs.
+> 任何entity都可以启动连接中止。进入NOT CONNECTED状态表示HSMS通信结束。
+
+## 7 HSMS Message Exchange Procedures
+HSMS deﬁnes the procedures for all message exchange between entities across the TCP/IP connection established according to the procedures in the previous section. As explained in the overview, once the connection is established, the two entities establish HSMS communications with the Select procedure. Then data messages may be exchanged in either direction at any time. When the entities wish to end HSMS communications, the Deselect or Separate procedure is used to end HSMS communications. 
+> HSMS协议定义了entity之间所有信息交换的过，前提是建立了TCP/IP连接。一旦TCP/IP连接建立，两个entity将通过select过程建立HSMS通信。然后数据可以在任何时候向任何一方交换。当entity希望结束HSMS通信时，使用deselect过程或者separate过程。
