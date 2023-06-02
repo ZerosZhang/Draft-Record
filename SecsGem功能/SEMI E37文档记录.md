@@ -334,7 +334,7 @@ All HSMS procedures involve the exchange of HSMS messages.  These messages are s
 
 The appendix gives examples of sending and receiving HSMS messages using both TLI and BSD socket APIs.
 
-## 7.2 Select Procedure
+### 7.2 Select Procedure
 
 > select流程
 
@@ -359,11 +359,11 @@ The procedure followed by the initiator is as follows.
    >
 2. If the initiator receives a Select.rsp with a Select Status of 0, The HSMS Select procedure completes successfully and the SELECTED state is entered (see Section 5).
 
-   > 如果后续发起者收到了select.rsp且select status= 0，则select流程结束，并进入SELECTED状态
+   > 如果后续发起者收到了响应代码为0的select.rsp消息，则select流程结束，并进入SELECTED状态
    >
 3. If the initiator receives a Select.rsp with a non-zero Select Status, the Select completes unsuccessfully (no state transitions).
 
-   > 如果后续发起者收到了select.rsp但是select status不为0，则select流程结束，没有状态转换，表示select失败
+   > 如果后续发起者收到了响应代码非0的select.rsp消息，则select流程结束，没有状态转换，表示select失败
    >
 4. If the T6 timeout expires in the initiator before receipt of a Select.rsp, it is considered a communications failure (see "Special Considerations").
 
@@ -378,21 +378,21 @@ The procedure followed by the initiator is as follows.
    >
 2. If the responding entity is able to accept the select, it transmits the Select.rsp with a Select Status of 0. The HSMS Select Procedure for the responding entity is successfully completed, and the SELECTED state is entered (see Section 5).
 
-   > 如果响应方决定接受，会传输select status = 0的select.rsp。此时响应方完成了select过程，并进入SELECTED状态
+   > 如果响应方决定接受select，会以响应代码为0的select.rsp消息进行回复。此时响应方完成了select过程，并进入SELECTED状态
    >
 3. If the responding entity is unable to permit the select, it transmits the Select.rsp with a non-zero Select Status. The HSMS Select Procedure for the responding entity completes unsuccessfully (no state transitions).
 
-   > 如果响应方不接收，应发送非零的select.rsp。响应方的HSMS的select结束，没有状态转换。
+   > 如果响应方不接收select，应发以响应代码非0的select.rsp的消息进行回复。响应方的HSMS的select结束，没有状态转换。
    >
 
 7.2.3 Simultaneous Select Procedures 双方同时select的过程
 If the subsidiary standards do not restrict the use of the Select, it is possible that both entities simultaneously initiate Select Procedures with identical SessionID’s. In such a case, each entity will accept the other entity's select request by responding with a Select.rsp.
 
-> 如果附属标准不限制select的使用，那么双方可能同时启动具有相同session id的select过程。在这种情况下，双方分别使用select.rsp来响应另一方的select.req
+> 如果附属标准不限制select的使用，那么双方可能同时发起具有相同session id的select过程。在这种情况下，双方分别使用select.rsp来响应另一方。
 
 ![1685692091723](image/SEMIE37文档记录/1685692091723.png)
 
-## 7.3 Data Procedure 数据交换过程
+### 7.3 Data Procedure 数据交换过程
 
 HSMS data messages may be initiated by either entity as long as the connection is in the SELECTED state. Receipt of a data message when not in the SELECTED state will result in a reject procedure (see Section 7.7).
 
@@ -433,25 +433,45 @@ deselect流程用于在TCP/IP连接中断之前提供一个优雅的方式断开
 7.4.1 Initiator Procedure 发起方的流程
 
 1. The initiator of the Deselect procedure sends the Deselect.req message to the responding entity.
+
    > 发起方发送deselect.req消息
-
+   >
 2. If the initiator receives a Deselect.rsp with a Deselect Status of 0, its Deselect procedure terminates successfully. The NOT SELECTED state is entered (see Section 5).
-   > 如果发起方接收到deselect.rsq，且回复为0，则deselect过程成功结束，进入NOT SELECTED状态
 
+   > 如果发起方接收到响应代码为0的deselect.rsq消息，则deselect过程成功结束，进入NOT SELECTED状态
+   >
 3. If the initiator receives a Deselect.rsp with a non-zero Deselect Status, its Deselect procedure terminates unsuccessfully. No state change occurs.
-   > 如果发起方接收到deselect.rsq，但是回复为非0，则deselect结束，但是状态不改变
 
-4. If the T6 timeout expires in the initiator before receipt of a Deselect.rsp, it is considered a communications failure (see "Special Considerations"). 
+   > 如果发起方接收到响应代码非0的deselect.rsq消息，则deselect结束，但是状态不改变
+   >
+4. If the T6 timeout expires in the initiator before receipt of a Deselect.rsp, it is considered a communications failure (see "Special Considerations").
+
    > 如果发起方在T6超时之前还没有收到deselect.rsq，则认为communication failure，应进入NOT CONNECTED状态
+   >
 
 7.4.2   Responding Entity Procedure 响应方的流程
 
 1. The responding entity receives the Deselect.req message.
 
+   > 响应方接收到deselect.req消息
+   >
 2. If the responding entity is in the SELECTED state, and if it is able to permit the Deselect, it responds using the Deselect.rsp with a zero response code. The responding entity's Deselect procedure com- pletes successfully.  The NOT SELECTED state is entered (see Section 5).
 
+   > 如果响应方处于SELECTED状态，且接收deselect，则将回复deselect.rsp，响应代码为0。响应方deselect流程结束，进入NOT SELECTED状态。
+   >
 3. If the responding entity is unable to permit the Deselect, either because it is not in the SELECTED state or because local conditions do not permit the Deselect, it responds using the Deselect.rsp with a non-zero response code. The responding entity's Deselect procedure terminates unsuccessfully.  No state change occurs.
 
-7.4.3   Simultaneous Deselect Procedures
+   > 如果响应方不处于SELECTED状态，或者不接受deselect，亦或者是因为某些其他原因无法deselect，那么就以非0代码的deselect.rsp进行回复。响应方的deselect过程结束，状态不更改。
+   >
+
+7.4.3   Simultaneous Deselect Procedures 双方同时发起deselect的流程
 
 If the subsidiary standards do not restrict the use of the Deselect, it is possible that both entities simultaneously initiate Deselect Procedures with identical SessionID’s. In such a case, each entity will accept the other entity's Deselect request by responding with the deselect.rsp.
+
+> 如果附属标准不限制deselect的使用，那么双方可能同时发起具有相同session id的deselect过程。在这种情况下，双方分别使用deselect.rsp响应另一方。
+
+![1685697715175](image/SEMIE37文档记录/1685697715175.png)
+
+### 7.5 LinkTest Procedure LinkTest流程（心跳包）
+The Linktest is used to determine the operational integrity of TCP/IP and HSMS communications. Its use is valid anytime in the CONNECTED state.
+> linktest用于确认TCP/IP和HSMS通信的完整性。在CONNECTED状态下（无论子状态）都可以使用。
