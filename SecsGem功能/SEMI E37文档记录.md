@@ -52,7 +52,7 @@ control message — An HSMS message used for the management of HSMS sessions bet
 
 > control message：一种用于管理两个实体之间的HSMS会话的HSMS消息。
 
-data message — An HSMS message used for commu- nication of application-speciﬁc data within an HSMS session. A Data Message can be a Primary Message or a Reply Message.
+data message — An HSMS message used for commu- nication of application-speciﬁc data within an HSMS session. A Data Message can be a primary message or a Reply Message.
 
 > data message：用于在HSMS会话中通信应用程序特定数据的HSMS消息。数据消息可以是主消息或回复消息。
 
@@ -119,7 +119,7 @@ TCP/IP — Transmission Control Protocol/Internet Protocol. A method of communic
 
 TLI — Transport Level Interface. One particular API provided by certain implementations of TCP/IP which provides a transport protocol and operating system independent deﬁnition of the use of any Transport Level protocol.
 
-transaction — A Primary Message and its associated Reply message, if required. Also, an HSMS Control Message of the request (.req) type, and its response Control Message (.rsp), if required.
+transaction — A primary message and its associated Reply message, if required. Also, an HSMS Control Message of the request (.req) type, and its response Control Message (.rsp), if required.
 
 unconﬁrmed service (HSMS) — An HSMS service requested by sending a message from the initiator to the responding entity which requires no indication of completion from the responding entity.
 
@@ -204,7 +204,7 @@ The HSMS state machine is illustrated in the diagram below. The behavior describ
 5. 当前状态为SELECTED时，成功完成了deselect或者separate流程，则进入了NOT SELECTED状态
 6. 当前状态为NOT SELECTED状态时，在执行select流程过程中出现了T7超时，则进入NOT CORRECTED状态
 
-## TCP/IP的使用
+## 6. TCP/IP的使用
 
 ### 6.1 TCP/IP API
 
@@ -391,3 +391,67 @@ If the subsidiary standards do not restrict the use of the Select, it is possibl
 > 如果附属标准不限制select的使用，那么双方可能同时启动具有相同session id的select过程。在这种情况下，双方分别使用select.rsp来响应另一方的select.req
 
 ![1685692091723](image/SEMIE37文档记录/1685692091723.png)
+
+## 7.3 Data Procedure 数据交换过程
+
+HSMS data messages may be initiated by either entity as long as the connection is in the SELECTED state. Receipt of a data message when not in the SELECTED state will result in a reject procedure (see Section 7.7).
+
+> 只要HSMS连接处于SELECTED状态，HSMS data message就可以由任何一方发起。如果不处于SELECTED状态时接收到了data message则会触发reject流程。
+
+Data messages may be further deﬁned as part of a data transaction as either a "Primary" or "Reply" data message. In a data transaction, the initiator of the transaction sends a primary message to the responding entity. If the primary message indicates that a reply is expected, a Reply message is sent by the responding entity in response to the Primary.
+
+> data message进一步可以区分为primary message或者secondary message。在data transaction中，事务的发起方向响应方发送主消息。如果primary message要求回复，则响应方会向primary message的发起方发送一条secondary message
+
+The following types of Data Transactions are supported:
+
+> HSMS协议支持如下几种数据事务
+
+1. Primary Message with reply expected and the associated Reply Message.
+   > 要求回复的主消息和相应的次消息
+   >
+2. Primary Message with no reply expected.
+   > 不要求回复的主消息
+   >
+
+![1685694594648](image/SEMIE37文档记录/1685694594648.png)
+
+The speciﬁc procedures for these transactions are determined by the application layer and are subject to other standards (for example, E5 and E30 for GEM equipment using SECS-II encoded messages).
+
+> 事务的具体流程由TCP/IP决定，并遵循其他标准（如使用SECS-II编码消息的GEM设备E5标准和E30标准）
+
+The applicable upper layer standard is identiﬁed by the message type. The type is determined from the speciﬁc format deﬁned in Section 8. The normal type for HSMS messages is SECS-II text. Also refer to "Special Considerations" concerning the T3 Reply Timeout.
+
+> 另外还需要进一步定义消息类型，该类型参考第八章。HSMS消息通常是SECS-II格式的文本。另外data transaction的超时使用T3超时。
+
+### 7.4 Deselect Procedure
+
+The Deselect procedure is used to provide a graceful end to HSMS communication for an entity prior to breaking the TCP/IP connection. HSMS requires that the connection be in the SELECTED state. The procedure is as follows.
+deselect流程用于在TCP/IP连接中断之前提供一个优雅的方式断开HSMS连接。要求HSMS连接处于SELECTED状态。
+
+![1685695937171](image/SEMIE37文档记录/1685695937171.png)
+
+7.4.1 Initiator Procedure 发起方的流程
+
+1. The initiator of the Deselect procedure sends the Deselect.req message to the responding entity.
+   > 发起方发送deselect.req消息
+
+2. If the initiator receives a Deselect.rsp with a Deselect Status of 0, its Deselect procedure terminates successfully. The NOT SELECTED state is entered (see Section 5).
+   > 如果发起方接收到deselect.rsq，且回复为0，则deselect过程成功结束，进入NOT SELECTED状态
+
+3. If the initiator receives a Deselect.rsp with a non-zero Deselect Status, its Deselect procedure terminates unsuccessfully. No state change occurs.
+   > 如果发起方接收到deselect.rsq，但是回复为非0，则deselect结束，但是状态不改变
+
+4. If the T6 timeout expires in the initiator before receipt of a Deselect.rsp, it is considered a communications failure (see "Special Considerations"). 
+   > 如果发起方在T6超时之前还没有收到deselect.rsq，则认为communication failure，应进入NOT CONNECTED状态
+
+7.4.2   Responding Entity Procedure 响应方的流程
+
+1. The responding entity receives the Deselect.req message.
+
+2. If the responding entity is in the SELECTED state, and if it is able to permit the Deselect, it responds using the Deselect.rsp with a zero response code. The responding entity's Deselect procedure com- pletes successfully.  The NOT SELECTED state is entered (see Section 5).
+
+3. If the responding entity is unable to permit the Deselect, either because it is not in the SELECTED state or because local conditions do not permit the Deselect, it responds using the Deselect.rsp with a non-zero response code. The responding entity's Deselect procedure terminates unsuccessfully.  No state change occurs.
+
+7.4.3   Simultaneous Deselect Procedures
+
+If the subsidiary standards do not restrict the use of the Deselect, it is possible that both entities simultaneously initiate Deselect Procedures with identical SessionID’s. In such a case, each entity will accept the other entity's Deselect request by responding with the deselect.rsp.
