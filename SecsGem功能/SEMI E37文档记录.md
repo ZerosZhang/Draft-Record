@@ -164,7 +164,7 @@ Two additional procedures, of a diagnostic nature, are supported in HSMS, which 
    >
 2. Reject. Because HSMS is intended to be extended to protocols other than just SECS-II (by means of subsidiary standards), it is possible that two entities can be connected (due to a conﬁguration error) which use incompatible subsidiary standards. Also, during initial implementation, incorrect message types may be sent, or they may be sent out of order due to software bugs. The reject procedure is used to indicate such an occurrence.
 
-   > 因为 HSMS 的目的是扩展到不仅仅是 SECS-II (通过附属标准)的协议，所以有可能连接两个使用不兼容附属标准的实体(由于配置错误)。此外，在最初的实现过程中，可能会发送不正确的消息类型，或者由于软件错误而发送错误的消息类型。拒绝过程用于指示这种情况。
+   > 因为 HSMS 的目的是扩展到不仅仅是 SECS-II (通过附属标准)的协议，所以有可能连接两个使用不兼容附属标准的实体(由于配置错误)。此外，在最初的实现过程中，可能会发送不正确的消息类型，或者由于软件错误而发送错误的消息类型。reject过程用于指示这种情况。
    >
 
 ### 5.1 HSMS Connection State Diagram
@@ -408,10 +408,9 @@ The following types of Data Transactions are supported:
 
 1. Primary Message with reply expected and the associated Reply Message.
    > 要求回复的主消息和相应的次消息
-   >
+
 2. Primary Message with no reply expected.
    > 不要求回复的主消息
-   >
 
 ![1685694594648](image/SEMIE37文档记录/1685694594648.png)
 
@@ -483,44 +482,79 @@ The Linktest is used to determine the operational integrity of TCP/IP and HSMS c
 7.5.1   Initiator Procedure 发起方流程
 
 1. The initiator of the Linktest procedure sends the Linktest.req message to the responding entity.
+
    > Linktest过程的发起方发送Linktest.req消息
-
+   >
 2. If the initiator receives a Linktest.rsp within the T6 timeout, the Linktest is successfully completed.
-   > 如果发起方在T6超时时间之前收到一个Linktest.rsp，Linktest成功完成
 
+   > 如果发起方在T6超时时间之前收到一个Linktest.rsp，Linktest成功完成
+   >
 3. If the T6 timeout expires in the initiator before receipt of a Linktest.rsp, it is considered a communications failure (see "Special Considerations").
+
    > 如果发起方在T6超时后未收到Linktest.rsp，则触发communication failure，应进入NOT CONNECTED状态
+   >
 
 7.5.2   Responding Entity Procedure 响应方流程
 
 1. The responding entity receives the Linktest.req from the initiator.
-   > 响应方接收到Linktest.req消息
 
+   > 响应方接收到Linktest.req消息
+   >
 2. The responding entity sends a Linktest.rsp.
+
    > 响应方发送一个Linktest.rsp
+   >
 
 ### 7.6   Separate Procedure Separate 流程，单方面强制断开
 
 The Separate procedure is used to abruptly terminate HSMS communication for an entity prior to breaking the TCP/IP Connection. HSMS requires that the connection be in the SELECTED state when using Separate. The responding entity does not send a response and is required to terminate communications regardless of its local state. The procedure is as follows.
+
 > separate流程用于在终端TCP/IP之前突然终止HSMS通信。在使用separate时，要处于SELECTED状态。响应方不发送任何响应，并且需要立即终止通信，不管当前状态是什么。
 
+![1685772268596](image/SEMIE37文档记录/1685772268596.png)
+
 7.6.1   Initiator Procedure
+
 > 发起方流程
 
 1. The initiator of the select procedure sends the Separate.req message to the responding entity. The initiator's Separate procedure completes successfully.The NOT SELECTED state is entered (see Section 5).
    > select过程的发起方发送separate.req消息，separate过程结束，进入NOT SELECTED状态
+   >
 
 7.6.2   Responding Entity Procedure
+
 > 响应方流程
 
 1. The responding entity receives the Separate.req from the initiator.
-   > 响应方接收separate.req消息
 
+   > 响应方接收separate.req消息
+   >
 2. If the responding entity is in the SELECTED state, its Separate procedure completes successfully.
+
    > 如果响应方在SELECTED状态，那么separate成功结束
+   >
 3. If the responding entity is not in the SELECTED state, the Separate.req is ignored.
+
    > 如果响应方不在SELECTED状态，则忽略separate.req消息
+   >
 
 ### 7.7   Reject Procedure reject流程
 
 The Reject procedure is used in response to an otherwise valid HSMS message received in an inappropriate context. Supporting the reject procedure can provide useful diagnostic infor- mation during the development of a distributed appli- cation using HSMS.  The procedure is as follows:
+
+> reject过程用于在非正常状态下响应正常的HSMS消息，这可以提供有用的诊断信息
+
+![1685772283039](image/SEMIE37文档记录/1685772283039.png)
+
+7.7.1   Initiator (Sender of Inappropriate Message) Procedure \
+> 发起方流程（这里的发起方指的是正常HSMS消息的发起方）
+
+1. The initiator of the inappropriate message, upon receiving the Reject.req, takes appropriate action (local entity-speciﬁc).
+   > 发起方在收到reject.req后，应采取适当的操作
+
+7.7.2   Responding Entity Procedure
+> 响应方的流程
+
+1. The entity receiving the inappropriate message responds with a Reject.req message. HSMS requires the reject procedure for the receipt of a data message in the NOT SELECTED state, or the receipt of a message whose SType or PType (see next section: Message Format) is not deﬁned for the entity receiving the message. Subsidiary standards may deﬁne other conditions which require the Reject Proce- dure. In general, receipt of a reject message is an indi- cation of an improperly conﬁgured system or a software programming error.
+
+> 在非正常状态下收到了正常的HSMS消息的响应方，要使用reject.req消息进行回复。当处于NOT SELECTED状态下收到了data message或者当SType或者PType未定义时，HSMS要使用reject流程。通常来说，收到reject消息说明系统错误或者软件编程错误。
