@@ -275,7 +275,7 @@ In Streams 64-127, Functions 1-255.
 
 > 流和函数代码分配也可以用图1所示的图表来表示。
 
-![1685426432380](https://file+.vscode-resource.vscode-cdn.net/c%3A/Users/ZerosZhang/Documents/%E3%80%90%E5%B7%A5%E4%BD%9C%E6%96%87%E4%BB%B6%E5%A4%B9%E3%80%91/%E3%80%90%E5%B8%B8%E7%94%A8%E3%80%91%E8%8D%89%E7%A8%BF%E6%96%87%E6%A1%A3/SecsGem%E5%8A%9F%E8%83%BD/image/SEMIE5%E6%96%87%E6%A1%A3%E8%AE%B0%E5%BD%95/1685426432380.png)
+![1685426432380](./image/SEMIE5%E6%96%87%E6%A1%A3%E8%AE%B0%E5%BD%95/1685426432380.png)
 
 4.3.2 The reserved codes assigned b y this standard are listed in Section 7. It is recognized that there will be user needs beyond the specific definitions given in this standard. In these situations, the streams and functions reserved for user definition should be used subject to the guidelines for minimum compliance outlined in Section 5.
 

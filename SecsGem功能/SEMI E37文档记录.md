@@ -473,5 +473,54 @@ If the subsidiary standards do not restrict the use of the Deselect, it is possi
 ![1685697715175](image/SEMIE37文档记录/1685697715175.png)
 
 ### 7.5 LinkTest Procedure LinkTest流程（心跳包）
+
 The Linktest is used to determine the operational integrity of TCP/IP and HSMS communications. Its use is valid anytime in the CONNECTED state.
+
 > linktest用于确认TCP/IP和HSMS通信的完整性。在CONNECTED状态下（无论子状态）都可以使用。
+
+![1685771222280](image/SEMIE37文档记录/1685771222280.png)
+
+7.5.1   Initiator Procedure 发起方流程
+
+1. The initiator of the Linktest procedure sends the Linktest.req message to the responding entity.
+   > Linktest过程的发起方发送Linktest.req消息
+
+2. If the initiator receives a Linktest.rsp within the T6 timeout, the Linktest is successfully completed.
+   > 如果发起方在T6超时时间之前收到一个Linktest.rsp，Linktest成功完成
+
+3. If the T6 timeout expires in the initiator before receipt of a Linktest.rsp, it is considered a communications failure (see "Special Considerations").
+   > 如果发起方在T6超时后未收到Linktest.rsp，则触发communication failure，应进入NOT CONNECTED状态
+
+7.5.2   Responding Entity Procedure 响应方流程
+
+1. The responding entity receives the Linktest.req from the initiator.
+   > 响应方接收到Linktest.req消息
+
+2. The responding entity sends a Linktest.rsp.
+   > 响应方发送一个Linktest.rsp
+
+### 7.6   Separate Procedure Separate 流程，单方面强制断开
+
+The Separate procedure is used to abruptly terminate HSMS communication for an entity prior to breaking the TCP/IP Connection. HSMS requires that the connection be in the SELECTED state when using Separate. The responding entity does not send a response and is required to terminate communications regardless of its local state. The procedure is as follows.
+> separate流程用于在终端TCP/IP之前突然终止HSMS通信。在使用separate时，要处于SELECTED状态。响应方不发送任何响应，并且需要立即终止通信，不管当前状态是什么。
+
+7.6.1   Initiator Procedure
+> 发起方流程
+
+1. The initiator of the select procedure sends the Separate.req message to the responding entity. The initiator's Separate procedure completes successfully.The NOT SELECTED state is entered (see Section 5).
+   > select过程的发起方发送separate.req消息，separate过程结束，进入NOT SELECTED状态
+
+7.6.2   Responding Entity Procedure
+> 响应方流程
+
+1. The responding entity receives the Separate.req from the initiator.
+   > 响应方接收separate.req消息
+
+2. If the responding entity is in the SELECTED state, its Separate procedure completes successfully.
+   > 如果响应方在SELECTED状态，那么separate成功结束
+3. If the responding entity is not in the SELECTED state, the Separate.req is ignored.
+   > 如果响应方不在SELECTED状态，则忽略separate.req消息
+
+### 7.7   Reject Procedure reject流程
+
+The Reject procedure is used in response to an otherwise valid HSMS message received in an inappropriate context. Supporting the reject procedure can provide useful diagnostic infor- mation during the development of a distributed appli- cation using HSMS.  The procedure is as follows:
