@@ -1,0 +1,477 @@
+# SEMI E37-0298 HIGH-SPEED SECS MESSAGE SERVICES (HSMS) GENERIC SERVICES
+
+## 1. Purpose 目的
+
+HSMS provides a means for independent manufacturers to produce implementations which can be connected and interoperate without requiring speciﬁc knowledge of one another.
+
+> HSMS 为独立制造商提供了一种生产实现的手段，这些实现可以相互连接和互操作，而不需要彼此之间的特定知识。
+
+HSMS is intended as an alternative to SEMI E4 (SECS-I) for applications where higher speed communication is needed or when a simple point-to-point topology is insufﬁcient. SEMI E4 (SECS-I) can still be used in applications where these and other attributes of HSMS are not required.
+
+> HSMS 是 SEMI E4(SECS-I)的替代品，用于需要更高速通信或简单点对点拓扑不足的应用。SEMI E4(SECS-I)仍然可以用于不需要 HSMS 的这些属性和其他属性的应用程序中。
+
+HSMS is also intended as an alternative to SEMI E13 (SECS Message Services) for applications where TCP/ IP is preferred over OSI.
+
+> HSMS 还可以作为 SEMI E13(SECS 消息服务)的替代品，用于 TCP/IP 优于 OSI 的应用程序。
+
+It is intended that HSMS be supplemented by subsidiary standards which further specify details of its use or impose restrictions on its use in particular application domains.
+
+> 目的是通过附属标准对 HSMS 进行补充，进一步详细说明其使用情况，或对其在特定应用领域的使用施加限制。
+
+## 2. Scope 范围
+
+High-Speed SECS Message Services (HSMS) deﬁnes a communication interface suitable for the exchange of messages between computers in a semiconductor factory.
+
+> 高速SECS消息服务(HSMS)定义了一种适合于半导体工厂中计算机之间交换消息的通信接口。
+
+## 3. Referenced Documents
+
+SEMI标准参考了
+SEMI E4  — SEMI Equipment Communication Standard 1 — Message Transport (SECS-I)
+SEMI E5  — SEMI Equipment Communication Standard 2 — Message Content (SECS-II)
+
+## 4. Terminology 术语
+
+API — Application Program Interface. In the case of TCP/IP, a set of programming conventions used by an application program to prepare for or invoke TCP/IP capabilities.
+
+> API：应用程序接口。在TCP/IP下，应用程序使用的一组编程约定，用于调试TCP/IP功能
+
+communication failure — A failure in the communication link resulting from a transition to the NOT CONNECTED state from the SELECTED state. (See Section 9.)
+
+> communication failure：通讯故障，特指从SELECTED状态转换到NOT CONNECTED状态而导致的通讯故障。
+
+conﬁrmed service (HSMS) — An HSMS service requested by sending a message from the initiator to the responding entity which requires that completion of the service be indicated by a response message from the responding entity to the initiator.
+
+> confirmed service(HSMS)：确认服务，表示通过从originator向interpreter发送request消息的HSMS服务，该消息要求interpreter向originator发送响应的消息后才算结束
+
+connection — A logical linkage established on a TCP/ IP LAN between two entities for the purposes of exchanging messages.
+
+> connection：在TCP/IP局域网上两个实体为交换消息而建立的一种逻辑链路。
+
+control message — An HSMS message used for the management of HSMS sessions between two entities.
+
+> control message：一种用于管理两个实体之间的HSMS会话的HSMS消息。
+
+data message — An HSMS message used for commu- nication of application-speciﬁc data within an HSMS session. A Data Message can be a primary message or a Reply Message.
+
+> data message：用于在HSMS会话中通信应用程序特定数据的HSMS消息。数据消息可以是主消息或回复消息。
+
+entity — An application program associated with an endpoint of a TCP/IP connection.
+
+> entity：通过TCP/IP连接的应用程序
+
+header — A 10-byte data element preceding every HSMS message.
+
+> header：在每个HSMS消息之前的一个10字节的数据单元。
+
+initiator (HSMS) — The entity requesting an HSMS service. The initiator requests the service by sending an appropriate HSMS message.
+
+> initiator：请求HSMS服务的应用程序
+
+IP Address — Internet Protocol Address. A logical address which uniquely identiﬁes a particular attach- ment to a TCP/IP network.
+
+> IP Address：Internet协议地址。唯一标识TCP/IP网络特定连接的逻辑地址。
+
+local entity — Relative to a particular end point of a connection, the local entity is that entity associated with that endpoint.
+local entity：本地实体，相对于远程实体。
+
+message — A complete unit of communication in one direction.  An HSMS Message consists of the Message Length, Message Header, and the Message Text. An HSMS Message can be a Data Message or a Control Message.
+
+message length — A 4-byte unsigned integer ﬁeld specifying the length of a message in bytes.
+
+open transaction — A transaction in progress.
+
+port — An endpoint of a TCP/IP connection whose complete network address is speciﬁed by an IP Address and TCP/IP Port number.
+
+port number — (or TCP port number).  The address of a port within an attachment to a TCP/IP network which can serve as an endpoint of a TCP/IP connection.
+
+primary message — An HSMS Data Message with an odd numbered Function.  Also, the ﬁrst message of a data transaction.
+
+published port — A TCP/IP IP Address and Port num- ber associated with a particular entity (server) which that entity intends to use for receiving TCP/IP connec- tion requests. An entity's published port must be known by remote entities intending to initiate connec- tions.
+
+receiver — The HSMS Entity receiving a message.
+
+remote entity — Relative to a particular endpoint of a connection, the remote entity is the entity associated with the opposite endpoint of the connection.
+
+reply — An HSMS Data Message with an even-num- bered function. Also, the appropriate response to a Pri- mary HSMS Data Message.
+
+responding entity (HSMS) — The provider of an HSMS service. The responding entity receives a mes- sage from an initiator requesting the service. In the event of a conﬁrmed service, the responding entity indicates completion of the requested service by send- ing an appropriate HSMS response message to the ini- tiator of the request. In an unconﬁrmed service, the responding entity does not send a response message.
+
+session — A relationship established between two entities for the purpose of exchanging HSMS messages.
+
+session entity — An entity participating in an HSMS session.
+
+session ID — A 16-bit unsigned integer which identi- ﬁes a particular session between particular session entities.
+
+stream (TCP/IP) — A sequence of bytes presented at one end of a TCP/IP connection for delivery to the other end. TCP/IP guarantees that the delivered sequence of bytes matches the presented stream. HSMS subdivides a stream into blocks of contiguous bytes - messages.
+
+T3 — Reply timeout in the HSMS protocol.
+
+T5 — Connect Separation Timeout in the HSMS protocol used to prevent excessive TCP/IP connect activity by providing a minimum time between the breaking, by an entity, of a TCP/IP connection or a failed attempt to establish one, and the attempt, by that same entity, to initiate a new TCP/IP connection.
+
+T6 — Control Timeout in the HSMS protocol which deﬁnes the maximum time an HSMS control transac- tion can remain open before a communications failure is considered to have occurred. A transaction is consid- ered open from the time the initiator sends the required request message until the response message is received.
+
+T7 — Connection Idle Timeout in the HSMS protocol which deﬁnes the maximum amount of time which may transpire between the formation of a TCP/IP con- nection and the use of that connection for HSMS com- munications before a communications failure is considered to have occurred.
+
+T8 —  Network Intercharacter Timeout in the HSMS protocol which deﬁnes the maximum amount of time which may transpire between the receipt of any two successive bytes of a complete HSMS message before a communications failure is considered to have occurred.
+
+TCP/IP — Transmission Control Protocol/Internet Protocol. A method of communications which provides reliable, connection-oriented message exchange between computers within a network.
+
+TLI — Transport Level Interface. One particular API provided by certain implementations of TCP/IP which provides a transport protocol and operating system independent deﬁnition of the use of any Transport Level protocol.
+
+transaction — A primary message and its associated Reply message, if required. Also, an HSMS Control Message of the request (.req) type, and its response Control Message (.rsp), if required.
+
+unconﬁrmed service (HSMS) — An HSMS service requested by sending a message from the initiator to the responding entity which requires no indication of completion from the responding entity.
+
+## 5. HSMS Overview and State Diagram HSMS概述和状态图
+
+High-Speed SECS Message Services (HSMS) deﬁnes a communication interface suitable for the exchange of messages between computers in a semiconductor fac- tory using a TCP/IP environment. HSMS uses TCP/IP stream support, which provides reliable two way simultaneous transmission of streams of contiguous bytes. It can be used as a replacement for SECS-I communication as well as other more advanced communi- cations environments.
+
+> HSMS定义了一种通信接口，基于TCP/IP通讯，用于半导体工厂计算机之间交换信息。
+
+The procedure for HSMS communications parallels the more familiar SECS-I communications it replaces. The following steps are followed for any communica- tions (HSMS or otherwise):
+
+> HSMS通信程序与SECS-I通讯程序类似，按照如下步骤进行通讯：
+
+1. Obtain a communications link between two entities. In SECS-I, this is the RS232 wire physically connecting host and equipment. In HSMS, the link is a TCP/IP connection obtained by the standard TCP/IP connect procedure. Note that the abstract term "entity" is used instead of "host" or "equip- ment." This is because, while HSMS is used for SECS-I replacement, it has more general applica- tions as well. In a SECS-I replacement application, the "host" is an "entity" and the "equipment" is an "entity."
+
+   > 建立两个entity之间的通信链路（局域网）。这里之所以使用术语entity而非equipment或者host，是因为HSMS有更广泛的应用，本质上equipment和host就是一个entity
+   >
+2. Establish the application protocol conventions to be used for exchanging data messages between two entities. For SECS-I, this step is implicit in the fact that semiconductor equipment is physically con- nected on the two ends of the wire: the protocol is SECS-II. In the case of HSMS, the communications link is a dynamically established TCP/IP connection on a physical link which may be shared with many other TCP/IP connections using protocols other than HSMS or connections using non TCP/IP protocols. HSMS adds a message exchange (called the Select procedure) which is used to conﬁrm to both entities that the particular TCP/IP connection is to be used exlusively for HSMS communications.
+
+   > 建立用于在两个entity之间的Socket通讯。除了建立Socket通讯，HSMS还增加了了一个消息交换(称为Select过程) ，用于向两个entity确认特定的socket连接将专门用于 HSMS 通信。
+   >
+3. Exchange Data. This is the normal intended purpose of the communications link. In both SECS-I and HSMS, the procedure is to exchange SECS-II encoded messages for the control of semiconductor equipment and/or processes. Data exchange nor- mally continues until one or both of the entities are taken off-line for equipment-speciﬁc purposes, such as maintenance.
+
+   > 交换数据，这也是建立通信连接的目的。在 SECS-I 和 HSMS 中，程序是交换 SECS-II 编码的消息以控制半导体设备和/或工艺。数据交换正常情况下继续进行，直到一个或两个实体为特定设备目的(如维护)脱机。
+   >
+4. Formally end communications. In SECS-I, there is no formal requirement here; the equipment to be taken off-line stops communicating. In HSMS, a message exchange (either the “bilat eral” Deselect procedure or the “unilateral” separate procedure) is used for both parties to conﬁrm that the TCP/IP connection is no longer needed for HSMS communications.
+
+   > 正式结束通讯。在 SECS-I 中，这里没有正式的要求; 要离线的设备停止通信。在 HSMS 中，双方使用消息交换(“双边”取消选择程序或“单边”分离速率程序)来确认 HSMS 通信不再需要 TCP/IP 连接。
+   >
+5. Break the communications link. In SECS-I, this is done by physically unplugging the host or equip- ment from the communications cable, which only occurs during repair or physical reconﬁguration of the factory network environment. In HSMS, since it uses the dynamic connection environment of TCP/IP, the TCP/IP connection is logically broken via a release or a disconnect procedure without any physical disconnect from the network medium.
+
+   > 切断通讯。在 SECS-I 中，这是通过将主机或设备从通信电缆中物理拔出来完成的，这只在工厂网络环境的维修或物理重新配置期间才会发生。在 HSMS 中，由于使用 TCP/IP 的动态连接环境，所以 TCP/IP 连接通过释放或断开过程在逻辑上中断，而不与网络介质发生任何物理断开。
+   >
+
+Two additional procedures, of a diagnostic nature, are supported in HSMS, which are generally not required by a simple SECS-I link or a SECS-I direct replacement. These follow:
+
+> HSMS 支持另外两个诊断性质的程序，这些程序通常不需要简单的 SECS-I 链接或 SECS-I 直接替换。以下是:
+
+1. Linktest. This procedure provides a simple conﬁrmation of connection integrity.
+
+   > 过程提供连接完整性的简单确认。
+   >
+2. Reject. Because HSMS is intended to be extended to protocols other than just SECS-II (by means of subsidiary standards), it is possible that two entities can be connected (due to a conﬁguration error) which use incompatible subsidiary standards. Also, during initial implementation, incorrect message types may be sent, or they may be sent out of order due to software bugs. The reject procedure is used to indicate such an occurrence.
+
+   > 因为 HSMS 的目的是扩展到不仅仅是 SECS-II (通过附属标准)的协议，所以有可能连接两个使用不兼容附属标准的实体(由于配置错误)。此外，在最初的实现过程中，可能会发送不正确的消息类型，或者由于软件错误而发送错误的消息类型。拒绝过程用于指示这种情况。
+   >
+
+### 5.1 HSMS Connection State Diagram
+
+The HSMS state machine is illustrated in the diagram below. The behavior described in this diagram defines the basic requirements of HSMS: subsidiary standards may further extend these or other states.
+
+> HSMS 状态机如下图所示。此图中描述的行为定义了 HSMS 的基本需求: 附属标准可以进一步扩展这些或其他状态。
+
+![1685514398652](image/SEMIE37文档记录/1685514398652.png)
+
+### 5.2 State Descriptions
+
+5.2.1   NOT CONNECTED — The entity is ready to listen for or initiate TCP/IP connections but either has not yet established any connections or all previously established TCP/IP connections have been terminated.
+
+> 该entity已准备好监听或启动TCP/IP连接。此时要么尚未建立任何连接，要么以前建立的所有TCP/IP连接都已断开。
+
+5.2.2 CONNECTED — A TCP/IP connection has been established. This state has two substates, NOT SELECTED and SELECTED.
+
+> 已建立TCP/IP连接。此状态有两个子节点，NOT SELECTED和SELECTED。
+
+5.2.2.1   NOT SELECTED — A substate of CONNECTED in which no HSMS session has been established or any previously established HSMS session has ended.
+
+> CONNECTED的子状态，该状态下没有建立任何HSMS会话或者之前建立的HSMS会话已经结束。
+
+5.2.2.2   SELECTED — A substate of CONNECTED in which at least one HSMS session has been established. This is the normal "operating" state of HSMS: data messages may be exchanged in this state. It is highlighted by a heavy outline in the state diagram.
+
+> CONNECTED的子状态，至少建立了一个HSMS会话。在这种状态下，数据消息可以进行交换。
+
+### 5.3 状态过渡
+
+![1685523365568](image/SEMIE37文档记录/1685523365568.png)
+
+1. 搭建好entity之间的局域网后，则进入NOT CONNECTED状态
+2. 当前状态为NOT CONNECTED状态时，建立了TCP/IP通讯后，则进入CONNECTED的NOT SELECTED子状态
+3. 当前状态为CONNECTED时（无所谓子状态）断开TCP/IP连接后则进入NOT CONNECTED状态
+4. 当前状态为NOT SELECTED时，成功完成了HSMS的select流程，则进入了SELECTED状态
+5. 当前状态为SELECTED时，成功完成了deselect或者separate流程，则进入了NOT SELECTED状态
+6. 当前状态为NOT SELECTED状态时，在执行select流程过程中出现了T7超时，则进入NOT CORRECTED状态
+
+## 6. TCP/IP的使用
+
+### 6.1 TCP/IP API
+
+The specification of a required TCP Application Program Interface (API) for use in imple- mentations is outside the scope of HSMS. A given HSMS implementation may use any TCP/IP API — sockets, TLI (Transport Layer Interface), etc. — appropriate to the intended hardware and software platform, as long as it provides interoperable TCP/IP streams protocol on the network.
+
+> 本文档并不会介绍怎么去实现TCP/IP的API，而是使用现成的socket
+
+The appendix contains examples of the TCP/IP procedures referenced in this standard and sample scenarios using both the TLI (POSIX standard 1003.12) and the popular BSD socket model for TCP/IP communication.
+
+### 6.2 TCP/IP Network Addressing Conventions TCP/IP网络寻址约定
+
+IP Address
+
+Each physical TCP/IP connection to a given Local Area Network (LAN) must have a unique IP Address. IP Addresses must be assignable at installation time, and an HSMS implementation cannot select a fixed IP Address. A typical IP Address is 192.9.200.1.
+
+> 给定局域网的每个物理连接都必须具有唯一的IP地址。这部分内容在建立TCP/IP连接部分完成，HSMS协议里不包含选择某个IP地址的方法。一个典型的IP地址为192.168.0.1。
+
+TCP Port Numbers
+
+A TCP Port Number can be considered as an extension of the IP Address.
+
+> TCP端口号可以视为IP地址的扩展
+
+HSMS implementations should allow conﬁguring TCP Port to the full range of the TCP/IP implementation used. A typical TCP Port Number is 5000.
+
+> HSMS协议支持TCP/IP协议支持的所有的端口。一个典型的端口为5000。
+
+### 6.3 Establishing a TCP/IP Connection 建立以一个TCP/IP连接
+
+Connect Modes
+
+The procedures for establishing a TCP/IP connection are defined in RFC 793. However, not all the procedures defined by RFC 793 are supported by commonly available APIs. In particular, while RFC 793 permits both entities to initiate the connection simultaneously, this feature is rarely supported in available APIs. Therefore, HSMS restricts an entity to one of the following modes:
+
+> 建立TCP/IP连接的过程在此不赘述，可以参考官方文档。通常TCP/IP分为服务器和客户端，基于这种模式HSMS将entity定义为下面两种模式：
+
+- Passive Mode： The Passive mode is used when the local entity listens for and accepts a connect procedure initiated by the Remote Entity.
+
+  > 当local entity接收由remote entity发起的连接时，使用被动模式（相当于服务器）
+  >
+- Active Mode：The Active mode is used when the connect procedure is initiated by the Local Entity.
+
+  > 当local entity发起连接时，使用主动模式（相当于客户端）
+  >
+
+The appendix provides an example of how an entity may operate alternately in the active and passive modes to achieve greater ﬂexibility in establishing communications.
+
+> 附录提供了一个实体如何以主动和被动方式交替运作的实例，以便在建立通信方面实现更大的灵活性
+
+Passive Mode Connect Procedure 被动模式连接过程
+
+The procedure followed by the Passive Local Entity is defined in RFC 793.  It is summarized as follows:
+
+> 被动模式的local entity连接过程总结如下：
+
+1. Obtain a connection endpoint and bind it to a published port.
+
+   > 建立socket并绑定端口
+   >
+2. Listen for an incoming connect request to the published port from a remote entity.
+
+   > 监听remote entity发起的连接请求
+   >
+3. Upon receipt of a connect request, acknowledge it and indicate acceptance of the connection. At this point, the connect procedure has completed suc- cessfully, and the CONNECTED state is entered (Section 5).
+
+   > 接收到连接请求后，确认该请求并接收连接。此时连接过程已经完成，并进入CONNECTED状态
+   >
+
+These procedures are carried out through the API of the local entity's implementation of TCP/IP. The appendices provide the API-speciﬁc procedures for the above steps using both TLI and BSD.
+
+> 这个过程是通过local entity的TCP/IP协议提供的API执行的。
+
+Note: A failure may occur during the above steps. The reason for failure may be local entity-speciﬁc or may be due to a lack of any connect request after a local entity-speciﬁc timeout. The action to be taken (for example: return to step 1 to retry) is a local entity-spe- ciﬁc issue.
+
+> 备注：上述步骤可能会失败。失败的原因可能是因为local entiry，也可能是因为remote entity。
+
+Note: See Section 9, Special Considerations, for issues relating to multiple connection requests to the same passive mode entity.
+
+> 备注：有关于同一个处于被动模式下的local entity如何处理多个remote entity请求的问题，参考第九章“特殊注意事项”
+
+Active Mode Connect Procedure 主动模式连接过程
+The procedure followed by the Active Local Entity is defined in RFC 793. It is summarized as follows:
+
+> 被动模式的local entity连接过程总结如下：
+
+1. Obtain a connection endpoint.
+
+   > 新建socket
+   >
+2. Initiate a connection to the published port of a passive mode remote entity.
+
+   > 连接被动模式的remote entity的对应端口
+   >
+3. Wait for the receipt of the acknowledge and the acceptance of the connect request from the remote entity. Receipt of the acceptance from the remote entity indicates successful completion of the connect procedure, and the CONNECTED state is entered (Section 5).
+
+   > 等待从remote entity收到确认并且接受了连接请求，进入CONNECTED状态
+   >
+
+These procedures are carried out through the API of the local entity's implementation of TCP/IP. The appendix provides the API-speciﬁc procedures for the above steps using both TLI and BSD.
+
+> 该过程是通过local entity的TCP/IP协议提供的API来执行的。
+
+Note: A failure may occur during the above steps. The reason for failure may be local entity-speciﬁc or may be due to a lack of any accept message after a local entity-speciﬁc timeout. The action to be taken is a local entity-speciﬁc issue. If, however, the local entity intends to retry the connection, it should do so subject to the T5 connect separation timeout (see "Special Considerations").
+
+> 注意：上述步骤可能会失败。如果local remote打算重新连接，应该在T5连接分离超时的情况下重新连接。
+
+### 6.4 Terminating a TCP/IP Connection 中止TCP/IP的连接
+
+Connection termination is the logical inverse of Connection estab- lishment. From the Local Entity's perspective, a TCP/ IP connection may be broken at any time. However, HSMS only permits termination of the connection when the connection is in the NOT SELECTED substate of the CONNECTED state.
+
+> 从local entity的角度来说，TCP/IP的连接随时可能终端。但是HSMS协议只允许在连接处于CONNECTED状态的NOT SELECTED子状态时中止连接
+
+The procedures for termination of a connection are deﬁned in RFC 793. Either entity may initiate termination of the connection. The NOT CONNECTED state is entered, indicating the end of HSMS communications. The appendix illustrates the procedures for both release and disconnect using the TLI and BSD APIs.
+
+> 任何entity都可以启动连接中止。进入NOT CONNECTED状态表示HSMS通信结束。
+
+## 7 HSMS Message Exchange Procedures
+
+HSMS deﬁnes the procedures for all message exchange between entities across the TCP/IP connection established according to the procedures in the previous section. As explained in the overview, once the connection is established, the two entities establish HSMS communications with the Select procedure. Then data messages may be exchanged in either direction at any time. When the entities wish to end HSMS communications, the Deselect or Separate procedure is used to end HSMS communications.
+
+> HSMS协议定义了entity之间所有信息交换的过，前提是建立了TCP/IP连接。一旦TCP/IP连接建立，两个entity将通过select过程建立HSMS通信。然后数据可以在任何时候向任何一方交换。当entity希望结束HSMS通信时，使用deselect过程或者separate过程。
+
+### 7.1 Sending and Receiving HSMS Message
+
+All HSMS procedures involve the exchange of HSMS messages.  These messages are sent and received as TCP/IP streams using the previously established TCP/ IP connection at standard priority.  In particular, the use of "Urgent" data is not supported under HSMS (see RFC 793 for more information on send and receive procedures).
+
+> 所有HSMS操作都涉及到HSMS Message的交换。这些Message通过之前建立的TCP/IP连接进行接收和发送。
+
+The appendix gives examples of sending and receiving HSMS messages using both TLI and BSD socket APIs.
+
+### 7.2 Select Procedure
+
+> select流程
+
+The Select procedure is used to establish HSMS communications on a TCP/IP connection using the Select.req and Select.rsp messages in a control transaction.
+
+> select过程是一个control类型的事务（message 分为 control message 和data message），在TCP/IP连接的基础上，使用Select.req和Select.rsp消息建立HSMS通讯。
+
+![1685689794416](image/SEMIE37文档记录/1685689794416.png)
+
+Although HSMS permits Select at any time in the CONNECTED state, subsidiary standards may further require the connection to be in the NOT SELECTED substate (see "Special Considerations").
+
+> 虽然HSMS在CONNECTED状态的任何时候都允许进行Select，但是一些子标准可能进一步要求处于NOT SELECTED子状态。
+
+7.2.1 Initiator Procedure select发起方的流程
+The procedure followed by the initiator is as follows.
+
+> 初始化流程如下所示：
+
+1. The initiator of the select procedure sends the Select.req message to the responding entity.
+
+   > select流程的发起方将select.rsq消息发给响应方
+   >
+2. If the initiator receives a Select.rsp with a Select Status of 0, The HSMS Select procedure completes successfully and the SELECTED state is entered (see Section 5).
+
+   > 如果后续发起者收到了响应代码为0的select.rsp消息，则select流程结束，并进入SELECTED状态
+   >
+3. If the initiator receives a Select.rsp with a non-zero Select Status, the Select completes unsuccessfully (no state transitions).
+
+   > 如果后续发起者收到了响应代码非0的select.rsp消息，则select流程结束，没有状态转换，表示select失败
+   >
+4. If the T6 timeout expires in the initiator before receipt of a Select.rsp, it is considered a communications failure (see "Special Considerations").
+
+   > 如果在T6超时之前没有接收到select.rsp，则认为是communication failure，此时应转换到NOT CONNECTED状态
+   >
+
+7.2.2 Responding Entity Procedure select响应方的流程
+
+1. The responding entity receives the Select.req.
+
+   > 响应方接收到select.req
+   >
+2. If the responding entity is able to accept the select, it transmits the Select.rsp with a Select Status of 0. The HSMS Select Procedure for the responding entity is successfully completed, and the SELECTED state is entered (see Section 5).
+
+   > 如果响应方决定接受select，会以响应代码为0的select.rsp消息进行回复。此时响应方完成了select过程，并进入SELECTED状态
+   >
+3. If the responding entity is unable to permit the select, it transmits the Select.rsp with a non-zero Select Status. The HSMS Select Procedure for the responding entity completes unsuccessfully (no state transitions).
+
+   > 如果响应方不接收select，应发以响应代码非0的select.rsp的消息进行回复。响应方的HSMS的select结束，没有状态转换。
+   >
+
+7.2.3 Simultaneous Select Procedures 双方同时select的过程
+If the subsidiary standards do not restrict the use of the Select, it is possible that both entities simultaneously initiate Select Procedures with identical SessionID’s. In such a case, each entity will accept the other entity's select request by responding with a Select.rsp.
+
+> 如果附属标准不限制select的使用，那么双方可能同时发起具有相同session id的select过程。在这种情况下，双方分别使用select.rsp来响应另一方。
+
+![1685692091723](image/SEMIE37文档记录/1685692091723.png)
+
+### 7.3 Data Procedure 数据交换过程
+
+HSMS data messages may be initiated by either entity as long as the connection is in the SELECTED state. Receipt of a data message when not in the SELECTED state will result in a reject procedure (see Section 7.7).
+
+> 只要HSMS连接处于SELECTED状态，HSMS data message就可以由任何一方发起。如果不处于SELECTED状态时接收到了data message则会触发reject流程。
+
+Data messages may be further deﬁned as part of a data transaction as either a "Primary" or "Reply" data message. In a data transaction, the initiator of the transaction sends a primary message to the responding entity. If the primary message indicates that a reply is expected, a Reply message is sent by the responding entity in response to the Primary.
+
+> data message进一步可以区分为primary message或者secondary message。在data transaction中，事务的发起方向响应方发送主消息。如果primary message要求回复，则响应方会向primary message的发起方发送一条secondary message
+
+The following types of Data Transactions are supported:
+
+> HSMS协议支持如下几种数据事务
+
+1. Primary Message with reply expected and the associated Reply Message.
+   > 要求回复的主消息和相应的次消息
+   >
+2. Primary Message with no reply expected.
+   > 不要求回复的主消息
+   >
+
+![1685694594648](image/SEMIE37文档记录/1685694594648.png)
+
+The speciﬁc procedures for these transactions are determined by the application layer and are subject to other standards (for example, E5 and E30 for GEM equipment using SECS-II encoded messages).
+
+> 事务的具体流程由TCP/IP决定，并遵循其他标准（如使用SECS-II编码消息的GEM设备E5标准和E30标准）
+
+The applicable upper layer standard is identiﬁed by the message type. The type is determined from the speciﬁc format deﬁned in Section 8. The normal type for HSMS messages is SECS-II text. Also refer to "Special Considerations" concerning the T3 Reply Timeout.
+
+> 另外还需要进一步定义消息类型，该类型参考第八章。HSMS消息通常是SECS-II格式的文本。另外data transaction的超时使用T3超时。
+
+### 7.4 Deselect Procedure
+
+The Deselect procedure is used to provide a graceful end to HSMS communication for an entity prior to breaking the TCP/IP connection. HSMS requires that the connection be in the SELECTED state. The procedure is as follows.
+deselect流程用于在TCP/IP连接中断之前提供一个优雅的方式断开HSMS连接。要求HSMS连接处于SELECTED状态。
+
+![1685695937171](image/SEMIE37文档记录/1685695937171.png)
+
+7.4.1 Initiator Procedure 发起方的流程
+
+1. The initiator of the Deselect procedure sends the Deselect.req message to the responding entity.
+
+   > 发起方发送deselect.req消息
+   >
+2. If the initiator receives a Deselect.rsp with a Deselect Status of 0, its Deselect procedure terminates successfully. The NOT SELECTED state is entered (see Section 5).
+
+   > 如果发起方接收到响应代码为0的deselect.rsq消息，则deselect过程成功结束，进入NOT SELECTED状态
+   >
+3. If the initiator receives a Deselect.rsp with a non-zero Deselect Status, its Deselect procedure terminates unsuccessfully. No state change occurs.
+
+   > 如果发起方接收到响应代码非0的deselect.rsq消息，则deselect结束，但是状态不改变
+   >
+4. If the T6 timeout expires in the initiator before receipt of a Deselect.rsp, it is considered a communications failure (see "Special Considerations").
+
+   > 如果发起方在T6超时之前还没有收到deselect.rsq，则认为communication failure，应进入NOT CONNECTED状态
+   >
+
+7.4.2   Responding Entity Procedure 响应方的流程
+
+1. The responding entity receives the Deselect.req message.
+
+   > 响应方接收到deselect.req消息
+   >
+2. If the responding entity is in the SELECTED state, and if it is able to permit the Deselect, it responds using the Deselect.rsp with a zero response code. The responding entity's Deselect procedure com- pletes successfully.  The NOT SELECTED state is entered (see Section 5).
+
+   > 如果响应方处于SELECTED状态，且接收deselect，则将回复deselect.rsp，响应代码为0。响应方deselect流程结束，进入NOT SELECTED状态。
+   >
+3. If the responding entity is unable to permit the Deselect, either because it is not in the SELECTED state or because local conditions do not permit the Deselect, it responds using the Deselect.rsp with a non-zero response code. The responding entity's Deselect procedure terminates unsuccessfully.  No state change occurs.
+
+   > 如果响应方不处于SELECTED状态，或者不接受deselect，亦或者是因为某些其他原因无法deselect，那么就以非0代码的deselect.rsp进行回复。响应方的deselect过程结束，状态不更改。
+   >
+
+7.4.3   Simultaneous Deselect Procedures 双方同时发起deselect的流程
+
+If the subsidiary standards do not restrict the use of the Deselect, it is possible that both entities simultaneously initiate Deselect Procedures with identical SessionID’s. In such a case, each entity will accept the other entity's Deselect request by responding with the deselect.rsp.
+
+> 如果附属标准不限制deselect的使用，那么双方可能同时发起具有相同session id的deselect过程。在这种情况下，双方分别使用deselect.rsp响应另一方。
+
+![1685697715175](image/SEMIE37文档记录/1685697715175.png)
+
+### 7.5 LinkTest Procedure LinkTest流程（心跳包）
+The Linktest is used to determine the operational integrity of TCP/IP and HSMS communications. Its use is valid anytime in the CONNECTED state.
+> linktest用于确认TCP/IP和HSMS通信的完整性。在CONNECTED状态下（无论子状态）都可以使用。
