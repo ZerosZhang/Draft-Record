@@ -407,10 +407,13 @@ The following types of Data Transactions are supported:
 > HSMS协议支持如下几种数据事务
 
 1. Primary Message with reply expected and the associated Reply Message.
-   > 要求回复的主消息和相应的次消息
 
+   > 要求回复的主消息和相应的次消息
+   >
 2. Primary Message with no reply expected.
+
    > 不要求回复的主消息
+   >
 
 ![1685694594648](image/SEMIE37文档记录/1685694594648.png)
 
@@ -547,14 +550,88 @@ The Reject procedure is used in response to an otherwise valid HSMS message rece
 ![1685772283039](image/SEMIE37文档记录/1685772283039.png)
 
 7.7.1   Initiator (Sender of Inappropriate Message) Procedure \
+
 > 发起方流程（这里的发起方指的是正常HSMS消息的发起方）
 
 1. The initiator of the inappropriate message, upon receiving the Reject.req, takes appropriate action (local entity-speciﬁc).
    > 发起方在收到reject.req后，应采取适当的操作
+   >
 
 7.7.2   Responding Entity Procedure
+
 > 响应方的流程
 
 1. The entity receiving the inappropriate message responds with a Reject.req message. HSMS requires the reject procedure for the receipt of a data message in the NOT SELECTED state, or the receipt of a message whose SType or PType (see next section: Message Format) is not deﬁned for the entity receiving the message. Subsidiary standards may deﬁne other conditions which require the Reject Proce- dure. In general, receipt of a reject message is an indi- cation of an improperly conﬁgured system or a software programming error.
 
 > 在非正常状态下收到了正常的HSMS消息的响应方，要使用reject.req消息进行回复。当处于NOT SELECTED状态下收到了data message或者当SType或者PType未定义时，HSMS要使用reject流程。通常来说，收到reject消息说明系统错误或者软件编程错误。
+
+## 8. HSMS Message Foramt HSMS Message 格式
+
+This section deﬁnes the detailed format of the messages used by the procedures in the previous section.
+> 本章定义了上一章流程中使用的消息的详细格式
+
+### 8.1 General Message Format 基本消息格式
+
+8.1.1 Byte Structure 字节结构
+Within HSMS, a byte contains eight (8) bits.  The bits in a byte are numbered from Bit 7 (most significant) to Bit 0 (least significant).
+> 在HSMS中，一个字节包含8位（bit）。
+
+8.1.2 Message Format 消息格式
+An HSMS Message is transmitted as a single contiguous stream of bytes in the following order:
+> HSMS消息包含以下几个部分
+
+![1685772975141](image/SEMIE37文档记录/1685772975141.png)
+
+8.1.3   Message Length
+Message Length is a four- byte unsigned integer value which specifies the length in bytes of the Message Header plus the Message Text. Message Length is transmitted most significant byte (MSB) first and least significant byte (LSB) last. The minimum possible Message Length is 10 (Header only). The maximum possible Message Length is implementation-speciﬁc.
+> Message Length是一个4字节的无符号整数值，指定了Message Header和Message Text的长度（以字节为单位）。Message Length的最小值为10（仅包含Message Header）。
+
+8.1.4   Message Header
+The Message Header is a ten-byte field. The bytes in the header are numbered from byte 0 (first byte transmitted) to byte 9 (last byte transmitted). The format of the Message Header is as follows:
+> Message Header是一个10字节的字段。Message Header的字节如下所示：
+
+![1685773023759](image/SEMIE37文档记录/1685773023759.png)
+
+The physical byte order is designed to correspond as closely as possible to the SECS-I header.
+> 物理字节顺序被设计为尽可能和SECS-I Message Header类似。
+
+8.1.4.1   Session ID
+Session ID is a 16-bit unsigned integer value, which occupies bytes 0 and 1 of the header (byte 0 is MSB, 1 is LSB). Its purpose is to pro- vide an association by reference between control messages (particularly Select and Deselect) and subsequent data messages.  It is the role of HSMS sub- sidiary standards to specify this association further.
+> Session ID是一个16位的无符号整数值，占用前两个字节。目的是为了提供control message和后续data message之间的关联。
+
+8.1.4.2   Header Byte 2
+This header byte is used in different ways for different HSMS messages. For Con- trol Messages (see SType, below) it contains zero or a status code. For a Data Message whose PType (see below) = 0, it contains the W-Bit and SECS Stream. For a Data Message with PType not equal to 0, see "Special Considerations."
+> 该字节不同的HSMS消息有所不同。对于control message，包含0或者状态代码。对于PType = 0的data message，他包含W-bit和stream编号。
+
+8.1.4.3   Header Byte 3
+This header byte is used in different ways for different HSMS messages. For Con- trol Messages, it contains zero or a status code. For a Data Message whose PType (see below) = 0, it con- tains the SECS Function. For a Data Message with PType not equal to 0, see "Special Considerations."
+> 该字节不同的HSMS消息有所不同，对于control message，包含0或者状态代码。对于PType = 0的data message，它包含function编号。
+
+8.1.4.4   PType
+PType (Presentation Type) is an 8- bit unsigned integer value which occupies byte 4 of the header. PType is intended as an enumerated type defining the presentation layer message type:  how the Message Header and Message Text are encoded. Only PType = 0 is defined by HSMS to mean SECS-II mes- sage encoding. For non-zero PType values, see "Spe- cial Considerations."
+> PType(Presentation Type)是一个8位无符号整数值，占用Message Header的第四个字节，PType定义了消息的编码。对于SECS-II消息，PType = 0。
+
+![1685774287829](image/SEMIE37文档记录/1685774287829.png)
+
+8.1.4.5   SType
+
+SType (Session Type) is a one-byte unsigned integer value which occupies header byte 5. SType is an enumerated type identifying whether this message is an HSMS Data Message (value = 0) or one of the HSMS Control Messages (other). Those values not explicitly deﬁned in the table are addressed in "Special Considerations."
+
+> SType(Session Type)是一个8位无符号整数值，占用Message Header的第五个字节。SType是一个枚举类型，用于标识HSMS消息是data message还是control message。
+
+![1685774420440](image/SEMIE37文档记录/1685774420440.png)
+
+8.1.4.6  System Bytes
+System Bytes is a four-byte field occupying header bytes 6-9. System Bytes is used to identify a transaction uniquely among the set of open transactions.
+> System Byte是一个4字节的字段，占用Message Header的6-9个字节。System Bytes用于在所有打开的transaction中标识唯一的transaction
+
+Uniqueness — The System Bytes of a Primary Data Message, Select.req, Deselect.req, or Linktest.req message must be unique from those of all other currently open transactions initiated from the same end of the connection. They must also be unique from those of the most recently completed transaction.
+> 唯一性——在同一端发起的Primary Data Message，select.req, deselect.req或者linktest.req消息的System Bytes必须保持唯一。
+
+Reply Message — The System Bytes of a Reply Data Message must be the same as those of the corresponding Pri- mary Message. The System Bytes of a Sel-ect.rsp, Deselect.rsp, or Linktest.rsp must be the same as those of the respective ".req" message.
+
+### 8.2   HSMS Message Formats by Type
+
+The specific interpretation of the header bytes in an HSMS message is
+dependent on the specific HSMS message type as defined by the value of the SType field. The complete set of
+messages defined is summarized in the table below, shown for PType = 0 (SECS-II message format).
