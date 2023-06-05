@@ -978,9 +978,11 @@ Each open transaction for which a Reply is expected requires a separate reply ti
 
 The SECS-II standard defines error messages S9F1, S9F3, S9F5, S9F7, S9F9, and S9F11, with message text containing the SECS-II Data Items MHEAD or SHEAD, which are defined to contain a 10-byte SECS-I block header.
 
-> SECS-II标准定义了错误消息S9F1，S9F3，S9F5，S9F7，S9F9，S9F11
+> SECS-II标准定义了错误消息S9F1，S9F3，S9F5，S9F7，S9F9，S9F11。这些消息的Message Text包含SECS-II数据项MHead或者SHead。
 
 When using SECS-II with HSMS, MHEAD and SHEAD should contain the ten bytes of the HSMS Message Header.
+
+> 当HSMS使用SECS-II消息是，MHead和SHead应该包含10个字节的HSMS Message Header。
 
 ## 10 HSMS Documentation
 
