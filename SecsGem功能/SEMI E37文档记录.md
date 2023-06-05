@@ -681,6 +681,7 @@ Note: Some Data Messages consist of header only, with no text.
 8.2.2 SType = 1：Select.req
 
 An HSMS message with SType 1 is a "Select Request" Control Message, which is used by the initiator of the procedure for establishing HSMS communications. The message format is as follows:
+
 > SType = 1的HSMS消息表示select.req控制消息，该消息用于建立HSMS通信。消息的格式如下所示：
 
 1. Message Length is always 10 (Header only).
@@ -703,6 +704,8 @@ An HSMS message with SType 1 is a "Select Request" Control Message, which is use
 8.2.3 SType = 2：Select.rsp
 An HSMS message with SType 2 is a "Select Response" Control Message, used as the response to a Select.req Control message in the procedure for establishing HSMS communications. The message format is as follows:
 
+> SType = 2的消息是select.rsp控制消息，用于建立HSMS通信过程中对select.req控制消息进行响应
+
 1. Message Length is always 10 (Header only).
 2. The HSMS Message Header is as follows:
 
@@ -719,7 +722,10 @@ An HSMS message with SType 2 is a "Select Response" Control Message, used as the
 - System Bytes -- Equal to value of System Bytes in the corresponding Select.req.
 
 8.2.4 SType=3: Deselect.req
+
 An HSMS message with SType 3 is a "Deselect Request" Control Message, used by the initiator of the Select procedure for ending HSMS communication. The message format is as follows:
+
+> SType = 3的消息是deselect.req控制消息，由select过程的发起者结束HSMS通信。
 
 1. Message Length is always 10 (Header only).
 2. The HSMS Message Header is as follows:
@@ -731,7 +737,11 @@ An HSMS message with SType 3 is a "Deselect Request" Control Message, used by th
 - SType = 3
 - System Bytes — A unique value among open transactions.
 
-8.2.5 SType=4: Deselect.rsp — An HSMS message with SType 4 is a "Deselect Response" Control Message, used as the response to a Deselect.req Control message in the Deselect procedure for ending HSMS communications. The message format is as follows:
+8.2.5 SType=4: Deselect.rsp
+
+An HSMS message with SType 4 is a "Deselect Response" Control Message, used as the response to a Deselect.req Control message in the Deselect procedure for ending HSMS communications. The message format is as follows:
+
+> SType = 4的HSMS消息是deselect.rsp的控制消息，用于deselect.req控制消息的响应。信息格式如下所示：
 
 1. Message Length is always 10 (Header only).
 2. The HSMS Message Header is as follows:
@@ -746,7 +756,11 @@ An HSMS message with SType 3 is a "Deselect Request" Control Message, used by th
 - SType = 4
 - System Bytes — Equal to System Bytes in corresponding Deselect.req.
 
-8.2.6 SType=5: Linktest.req — An HSMS message with SType 5 is a "Linktest Request" Control Message. It is used to verify the integrity of the HSMS Connection, or as a periodic heartbeat. The message format is as follows:
+8.2.6 SType=5: Linktest.req
+
+An HSMS message with SType 5 is a "Linktest Request" Control Message. It is used to verify the integrity of the HSMS Connection, or as a periodic heartbeat. The message format is as follows:
+
+> SType = 5的HSMS消息是linktest.req的控制消息，用于验证HSMS连接的完整性，或者作为心跳包。消息格式如下所示：
 
 1. Message Length is always 10 (Header only).
 2. The HSMS Message Header is as follows:
@@ -758,7 +772,11 @@ An HSMS message with SType 3 is a "Deselect Request" Control Message, used by th
 - SType = 5
 - System Bytes — A unique value among open transactions.
 
-8.2.7   SType=6: Linktest.rsp — An HSMS message with SType 6 is a "Linktest Response" Control Message, used as the response to a Linktest.req Control message in the Linktest Procedure. The message format is as follows:
+8.2.7   SType=6: Linktest.rsp
+
+An HSMS message with SType 6 is a "Linktest Response" Control Message, used as the response to a Linktest.req Control message in the Linktest Procedure. The message format is as follows:
+
+> SType = 6的HSMS消息是linktest.rsp的控制消息，用于在linktest过程中linktest.req控制消息的响应。消息格式如下所示：
 
 1. Message Length is always 10 (Header only).
 2. The HSMS Message Header is as follows:
@@ -773,9 +791,13 @@ An HSMS message with SType 3 is a "Deselect Request" Control Message, used by th
 8.2.8   SType=7: Reject.req
 
 An HSMS message with SType 7 is used in response to any valid HSMS message received which is not supported by the receiver of the message or which is not valid at the time. It is intended for dealing with attempts to use subsidiary standards or user-defined extensions which are not supported by the receiver (for example, SType equal to any value not defined in this standard). It must be used when an entity receives a control message which is a response (even numbered SType) for which there was no corresponding open transaction.
+
+> 对于SType = 7的HSMS消息可以用于响应任何有效的HSMS消息，该有效的HSMS消息可能是由于响应方不支持，或者在当时的状态下无效。当entity接受到作为响应的控制消息（偶数编号的SType）而无法打开对应的事务时，使用reject.rsp消息。
+
 The HSMS Message Header is as follows:
 
 - SessionID — equal to the value of the Session ID in the message being rejected.
+  > 等于被拒绝消息的Session ID
 - Header Byte 2 — For ReasonCode = PType Not Supported, equal to the PType in the message being rejected. Otherwise equal to the value of the SType in the message being rejected.
   > 当PType不支持时，相应代码为被拒绝消息的PType（SECS-II消息中PType非0时不支持）。否则该值表示被拒绝消息的SType。
 - Header Byte 3 — reason code (always non-zero)
