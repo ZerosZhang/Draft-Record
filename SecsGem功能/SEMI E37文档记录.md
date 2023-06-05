@@ -561,9 +561,11 @@ The Reject procedure is used in response to an otherwise valid HSMS message rece
 
 > 响应方的流程
 
-1. The entity receiving the inappropriate message responds with a Reject.req message. HSMS requires the reject procedure for the receipt of a data message in the NOT SELECTED state, or the receipt of a message whose SType or PType (see next section: Message Format) is not deﬁned for the entity receiving the message. Subsidiary standards may deﬁne other conditions which require the Reject Proce- dure. In general, receipt of a reject message is an indi- cation of an improperly conﬁgured system or a software programming error.
+1. The entity receiving the inappropriate message responds with a Reject.req message.
+   > 在非正常状态下收到了正常的HSMS消息的响应方，要使用reject.req消息进行回复。
 
-> 在非正常状态下收到了正常的HSMS消息的响应方，要使用reject.req消息进行回复。当处于NOT SELECTED状态下收到了data message或者当SType或者PType未定义时，HSMS要使用reject流程。通常来说，收到reject消息说明系统错误或者软件编程错误。
+HSMS requires the reject procedure for the receipt of a data message in the NOT SELECTED state, or the receipt of a message whose SType or PType (see next section: Message Format) is not deﬁned for the entity receiving the message. Subsidiary standards may deﬁne other conditions which require the Reject Proce- dure. In general, receipt of a reject message is an indi- cation of an improperly conﬁgured system or a software programming error.
+> 当处于NOT SELECTED状态下收到了data message或者当SType或者PType未定义时，HSMS要使用reject流程。通常来说，收到reject消息说明系统错误或者软件编程错误。
 
 ## 8. HSMS Message Foramt HSMS Message 格式
 
@@ -595,7 +597,7 @@ The Message Header is a ten-byte field. The bytes in the header are numbered fro
 The physical byte order is designed to correspond as closely as possible to the SECS-I header.
 > 物理字节顺序被设计为尽可能和SECS-I Message Header类似。
 
-8.1.4.1   Session ID
+8.1.4.1 Session ID
 Session ID is a 16-bit unsigned integer value, which occupies bytes 0 and 1 of the header (byte 0 is MSB, 1 is LSB). Its purpose is to pro- vide an association by reference between control messages (particularly Select and Deselect) and subsequent data messages.  It is the role of HSMS sub- sidiary standards to specify this association further.
 > Session ID是一个16位的无符号整数值，占用前两个字节。目的是为了提供control message和后续data message之间的关联。
 
@@ -631,8 +633,27 @@ Uniqueness — The System Bytes of a Primary Data Message, Select.req, Deselect.
 Reply Message — The System Bytes of a Reply Data Message must be the same as those of the corresponding Primary Message. The System Bytes of a Select.rsp, Deselect.rsp, or Linktest.rsp must be the same as those of the respective ".req" message.
 > 回复消息 —— data message的系统字节必须和相应的主消息的系统字节相同。select.rsp，deselect.rsp和linktest.rsp的系统字节必须和各自的req消息相同。
 
-### 8.2   HSMS Message Formats by Type
+### 8.2 HSMS Message Formats by Type 按类型分类的HSMS消息格式
 
-The specific interpretation of the header bytes in an HSMS message is
-dependent on the specific HSMS message type as defined by the value of the SType field. The complete set of
-messages defined is summarized in the table below, shown for PType = 0 (SECS-II message format).
+The specific interpretation of the header bytes in an HSMS message is dependent on the specific HSMS message type as defined by the value of the SType field. The complete set of messages defined is summarized in the table below, shown for PType = 0 (SECS-II message format).
+> HSMS Message Header 中具体字节的意义取决于SType字段的值。下表总结了在PType = 0时的消息集合的定义
+![1685928034115](image/SEMIE37文档记录/1685928034115.png)
+![1685928049636](image/SEMIE37文档记录/1685928049636.png)
+> *的意思是由附属标准进一步规范
+
+8.2.1 SType = 0:Data Message
+An HSMS message with SType = 0 is used by the HSMS Data procedure to send a Data message, either Primary or Reply. The message format is as follows:
+> 一个SType = 0的HSMS消息用于在数据流程中发送data message，可以是主消息或者次消息。消息格式如下所示：
+HSMS Message Length is always 10 (the length of the header alone) or greater.
+> HSMS Message Length 的大于等于10。（仅包含消息头时，为10）
+The HSMS Message Header is as follows:
+> HSMS Message Header 如下所示：
+
+- Session ID — As described above. Speciﬁc value subject to subsidiary standards.
+   > Session ID —— 描述参考8.1.4.1 Session ID，具体的值依赖于附属标准
+- Header Byte 2 — For messages with PType value = 0 (SECS-II), header byte 2 is formatted as shown below.
+  > Header Byte 2 —— 对于SECS-II消息（PType = 0），header byte 2的格式如下所示：
+  ![1685928530203](image/SEMIE37文档记录/1685928530203.png)
+  
+  The most signiﬁcant bit (bit 7) of Header Byte 2 is the W-Bit. In a Primary Message, the W-Bit indicates whether the Primary Message expects a Reply message. A Primary Message which expects a Reply should set the W-Bit to 1. A Primary Message which does not expect a Reply should set the W-Bit to 0. A Reply Message should always set the W-Bit to 0. The low-order 7 bits (bits 6-0) of Header Byte 2 contain the SECS Stream for the message. The Stream is a 7-bit unsigned integer value, which identiﬁes a major topic of the message, and its use is deﬁned within SEMI E5 (SECS-II).
+  > header byte 2 中最重要的一位(第七位)是W-bit。在主消息中W-bit用于表示主消息是否需要回复。需要回复的主消息将W-bit设置为1，否则设置为0。次消息中W-bit永远为0。header byte 2的低7位（6-0）表示消息的SECS消息的stream编号。stream是一个7位的无符号整数值，用于表示消息的主题，具体参考SEMI E5。
