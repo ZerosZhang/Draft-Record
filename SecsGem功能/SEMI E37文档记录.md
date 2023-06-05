@@ -814,3 +814,161 @@ The HSMS Message Header is as follows:
 
 An HSMS message with SType = 9 is used to terminate HSMS communications immediately. With the exception of the SType value, it is identical to the Deselect.req message. Its purpose is to end HSMS communications immediately and without exception. No response is defined.
 > SType = 9的HSMS消息用于立即中止HSMS通信。除了SType值外，和Deselect.req消息完全相同，用于单方面的立即中止HSMS通信。该消息不需要响应。
+
+## 第九章 特殊情况
+
+### 9.1 General Considerations
+
+> 一般情况
+
+Communications Failures
+
+If a communications failure is detected, the entity should terminate the TCP/IP connection. Upon termination of the connection, the entity may, at this point, attempt to reestablish communications.
+> 如果检测到communication failure，则该entity应中止TCP/IP连接，进入NOT CONNECTED状态。连接终端后，该entity可以在此时尝试重新建立通信。
+
+### 9.2 TCP/IP Considerations
+
+> TCP/IP情况
+
+Connect Separation Time(T5)
+> 连接分离时间（T5）
+
+The connect procedures initiate some network activity. Frequent use of the active mode connect procedure to the IP Address and Port Number of an entity not yet ready to accept connections can be hostile to TCP/IP operations. The passive mode does not generate network activity and is not considered hostile to the network, although it may affect local application performance. An Entity initiating a connection in the active mode should limit its use of the connect procedure in a man- ner that is equivalent to the procedure described here.
+
+> 连接过程启动一些网络活动。频繁使用主动模式连接到还没有准备好接受的IP地址和端口对TCP/IP操作有影响。被动模式不会产生网络活动，也不会认为对网络有影响，尽管他可能会影响本地程序的性能。
+
+After an active connect procedure terminates by any means (successfully or unsuccessfully), the Entity should not initiate another active connect procedure (for the same Remote Entity) until the T5 Connect Separation Time has elapsed. The separation of connect operations will be the sum of the T5 Connect Sep- aration Time interval, plus the duration of the connect operation itself.
+> 在一个主动连接过程通过任何方式中断后，某entity不应该立即启动另一个主动连接，直到T5 Connect Separate Time过去。连接操作的间隔，应该是T5连接间隔时间加上连接操作本身的时间的总和。
+
+NOT SELECTED Timeout(T7)
+> NOT SELECTED 超时（T7）
+
+Entry into the NOT SELECTED state is achieved either by state transition #2 (establishment of a TCP/IP connection). There is a time limit on how long an entity is required to remain in the NOT SELECTED state before either entering the SELECTED state or by returning to the NOT CONNECTED state.
+> 可以通过#2状态转换（建立TCP/IP连接）进入NOT SELECTED状态。在entity进入SELECTED状态或者返回NOT CONNECTED状态有一个时间限制，因此定义了T7。
+
+Some entities, particularly those unable to accept more than a single TCP/IP connection, may be impaired in their operation by remaining in their NOT SELECTED state as they will be unavailable for communications with other entities. Such entities shall disconnect the TCP/IP connection (State Transition Event #3) if com- munication remains in the NOT SELECTED state for longer than the T7 timeout period.
+> 一些实体，尤其是那些无法接受多个TCP/IP连接的实体，可能会因为保持NOT SELECTED状态而无法和其他entity进行通信。如果通信保持在NOT SELECTED状态的时间超过T7，则该entity应断开TCP/IP连接（#3状态转换）
+
+Network Intercharacter Timeout (T8)
+> 网络字符间超时（T8）
+
+Because TCP/IP is a stream rather than a message pro- tocol, it is possible that bytes which are all part of a single HSMS message may be transmitted in separate TCP/IP messages without any violation of the TCP/IP protocol. Since it is possible that these separate mes- sages may be separated by a substantial period of time, the Network Intercharacter Timeout (T8) is defined.
+> 因为TCP/IP是一个流而不是一个消息协议，所以单个HSMS消息的一部分字节可能在单独的TCP/IP消息中传输，而不会违反TCP/IP协议。由于这些单独的消息可能相隔一段相当长的时间，因此定义了网络字符间超时（T8）
+
+T8 is similar in purpose to the SECS-I T1 timer except that the communications issues which necessitate T8 are not entirely in the control of the sender of the mes- sage. Therefore, it is deﬁned only in terms of the receiver of the message. In particular, if after receipt of a partial message, the T8 timeout period expires prior to receipt of the complete message, the receiving entity shall consider such case as a communications failure, as deﬁned above.
+> T8在墓地上与SECS-I的T1计时器相同，应由消息的响应方定义。如果在收到部分消息后，T8超时时间内没有收到完整消息，响应方应视为communication failure。
+
+Multiple Connection Requests Directed to a Single Published Port
+
+> 单个port的多个连接请求
+
+Once a passive entity has accepted a connection on its published port, TCP/IP permits (though does not require) the entity to listen for and accept additional connections directed to the same published port.
+
+> 一旦被动模式的entity在开发的port上接受了一个连接，TCP/IP就允许（但不要求）该entity监听并接受同一端口的其他连接。
+
+HSMS permits (though does not require) entities to operate in this manner. However, for the purposes of HSMS compliance, each connection so formed must exhibit the behavior deﬁned in the HSMS state dia- gram as if it were completely independent of any other connection to the same published port.
+
+> HSMS允许（但不要求）entity以这种方式要求。然而为了遵循HSMS协议，这样建立的连接必须满足HSMS状态图中定义的行为，且完全独立于该端口的其他连接。
+
+Rejection of Additional Connection Requests by a Passive Mode Entity
+
+> 被动模式的entity拒绝额外的连接请求
+
+A passive mode entity unable to service more than a single TCP/IP connec- tion for HSMS communications will follow one of these three procedures with respect to additional connection requests.
+
+> 无法接受多个TCP/IP连接请求的被动模式的entity，将按照以下的方式处理额外请求
+
+1. Accept the connection, but always respond to any subsequent HSMS select procedures with the Com- munication Already Active response code. For the purpose of the HSMS State Diagram, the connect procedure terminates successfully (enters CONNECTED state), but HSMS communications are never established (remain in NOT SELECTED substate). This is the preferred option in that it can provide the most information to the remote entity as to why the connection is refused (see HSMS Select Procedure), but places an addition imple- mentation requirement on the local entity.
+   > 接受连接，但总是用"通信已激活"响应代码响应后续所有的select过程。在HSMS状态图中，连接过程成功结束（进入CONNECTED状态），但HSMS通信未建立（保持在NOT SELECTED子状态）。这是首选项，因为它可以向remote entity提供连接被拒绝最多原因，但是对local entity提出了额外的实现要求。
+
+2. Actively reject the connection request. This can be done in a TLI implementation using the t_snddis procedure. This will cause the connect procedure in the remote entity to terminate unsuccessfully. This option may not be available to all implementations because some API’s, notably some implementa- tions of BSD Sockets, do not provide for initiating an active reject. Note, however, that all TCP/IP implementations, including BSD Sockets, properly respond to an active reject from the remote entity.
+   > 主动拒绝连接请求。这可以使用t_snddis过程中的TLI实现。这会导致remote entity的连接过程非正常中断。这种方式不使用于所有的情况，因为一些TCP/IP的API不提供主动拒绝的操作。但是所有TCP/IP都响应来自remote entity的主动拒绝。
+
+3. Refuse to listen for or accept the connect request. No action is taken in the local entity: the remote entity's connect procedure will eventually time out. This option is permitted, but not recommended, as it can cause considerable delay on the part of the remote entity.  However, it may be the only alterna- tive available to implementations with network resource limitations.
+   > 拒绝监听或者接受连接请求。在local entity中不采取任何操作，remote entity的连接过程最终将超时。这个选型是允许的但是不推荐使用，因为他可能会导致remote entity有相当大的延迟。对于网络资源有限的实体来说，这可能是唯一可用的替代方案。
+
+The documentation of the passive local entity shall indicate which means it uses to refuse connections.
+> 被动模式的local entity的文档要写明要使用何种方式拒绝连接。
+
+### 9.3 HSMS特有的情况
+
+9.3.1 Control Transactions T6 Control Timeout
+
+> 控制事务T6控制超时
+
+A number of the control messages are part of procedures which require a message exchange or transaction: <xx>.req from the initiator of the control service, fol- lowed by an <xx>.rsp from the receiver of the <xx>.req in response to it. A control transaction is considered open from the time the <xx>.req request is sent until the time the <xx>.rsp is received.
+
+> 许多控制消息是信息交换和事务前提一部分：由发起者的req消息，和响应者的rsp消息组成。控制事务是从发送req消息开始，收到rsp消息结束。
+
+The time a control transaction may remain open is sub- ject to the T6 control transaction timeout. Upon initia- tion of a control transaction, the local entity should set a timer whose duration is equal to the T6 timeout value. If the transaction is properly closed prior to the expiration of the timer, the timer should be canceled. If the timer expires prior to the proper closing of the transaction, the transaction shall be considered closed by the initiator and considered an HSMS communica- tions failure.
+
+> 控制事务保持打开的时间受限于T6事务超时。在控制事务启动的时候，local entity要设置一个等于T6的计时器。如果在计时器到期之前正确关闭了事务，则应该取消计时器。如果在计时器在事务正确关闭之前结束，则事务的发起者认为事务已关闭，并认为是HSMS通信失败。
+
+9.3.2   Procedures and "Stateless" Transactions
+
+> 流程和无状态事务
+
+Most of the HSMS control procedures involve a trans- action: the initiator sends a request message to the responding entity and waits for a response message. The responding entity receives the initiator's request message and sends a reply.
+
+> 大多数HSMS控制过程涉及到一个事务：发起者向响应者发送request消息并等待response消息，响应者接受发起者的request消息并发送response消息。
+
+Note that such transactions are "stateless" in the following sense: while the initiator of a transaction is waiting for a response, it may receive a message other than that response, and this message may be any message valid for the state the initiator was in at the time the original transaction was initiated. For example, the two entities may simultaneously initiate transactions. As a result, no states for "TRANSACTION OPEN" or "TRANSACTION NOT OPEN" are reﬂected in the HSMS state machine. The use of such state informa- tion in an implementation is strictly a local entity-speciﬁc issue.
+
+> 请注意，这样的事务在以下场景下是无意义的：当事务的发起者正在等待响应时，他可能会收到与该响应不同的消息，并且该消息可能是发起者在之前事务的任何有效消息。例如，两个entity可能同时发起事务。因此HSMS状态机没有响应"Transaction Open"或者"Transaction Not Open"的状态，实际情况下这是一个特定的问题。
+
+9.3.3   Alternative Message Types and Header Byte Values
+
+> 可选消息类型和Message Header字节值
+
+The HSMS standard does not completely define all possible enumerated values of either the PType or SType field. Further, Header bytes 2 and 3 have a format determined by the PType for messages whose SType is equal to 0, but is otherwise specified for all other SType values. The message text format- ting is defined by the PType as well, but only for data messages.
+
+> HSMS协议没有完全定义PType和SType可能的枚举值。此外，对于data message，PType = 0确定了Message Header 2，Message Header 3，以及Message Text的格式。
+
+Subsidiary standards must be consistent with this con- vention. In particular, for SType = 0, subsidiary stan- dards deﬁning PType values not equal to 0 may specify both the message text encoding and the interpretation of header bytes 2 and 3. For STypes not equal to 0 but otherwise speciﬁed in this standard, PType must = 0, and no message text may be transmitted. For STypes deﬁned in subsidiary standards, the meaning of header bytes 2 and 3 may be speciﬁed on a per SType value basis, and these STypes may optionally deﬁne message text as long as the PType ﬁeld is used in a manner con- sistent with the preceding paragraph.
+
+> 附属标准必须和HSMS协议一致。特别的，对于data message，PType不等于0的附属标准可以同时指定Message Text编码和Message Header 2和3的解释。对于不等于0但是本标准另有规定的类型，则PType必须为0，不允许发送消息文本。对于附属标准中定义的类型，Message Header 2和3的含义可以在每个SType值的基础上进行定义，只要PType字段的使用方式与之前一致。
+
+### 9.4   SECS-II Considerations
+
+> SECS-II情况
+
+The SECS-II standard (SEMI E5) makes certain references to SECS-I (SEMI E4). This section addresses issues specific to SECS-II when HSMS is used to transport SECS-II messages.
+
+9.4.1   Reply Matching
+
+When a Sender sends a Primary Message with W-Bit 1 (Reply Expected), the Sender should expect a  Reply message whose header meets the following requirements.
+
+The SessionID of the Reply must match the SessionID of the Primary Message.
+
+The Stream of the Reply must match the Stream of the Primary Message.
+
+The Function of the Reply must be one greater than the Function of the Primary Message, or else the Function of the Reply must be 0 (Function Zero Reply).
+
+The System Bytes of the Reply must match the System Bytes of the Primary Message.
+
+9.4.1.1   T3 Reply Timeout
+
+The T3 reply timeout is a limit on the length of time that the HSMS message protocol is willing to wait for a Reply message.
+
+After sending a Primary Message with W-bit 1 (Reply Expected), the sender must begin a reply timer, initialized to the T3 value. If the sender does not receive the Reply Message before the reply timer expires, then a T3 Timeout Error has occurred. The sender should close the transaction and no longer expect the Reply Message.
+
+Each open transaction for which a Reply is expected requires a separate reply timer.
+
+9.4.2   Stream 9 Messages — The SECS-II standard defines error messages S9F1, S9F3, S9F5, S9F7, S9F9, and S9F11, with message text containing the SECS-II Data Items MHEAD or SHEAD, which are defined to contain a 10-byte SECS-I block header.
+
+When using SECS-II with HSMS, MHEAD and SHEAD should contain the ten bytes of the HSMS Message Header.
+
+## 10 HSMS Documentation
+
+An HSMS implementation is required to document the following information:
+
+1. Method for setting protocol parameters (see Section 10.1).
+2. Range allowed and resolution for each parameter.
+3. The option used for refusing incoming connection requests if the implementation uses the passive mode for TCP/IP connection establishment.
+4. Maximum message size which can be received.
+5. Maximum expected size of messages sent.
+6. Maximum number of supported concurrent open transactions.
+
+10.1   Parameter Setting
+
+Implementations of HSMS must provide for installation time setting of the following parameters. The range and resolution of all param- eters must be at least as shown in the table. All parameters must be stored in such a manner that the settings will be retained if the power fails or if the sys- tem software is reloaded.
