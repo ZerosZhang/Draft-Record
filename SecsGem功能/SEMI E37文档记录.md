@@ -628,7 +628,8 @@ System Bytes is a four-byte field occupying header bytes 6-9. System Bytes is us
 Uniqueness — The System Bytes of a Primary Data Message, Select.req, Deselect.req, or Linktest.req message must be unique from those of all other currently open transactions initiated from the same end of the connection. They must also be unique from those of the most recently completed transaction.
 > 唯一性——在同一端发起的Primary Data Message，select.req, deselect.req或者linktest.req消息的System Bytes必须保持唯一。
 
-Reply Message — The System Bytes of a Reply Data Message must be the same as those of the corresponding Pri- mary Message. The System Bytes of a Sel-ect.rsp, Deselect.rsp, or Linktest.rsp must be the same as those of the respective ".req" message.
+Reply Message — The System Bytes of a Reply Data Message must be the same as those of the corresponding Primary Message. The System Bytes of a Select.rsp, Deselect.rsp, or Linktest.rsp must be the same as those of the respective ".req" message.
+> 回复消息 —— data message的系统字节必须和相应的主消息的系统字节相同。select.rsp，deselect.rsp和linktest.rsp的系统字节必须和各自的req消息相同。
 
 ### 8.2   HSMS Message Formats by Type
 
