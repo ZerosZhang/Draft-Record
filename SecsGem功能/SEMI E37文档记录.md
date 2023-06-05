@@ -657,3 +657,14 @@ The HSMS Message Header is as follows:
   
   The most signiﬁcant bit (bit 7) of Header Byte 2 is the W-Bit. In a Primary Message, the W-Bit indicates whether the Primary Message expects a Reply message. A Primary Message which expects a Reply should set the W-Bit to 1. A Primary Message which does not expect a Reply should set the W-Bit to 0. A Reply Message should always set the W-Bit to 0. The low-order 7 bits (bits 6-0) of Header Byte 2 contain the SECS Stream for the message. The Stream is a 7-bit unsigned integer value, which identiﬁes a major topic of the message, and its use is deﬁned within SEMI E5 (SECS-II).
   > header byte 2 中最重要的一位(第七位)是W-bit。在主消息中W-bit用于表示主消息是否需要回复。需要回复的主消息将W-bit设置为1，否则设置为0。次消息中W-bit永远为0。header byte 2的低7位（6-0）表示消息的SECS消息的stream编号。stream是一个7位的无符号整数值，用于表示消息的主题，具体参考SEMI E5。
+- Header Byte 3 — For messages whose PType value=0, header Byte 3 contains the SECS Function for the message. The Function is an 8-bit unsigned integer value which identiﬁes a minor topic of the message (within the Stream), and its use is deﬁned within SEMI E5 (SECS-II). The least signiﬁcant bit (bit 0) of the Function deﬁnes whether the Data Message is Primary or Reply; the value 1 indicates Primary and the value 0 indicates Reply.
+  > header byte 3 —— 在SECS-II消息（PType = 0）的消息中，header byte 3包含消息的function编号，是一个8位的无符号整数，用于定义stream中的特定功能。具体参考SEMI E5。function的奇偶性（最低位为0或1）表示消息是主消息还是次消息，奇数表示主消息，偶数表示次消息。
+- PType —— PType = 0表示SECS-II消息
+- SType —— SType = 0表示data message
+- System Bytes —— For PType=0 (SECS-II), the following deﬁnition applies. For a Primary Message, System Bytes contain a value uniquely identifying this transaction from all other open transactions initiated from the same end of the Connection. For a Reply Message, System Bytes contain the same value as the corresponding Primary Message.
+  > 对于SECS-II消息（PType = 0）,使用如下定义：对于主消息，system bytes的值用于唯一标识从HSMS连接的同一端发起的事务。对于次消息，system bytes的值和主消息保持一致。
+
+The HSMS Message Text contains the text of the Data Message (if any), formatted as speciﬁed by the PType ﬁeld. For PType = 0, the text will be formatted as SECS-II messages.
+> HSMS Message Text包含data message的文本，格式由PType字段指定。对于PType = 0，文本将被格式化为SECS-II格式的消息。
+Note: Some Data Messages consist of header only, with no text.
+> 注意：一些data message只包含message header，不包含message text
