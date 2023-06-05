@@ -428,7 +428,7 @@ The applicable upper layer standard is identiﬁed by the message type. The type
 ### 7.4 Deselect Procedure
 
 The Deselect procedure is used to provide a graceful end to HSMS communication for an entity prior to breaking the TCP/IP connection. HSMS requires that the connection be in the SELECTED state. The procedure is as follows.
-deselect流程用于在TCP/IP连接中断之前提供一个优雅的方式断开HSMS连接。要求HSMS连接处于SELECTED状态。
+> deselect流程用于在TCP/IP连接中断之前提供一个优雅的方式断开HSMS连接。要求HSMS连接处于SELECTED状态。
 
 ![1685695937171](image/SEMIE37文档记录/1685695937171.png)
 
@@ -637,16 +637,22 @@ Reply Message — The System Bytes of a Reply Data Message must be the same as t
 
 The specific interpretation of the header bytes in an HSMS message is dependent on the specific HSMS message type as defined by the value of the SType field. The complete set of messages defined is summarized in the table below, shown for PType = 0 (SECS-II message format).
 > HSMS Message Header 中具体字节的意义取决于SType字段的值。下表总结了在PType = 0时的消息集合的定义
+
 ![1685928034115](image/SEMIE37文档记录/1685928034115.png)
 ![1685928049636](image/SEMIE37文档记录/1685928049636.png)
 > *的意思是由附属标准进一步规范
 
 8.2.1 SType = 0:Data Message
 An HSMS message with SType = 0 is used by the HSMS Data procedure to send a Data message, either Primary or Reply. The message format is as follows:
+
 > 一个SType = 0的HSMS消息用于在数据流程中发送data message，可以是主消息或者次消息。消息格式如下所示：
+
 HSMS Message Length is always 10 (the length of the header alone) or greater.
+
 > HSMS Message Length 的大于等于10。（仅包含消息头时，为10）
+
 The HSMS Message Header is as follows:
+
 > HSMS Message Header 如下所示：
 
 - Session ID — As described above. Speciﬁc value subject to subsidiary standards.
@@ -665,6 +671,124 @@ The HSMS Message Header is as follows:
   > 对于SECS-II消息（PType = 0）,使用如下定义：对于主消息，system bytes的值用于唯一标识从HSMS连接的同一端发起的事务。对于次消息，system bytes的值和主消息保持一致。
 
 The HSMS Message Text contains the text of the Data Message (if any), formatted as speciﬁed by the PType ﬁeld. For PType = 0, the text will be formatted as SECS-II messages.
+
 > HSMS Message Text包含data message的文本，格式由PType字段指定。对于PType = 0，文本将被格式化为SECS-II格式的消息。
+
 Note: Some Data Messages consist of header only, with no text.
+
 > 注意：一些data message只包含message header，不包含message text
+
+8.2.2 SType = 1：Select.req
+
+An HSMS message with SType 1 is a "Select Request" Control Message, which is used by the initiator of the procedure for establishing HSMS communications. The message format is as follows:
+> SType = 1的HSMS消息表示select.req控制消息，该消息用于建立HSMS通信。消息的格式如下所示：
+
+1. Message Length is always 10 (Header only).
+
+   > Message Length为10，即仅包含Message Header
+
+2. The HSMS Message Header is as follows:
+
+   > Message Header如下所示
+
+   - SessionID — As described above. Speciﬁc value subject to subsidiary standards.
+     > Session ID——参考Session ID
+   - Header Byte 2 = 0
+   - Header Byte 3 = 0
+   - PType = 0.
+   - SType = 1
+   - System Bytes — A unique value among open transactions.
+     > 在所有打开的事务里是唯一的
+
+8.2.3 SType = 2：Select.rsp
+An HSMS message with SType 2 is a "Select Response" Control Message, used as the response to a Select.req Control message in the procedure for establishing HSMS communications. The message format is as follows:
+
+1. Message Length is always 10 (Header only).
+2. The HSMS Message Header is as follows:
+
+- SessionID -- must be equal to the value of the session ID in the corresponding Select.req.
+- Header Byte 2 =0
+- Header Byte 3 — SelectStatus.  A code of zero indicates success of the Select operation. A non-zero code indicates failure.
+   > 响应代码为0表示Select过程成功，非0表示失败
+
+![1685943880310](image/SEMIE37文档记录/1685943880310.png)
+![1685943964311](image/SEMIE37文档记录/1685943964311.png)
+
+- PType = 0
+- SType = 2
+- System Bytes -- Equal to value of System Bytes in the corresponding Select.req.
+
+8.2.4 SType=3: Deselect.req
+An HSMS message with SType 3 is a "Deselect Request" Control Message, used by the initiator of the Select procedure for ending HSMS communication. The message format is as follows:
+
+1. Message Length is always 10 (Header only).
+2. The HSMS Message Header is as follows:
+
+- SessionID — The SessionID must match the value of the SessionID of a previously sent Select.req to indicate the particular HSMS session that is ending. Subject to further speciﬁcation by subsidiary standards.
+- Header Byte 2 = 0
+- Header Byte 3 = 0
+- PType = 0
+- SType = 3
+- System Bytes — A unique value among open transactions.
+
+8.2.5 SType=4: Deselect.rsp — An HSMS message with SType 4 is a "Deselect Response" Control Message, used as the response to a Deselect.req Control message in the Deselect procedure for ending HSMS communications. The message format is as follows:
+
+1. Message Length is always 10 (Header only).
+2. The HSMS Message Header is as follows:
+
+- SessionID — must equal the session ID in the corresponding Deselect.req
+- Header Byte 2 = 0
+- Header Byte 3 -- DeselectStatus.  A code of zero indicates success of the Deselect operation. A non-zero code indicates failure.
+
+![1685944284825](image/SEMIE37文档记录/1685944284825.png)
+
+- PType = 0
+- SType = 4
+- System Bytes — Equal to System Bytes in corresponding Deselect.req.
+
+8.2.6 SType=5: Linktest.req — An HSMS message with SType 5 is a "Linktest Request" Control Message. It is used to verify the integrity of the HSMS Connection, or as a periodic heartbeat. The message format is as follows:
+
+1. Message Length is always 10 (Header only).
+2. The HSMS Message Header is as follows:
+
+- SessionID = 0xFFFF (in binary, all ones)
+- Header Byte 2 = 0
+- Header Byte 3 = 0
+- PType = 0
+- SType = 5
+- System Bytes — A unique value among open transactions.
+
+8.2.7   SType=6: Linktest.rsp — An HSMS message with SType 6 is a "Linktest Response" Control Message, used as the response to a Linktest.req Control message in the Linktest Procedure. The message format is as follows:
+
+1. Message Length is always 10 (Header only).
+2. The HSMS Message Header is as follows:
+
+- SessionID = 0xFFFF (binary, all ones)
+- Header Byte 2 = 0
+- Header Byte 3 = 0
+- PType = 0
+- SType = 6
+- System Bytes — Equal to System Bytes in corresponding Linktest.req.
+
+8.2.8   SType=7: Reject.req
+
+An HSMS message with SType 7 is used in response to any valid HSMS message received which is not supported by the receiver of the message or which is not valid at the time. It is intended for dealing with attempts to use subsidiary standards or user-defined extensions which are not supported by the receiver (for example, SType equal to any value not defined in this standard). It must be used when an entity receives a control message which is a response (even numbered SType) for which there was no corresponding open transaction.
+The HSMS Message Header is as follows:
+
+- SessionID — equal to the value of the Session ID in the message being rejected.
+- Header Byte 2 — For ReasonCode = PType Not Supported, equal to the PType in the message being rejected. Otherwise equal to the value of the SType in the message being rejected.
+  > 当PType不支持时，相应代码为被拒绝消息的PType（SECS-II消息中PType非0时不支持）。否则该值表示被拒绝消息的SType。
+- Header Byte 3 — reason code (always non-zero)
+  > 相应代码，永远都是非0值
+
+![1685944504045](image/SEMIE37文档记录/1685944504045.png)
+
+- PType = 0
+- SType = 7
+- System Bytes — Equal to System Bytes in corresponding message being rejected.
+  > 和相应的被拒绝的消息的System Bytes相同
+
+8.2.9   SType=9: Separate.req
+
+An HSMS message with SType = 9 is used to terminate HSMS communications immediately. With the exception of the SType value, it is identical to the Deselect.req message. Its purpose is to end HSMS communications immediately and without exception. No response is defined.
+> SType = 9的HSMS消息用于立即中止HSMS通信。除了SType值外，和Deselect.req消息完全相同，用于单方面的立即中止HSMS通信。该消息不需要响应。
