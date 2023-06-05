@@ -934,27 +934,51 @@ Subsidiary standards must be consistent with this con- vention. In particular, f
 
 The SECS-II standard (SEMI E5) makes certain references to SECS-I (SEMI E4). This section addresses issues specific to SECS-II when HSMS is used to transport SECS-II messages.
 
+> SECS-II标准（SEMI E5）参考了SECS-I（SEMI E4）。当使用HSMS传输SECS-II消息时，本节的目的是解决SECS-II特有的问题
+
 9.4.1   Reply Matching
+
+> 回复匹配
 
 When a Sender sends a Primary Message with W-Bit 1 (Reply Expected), the Sender should expect a  Reply message whose header meets the following requirements.
 
-The SessionID of the Reply must match the SessionID of the Primary Message.
+> 当发送方发送w-bit为1的主消息时，发送方应该期望收到一个Message Header满足以下要求的回复消息
 
-The Stream of the Reply must match the Stream of the Primary Message.
+- The SessionID of the Reply must match the SessionID of the Primary Message.
+  > 次消息的SessionID必须和主消息的SessionID相同
 
-The Function of the Reply must be one greater than the Function of the Primary Message, or else the Function of the Reply must be 0 (Function Zero Reply).
+- The Stream of the Reply must match the Stream of the Primary Message.
+  > 次消息的stream必须和主消息的steam相同
 
-The System Bytes of the Reply must match the System Bytes of the Primary Message.
+- The Function of the Reply must be one greater than the Function of the Primary Message, or else the Function of the Reply must be 0 (Function Zero Reply).
+  > 次消息的function必须比主消息的function大1，否则次消息的function必须为0
 
-9.4.1.1   T3 Reply Timeout
+- The System Bytes of the Reply must match the System Bytes of the Primary Message.
+  > 次消息的System Bytes必须和主消息的System Bytes相同
+
+9.4.1.1 T3 Reply Timeout
+
+> T3回复超时
 
 The T3 reply timeout is a limit on the length of time that the HSMS message protocol is willing to wait for a Reply message.
 
+> T3回复超时是HSMS等待次消息的最长时间
+
 After sending a Primary Message with W-bit 1 (Reply Expected), the sender must begin a reply timer, initialized to the T3 value. If the sender does not receive the Reply Message before the reply timer expires, then a T3 Timeout Error has occurred. The sender should close the transaction and no longer expect the Reply Message.
+
+> 发送一个w-bit为1的主消息后，发送方必须开始一个值为T3的回复计时器。如果发送方在计时器超时之前没有收到回复，则发生T3超时错误。发送方应关闭事务，不再期望收到回复消息。
 
 Each open transaction for which a Reply is expected requires a separate reply timer.
 
-9.4.2   Stream 9 Messages — The SECS-II standard defines error messages S9F1, S9F3, S9F5, S9F7, S9F9, and S9F11, with message text containing the SECS-II Data Items MHEAD or SHEAD, which are defined to contain a 10-byte SECS-I block header.
+> 每个需要回复的打开的事务，都幼一个单独的计时器。
+
+9.4.2   Stream 9 Messages
+
+> stream 9 消息
+
+The SECS-II standard defines error messages S9F1, S9F3, S9F5, S9F7, S9F9, and S9F11, with message text containing the SECS-II Data Items MHEAD or SHEAD, which are defined to contain a 10-byte SECS-I block header.
+
+> SECS-II标准定义了错误消息S9F1，S9F3，S9F5，S9F7，S9F9，S9F11
 
 When using SECS-II with HSMS, MHEAD and SHEAD should contain the ten bytes of the HSMS Message Header.
 
