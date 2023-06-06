@@ -74,3 +74,79 @@ The GEM standard contains two types of requirements:
 The fundamental GEM requirements form the foundation of the GEM standard. The additional GEM capabilities provide functionality required for some types of factory automation or functionality applicable to specific types of equipment. A detailed list of the fundamental GEM requirements and additional GEM capabilities can be found in Chapter 8, GEM Compliance. Figure 1.2 illustrates the components of the GEM standard.
 
 > GEM的基本功能是GEM标准的基础。GEM的额外功能提供了一些半导体工厂所需要的功能或者特定类型的设备的功能。GEM的基本功能和额外功能可以参考第八章。
+
+Equipment suppliers should work with their customers to determine which additional GEM capabilities should be implemented for a specific type of equipment. Because the capabilities defined in the GEM standard were specifically developed to meet the factory automation requirements of semiconductor manufacturers, it is anticipated that most device manufacturers will require most of the GEM capabilities that apply to a particular type of equipment. Some device manufacturers may not require all the GEM capabilities due to differences in their factory automation strategies.
+
+> 设备供应商应该和他的客户合作，已确定特定的设备需要哪些额外的GEM功能。由于GEM标准中定义的功能是专门为了满足半导体工厂的自动化要求开发的，预计大多数设备制造商都可以使用大部分GEM功能。由于半导体自动化测量的差异，一些设备制造商可能不需要所有的GEM功能。
+
+### 1.4 Overview
+
+> 概述
+
+The GEM standard is divided into sections as described below.
+
+> GEM标准分为以下几个部分：
+
+Section 1 — Introduction
+
+This section provides the revision history, scope and intent of the GEM standard. It also provides an overview of the structure of the document and a list of related documents.
+
+Section 2 — Definitions
+
+This section provides definitions of terms used throughout the document.
+
+Section 3 — State Models
+
+This section describes the conventions used throughout this document to depict state models. It also describes the basic state models that apply to all semiconductor manufacturing equipment and that pertain to more than a single capability. State models describe the behavior of the equipment from a host perspective.
+
+Section 4 — Capabilities and Scenarios
+
+This section provides a detailed description of the communications capabilities defined for semiconductor manufacturing equipment. The description of each capability includes the purpose, definitions, requirements, and scenarios that shall be supported.
+
+Section 5 — Data Definitions
+
+This section provides a reference to the Data Item Dictionary and Variable Item Dictionary found in SEMI Standard E5. The first subsection shows those data items from SECS-II which have been restricted in their use (i.e., allowed formats). The second subsection lists variable data items that are available to the host for data collection and shows any restrictions on their SECS-II definitions.
+
+Section 6 — Collection Events
+
+This section provides a list of required collection events and their associated data.
+
+Section 7 — SECS Message Subset
+
+This section provides a composite list of the SECS-II messages required to implement all capabilities defined in the GEM standard.
+
+Section 8 — GEM Compliance
+
+This section describes the fundamental GEM requirements and additional GEM capabilities and provides references to other sections of the standard where detailed requirements are located. This section also defines standard terminology and documentation that can be used by equipment suppliers and device manufacturers to describe compliance with this standard.
+
+Section A — Application Notes
+
+These sections provide additional explanatory information and examples.
+
+Section A.1 — Factory Operational Script
+
+This section provides an overview of how the required SECS capabilities may be used in the context of a typical factory operation sequence. This section is organized according to the sequence in which actions are typically performed.
+
+Section A.2 — Equipment Front Panel
+
+This section provides guidance in implementing the required front panel buttons, indicators, and switches as defined in this document. A summary of the front panel requirements is provided.
+
+Section A.3 — Examples of Equipment Alarms
+
+This section provides examples of alarms related to various equipment configurations.
+
+Section A.4 — Trace Data Collection Example
+
+This section provides an example of trace initialization by the host and the periodic trace data messages that might be sent by the equipment.
+
+Section A.5 — Harel Notation
+
+This section explains David Harel’s “Statechart” notation that is used throughout this document to depict state models.
+
+Section A.6 — Example Control Model Application
+
+This section provides one example of a host’s interaction with an equipment’s control model.
+
+Section A.7 — Examples of Limits Monitoring
+
+This section contains four limits monitoring examples to help clarify the use of limits and to illustrate typical applications.
