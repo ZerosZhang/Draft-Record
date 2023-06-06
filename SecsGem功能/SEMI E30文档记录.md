@@ -89,64 +89,127 @@ The GEM standard is divided into sections as described below.
 
 Section 1 — Introduction
 
+> 第一章 介绍
+
 This section provides the revision history, scope and intent of the GEM standard. It also provides an overview of the structure of the document and a list of related documents.
+
+> 本章提供了GEM标准的修订历史，范围和目的，还概述了文档的结构
 
 Section 2 — Definitions
 
+> 第二章 定义
+
 This section provides definitions of terms used throughout the document.
+
+> 本章提供了文档中使用的术语的定义
 
 Section 3 — State Models
 
+> 第三章 状态模型
+
 This section describes the conventions used throughout this document to depict state models. It also describes the basic state models that apply to all semiconductor manufacturing equipment and that pertain to more than a single capability. State models describe the behavior of the equipment from a host perspective.
+
+> 本章介绍了文档中状态模型的定义。他还描述了适用于半导体制造设备的基本状态模型，这些模型涉及到多个功能。状态模型从主机的角度描述设备的行为。
 
 Section 4 — Capabilities and Scenarios
 
+> 第四章 能力和场景
+
 This section provides a detailed description of the communications capabilities defined for semiconductor manufacturing equipment. The description of each capability includes the purpose, definitions, requirements, and scenarios that shall be supported.
+
+> 本章详细的描述了半导体设备的通信能力。每种能力的描述包含目的，定义，需求和场景。
 
 Section 5 — Data Definitions
 
+> 第五章  数据定义
+
 This section provides a reference to the Data Item Dictionary and Variable Item Dictionary found in SEMI Standard E5. The first subsection shows those data items from SECS-II which have been restricted in their use (i.e., allowed formats). The second subsection lists variable data items that are available to the host for data collection and shows any restrictions on their SECS-II definitions.
+
+> 本章参考了SEMI E5标准中的数据项字典和变量项字典。第一小节显示了SECS-II在使用方面受到限制的数据项。第二小节列出了主机可用于数据收集的可变数据项，并显示了SECS-II对其定义的限制。
 
 Section 6 — Collection Events
 
+> 第六章 收集事件
+
 This section provides a list of required collection events and their associated data.
+
+> 本章提供了一系列要求的收集事件和相关的数据
 
 Section 7 — SECS Message Subset
 
+> 第七章 SECS消息子集
+
 This section provides a composite list of the SECS-II messages required to implement all capabilities defined in the GEM standard.
+
+> 本节提实现GEM标准中定义所有功能需要的SECS-II消息的列表
 
 Section 8 — GEM Compliance
 
+> GEM合规性
+
 This section describes the fundamental GEM requirements and additional GEM capabilities and provides references to other sections of the standard where detailed requirements are located. This section also defines standard terminology and documentation that can be used by equipment suppliers and device manufacturers to describe compliance with this standard.
+
+> 本节描述了GEM的基本功能和额外功能，并且提供了详细功能所在章节的参考。本节还定义了设备供应商和设备制造商可用于描述符合本标准的术语和为文件。
 
 Section A — Application Notes
 
+> 应用笔记
+
 These sections provide additional explanatory information and examples.
+
+> 本节提供了额外的解释性信息和示例
 
 Section A.1 — Factory Operational Script
 
+> A.1 工厂操作脚本
+
 This section provides an overview of how the required SECS capabilities may be used in the context of a typical factory operation sequence. This section is organized according to the sequence in which actions are typically performed.
+
+> 本节概述了如何在典型工厂操作序列中使用所需的SECS功能。本节根据通常操作的顺序进行解释。
 
 Section A.2 — Equipment Front Panel
 
+> A.2 设备前面板
+
 This section provides guidance in implementing the required front panel buttons, indicators, and switches as defined in this document. A summary of the front panel requirements is provided.
+
+> 本节提供了实现文档中定义功能所需要的面板按钮，指示灯和开关的指南。提供了前面板要求的摘要。
 
 Section A.3 — Examples of Equipment Alarms
 
+> A.3 设备报警的例子
+
 This section provides examples of alarms related to various equipment configurations.
+
+> 本节提供了与各种设备配置相关的报警示例
 
 Section A.4 — Trace Data Collection Example
 
+> A.4 跟踪数据收集示例
+
 This section provides an example of trace initialization by the host and the periodic trace data messages that might be sent by the equipment.
+
+> 本节提供了主机进行跟踪数据，以及设备可能定期发送数据消息的示例
 
 Section A.5 — Harel Notation
 
+> A.5 Harel符号
+
 This section explains David Harel’s “Statechart” notation that is used throughout this document to depict state models.
+
+> 本节解释David Harel的状态图的表示方法，该表示方法用于在文档中描述状态模型
 
 Section A.6 — Example Control Model Application
 
+> A.6 控制模型应用示例
+
 This section provides one example of a host’s interaction with an equipment’s control model.
+
+> 本节提供了主机与设备控制模型交互的一个示例
 
 Section A.7 — Examples of Limits Monitoring
 
+> A.7 极限值监控的示例
+
 This section contains four limits monitoring examples to help clarify the use of limits and to illustrate typical applications.
+> 本节包含4个极限检测示例，以帮助理解极限值的使用。
