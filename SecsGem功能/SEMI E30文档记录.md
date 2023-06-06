@@ -213,3 +213,107 @@ Section A.7 — Examples of Limits Monitoring
 
 This section contains four limits monitoring examples to help clarify the use of limits and to illustrate typical applications.
 > 本节包含4个极限检测示例，以帮助理解极限值的使用。
+
+## 2. Definitions
+
+> 第二章 定义
+
+### 2.1 alarm
+
+> 报警
+
+An alarm is related to any abnormal situation on the equipment that may endanger people, equipment, or material being processed. Such abnormal situations are defined by the equipment manufacturer based on physical safety limitations. Equipment activities potentially impacted by the presence of an alarm shall be inhibited.
+
+2.1.1 Note that exceeding control limits associated with process tolerance does not constitute an alarm nor do normal equipment events such as the start or completion of processing.
+
+2.2 capabilities
+
+Capabilities are operations performed by semiconductor manufacturing equipment. These operations are initiated through the communications interface using sequences of SECS-II messages (or scenarios). An example of a capability is the setting and clearing of alarms.
+
+2.3 collection event
+
+A collection event is an event (or grouping of related events) on the equipment that is considered to be significant to the host.
+
+2.4  communication failure
+
+A communication failure is said to occur when an established communications link is broken. Such failures are protocol specific. Refer to the appropriate protocol standard (e.g., SEMI E4 or SEMI E37) for a protocol-specific definition of communication failure.
+
+2.5 communication fault
+
+A communication fault occurs when the equipment does not receive an expected message, or when either a transaction timer or a conversation timer expires.
+
+2.6 control
+
+To control is to exercise directing influence.
+
+2.7 equipment model — An equipment model is a definition based on capabilities, scenarios, and SECS-II messages that manufacturing equipment should perform to support an automated manufacturing environment. (See also Generic Equipment Model.)
+
+2.8 event
+
+An event is a detectable occurrence significant to the equipment.
+
+2.9  GEM compliance
+
+The term “GEM Compliance” is defined with respect to individual GEM capabilities to indicate adherence to the GEM standard for a specific capability. Section 8 includes more detail on GEM Compliance.
+
+2.10 Generic Equipment Model
+
+The Generic Equipment Model is used as a reference model for any type of equipment. It contains functionality that can apply to most equipment, but does not address unique requirements of specific equipment.
+
+2.11 host
+
+The SEMI E4 and E5 standards define Host as “the intelligent system that communicates with the equipment.”
+
+2.12  message fault
+
+A message fault occurs when the equipment receives a message that it cannot process because of a defect in the message.
+
+2.13 operational script
+
+An operational script is a collection of scenarios arranged in a sequence typical of actual factory operations. Example sequences are system initialization powerup, machine setup, and processing.
+
+2.14  operator
+
+A human who operates the equipment to perform its intended function (e.g., processing). The operator typically interacts with the equipment via the equipment supplied operator console.
+
+2.15 process unit
+
+A process unit refers to the material that is typically processed as a unit via single run command, process program, etc. Common process units are wafers, cassettes, magazines, and boats.
+
+2.16 processing cycle
+
+A processing cycle is a sequence wherein all of the material contained in a typical process unit is processed. This is often used as a measure of action or time.
+
+2.17 scenario
+
+A scenario is a group of SECS-II messages arranged in a sequence to perform a capability. Other information may also be included in a scenario for clarity.
+
+2.18 SECS-I
+
+SEMI Equipment Communications Standard 1 (SEMI E4). This standard specifies a method for a message transfer protocol with electrical signal levels based upon EIA RS232-C.
+
+2.19 SECS-II
+
+SEMI Equipment Communications Standard 2 (SEMI E5). This standard specifies a group of messages and the respective syntax and semantics for those messages relating to semiconductor manufacturing equipment control.
+
+2.20  SMS
+
+SECS Message Service. An alternative to SECS-I to be used when sending SECS-II formatted messages over a network.
+
+2.21 state model
+
+A State Model is a collection of states and state transitions that combine to describe the behavior of a system. This model includes definition of the conditions that delineate a state, the actions/reactions possible within a state, the events that trigger transitions to other states, and the process of transitioning between states.
+
+2.22 system default
+
+Refers to state(s) in the equipment behavioral model that are expected to be active at the end of system initialization. It also refers to the value(s) that specified equipment variables are expected to contain at the end of system initialization.
+
+2.23 system initialization
+
+The process that an equipment performs at power-up, system activation, and/or system reset. This process is expected to prepare the equipment to operate properly and according to the equipment behavioral models.
+
+2.24 user
+
+A human or humans who represent the factory and enforce the factory operation model. A user is considered to be responsible for many setup and configuration activities that cause the equipment to best conform to factory operations practices.
+
+## 3. State Models
