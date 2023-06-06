@@ -32,96 +32,96 @@ SEMI E5  — SEMI Equipment Communication Standard 2 — Message Content (SECS-I
 
 ## 4. Terminology 术语
 
-API — Application Program Interface. In the case of TCP/IP, a set of programming conventions used by an application program to prepare for or invoke TCP/IP capabilities.
+`API `— Application Program Interface. In the case of TCP/IP, a set of programming conventions used by an application program to prepare for or invoke TCP/IP capabilities.
 
 > API：应用程序接口。在TCP/IP下，应用程序使用的一组编程约定，用于调试TCP/IP功能
 
-communication failure — A failure in the communication link resulting from a transition to the NOT CONNECTED state from the SELECTED state. (See Section 9.)
+`communication failure` — A failure in the communication link resulting from a transition to the NOT CONNECTED state from the SELECTED state. (See Section 9.)
 
 > communication failure：通讯故障，特指从SELECTED状态转换到NOT CONNECTED状态而导致的通讯故障。
 
-conﬁrmed service (HSMS) — An HSMS service requested by sending a message from the initiator to the responding entity which requires that completion of the service be indicated by a response message from the responding entity to the initiator.
+`conﬁrmed service (HSMS)` — An HSMS service requested by sending a message from the initiator to the responding entity which requires that completion of the service be indicated by a response message from the responding entity to the initiator.
 
 > confirmed service(HSMS)：确认服务，表示通过从originator向interpreter发送request消息的HSMS服务，该消息要求interpreter向originator发送响应的消息后才算结束
 
-connection — A logical linkage established on a TCP/ IP LAN between two entities for the purposes of exchanging messages.
+`connection` — A logical linkage established on a TCP/ IP LAN between two entities for the purposes of exchanging messages.
 
 > connection：在TCP/IP局域网上两个实体为交换消息而建立的一种逻辑链路。
 
-control message — An HSMS message used for the management of HSMS sessions between two entities.
+`control message` — An HSMS message used for the management of HSMS sessions between two entities.
 
 > control message：一种用于管理两个实体之间的HSMS会话的HSMS消息。
 
-data message — An HSMS message used for commu- nication of application-speciﬁc data within an HSMS session. A Data Message can be a primary message or a Reply Message.
+`data message` — An HSMS message used for commu- nication of application-speciﬁc data within an HSMS session. A Data Message can be a primary message or a Reply Message.
 
 > data message：用于在HSMS会话中通信应用程序特定数据的HSMS消息。数据消息可以是主消息或回复消息。
 
-entity — An application program associated with an endpoint of a TCP/IP connection.
+`entity` — An application program associated with an endpoint of a TCP/IP connection.
 
 > entity：通过TCP/IP连接的应用程序
 
-header — A 10-byte data element preceding every HSMS message.
+`header` — A 10-byte data element preceding every HSMS message.
 
 > header：在每个HSMS消息之前的一个10字节的数据单元。
 
-initiator (HSMS) — The entity requesting an HSMS service. The initiator requests the service by sending an appropriate HSMS message.
+`initiator (HSMS)` — The entity requesting an HSMS service. The initiator requests the service by sending an appropriate HSMS message.
 
 > initiator：请求HSMS服务的应用程序
 
-IP Address — Internet Protocol Address. A logical address which uniquely identiﬁes a particular attach- ment to a TCP/IP network.
+`IP Address` — Internet Protocol Address. A logical address which uniquely identiﬁes a particular attach- ment to a TCP/IP network.
 
 > IP Address：Internet协议地址。唯一标识TCP/IP网络特定连接的逻辑地址。
 
-local entity — Relative to a particular end point of a connection, the local entity is that entity associated with that endpoint.
+`local entity` — Relative to a particular end point of a connection, the local entity is that entity associated with that endpoint.
 local entity：本地实体，相对于远程实体。
 
-message — A complete unit of communication in one direction.  An HSMS Message consists of the Message Length, Message Header, and the Message Text. An HSMS Message can be a Data Message or a Control Message.
+`message` — A complete unit of communication in one direction.  An HSMS Message consists of the Message Length, Message Header, and the Message Text. An HSMS Message can be a Data Message or a Control Message.
 
-message length — A 4-byte unsigned integer ﬁeld specifying the length of a message in bytes.
+`message length` — A 4-byte unsigned integer ﬁeld specifying the length of a message in bytes.
 
-open transaction — A transaction in progress.
+`open transaction` — A transaction in progress.
 
-port — An endpoint of a TCP/IP connection whose complete network address is speciﬁed by an IP Address and TCP/IP Port number.
+`port` — An endpoint of a TCP/IP connection whose complete network address is speciﬁed by an IP Address and TCP/IP Port number.
 
-port number — (or TCP port number).  The address of a port within an attachment to a TCP/IP network which can serve as an endpoint of a TCP/IP connection.
+`port number` — (or TCP port number).  The address of a port within an attachment to a TCP/IP network which can serve as an endpoint of a TCP/IP connection.
 
-primary message — An HSMS Data Message with an odd numbered Function.  Also, the ﬁrst message of a data transaction.
+`primary message` — An HSMS Data Message with an odd numbered Function.  Also, the ﬁrst message of a data transaction.
 
-published port — A TCP/IP IP Address and Port num- ber associated with a particular entity (server) which that entity intends to use for receiving TCP/IP connec- tion requests. An entity's published port must be known by remote entities intending to initiate connec- tions.
+`published port` — A TCP/IP IP Address and Port num- ber associated with a particular entity (server) which that entity intends to use for receiving TCP/IP connec- tion requests. An entity's published port must be known by remote entities intending to initiate connec- tions.
 
-receiver — The HSMS Entity receiving a message.
+`receiver` — The HSMS Entity receiving a message.
 
-remote entity — Relative to a particular endpoint of a connection, the remote entity is the entity associated with the opposite endpoint of the connection.
+`remote entity` — Relative to a particular endpoint of a connection, the remote entity is the entity associated with the opposite endpoint of the connection.
 
-reply — An HSMS Data Message with an even-num- bered function. Also, the appropriate response to a Pri- mary HSMS Data Message.
+`reply` — An HSMS Data Message with an even-num- bered function. Also, the appropriate response to a Pri- mary HSMS Data Message.
 
-responding entity (HSMS) — The provider of an HSMS service. The responding entity receives a mes- sage from an initiator requesting the service. In the event of a conﬁrmed service, the responding entity indicates completion of the requested service by send- ing an appropriate HSMS response message to the ini- tiator of the request. In an unconﬁrmed service, the responding entity does not send a response message.
+`responding entity (HSMS)` — The provider of an HSMS service. The responding entity receives a mes- sage from an initiator requesting the service. In the event of a conﬁrmed service, the responding entity indicates completion of the requested service by send- ing an appropriate HSMS response message to the ini- tiator of the request. In an unconﬁrmed service, the responding entity does not send a response message.
 
-session — A relationship established between two entities for the purpose of exchanging HSMS messages.
+`session` — A relationship established between two entities for the purpose of exchanging HSMS messages.
 
-session entity — An entity participating in an HSMS session.
+`session entity` — An entity participating in an HSMS session.
 
-session ID — A 16-bit unsigned integer which identi- ﬁes a particular session between particular session entities.
+`session ID` — A 16-bit unsigned integer which identi- ﬁes a particular session between particular session entities.
 
-stream (TCP/IP) — A sequence of bytes presented at one end of a TCP/IP connection for delivery to the other end. TCP/IP guarantees that the delivered sequence of bytes matches the presented stream. HSMS subdivides a stream into blocks of contiguous bytes - messages.
+`stream (TCP/IP)` — A sequence of bytes presented at one end of a TCP/IP connection for delivery to the other end. TCP/IP guarantees that the delivered sequence of bytes matches the presented stream. HSMS subdivides a stream into blocks of contiguous bytes - messages.
 
-T3 — Reply timeout in the HSMS protocol.
+`T3` — Reply timeout in the HSMS protocol.
 
-T5 — Connect Separation Timeout in the HSMS protocol used to prevent excessive TCP/IP connect activity by providing a minimum time between the breaking, by an entity, of a TCP/IP connection or a failed attempt to establish one, and the attempt, by that same entity, to initiate a new TCP/IP connection.
+`T5` — Connect Separation Timeout in the HSMS protocol used to prevent excessive TCP/IP connect activity by providing a minimum time between the breaking, by an entity, of a TCP/IP connection or a failed attempt to establish one, and the attempt, by that same entity, to initiate a new TCP/IP connection.
 
-T6 — Control Timeout in the HSMS protocol which deﬁnes the maximum time an HSMS control transac- tion can remain open before a communications failure is considered to have occurred. A transaction is consid- ered open from the time the initiator sends the required request message until the response message is received.
+`T6` — Control Timeout in the HSMS protocol which deﬁnes the maximum time an HSMS control transac- tion can remain open before a communications failure is considered to have occurred. A transaction is consid- ered open from the time the initiator sends the required request message until the response message is received.
 
-T7 — Connection Idle Timeout in the HSMS protocol which deﬁnes the maximum amount of time which may transpire between the formation of a TCP/IP con- nection and the use of that connection for HSMS com- munications before a communications failure is considered to have occurred.
+`T7` — Connection Idle Timeout in the HSMS protocol which deﬁnes the maximum amount of time which may transpire between the formation of a TCP/IP con- nection and the use of that connection for HSMS com- munications before a communications failure is considered to have occurred.
 
-T8 —  Network Intercharacter Timeout in the HSMS protocol which deﬁnes the maximum amount of time which may transpire between the receipt of any two successive bytes of a complete HSMS message before a communications failure is considered to have occurred.
+`T8` —  Network Intercharacter Timeout in the HSMS protocol which deﬁnes the maximum amount of time which may transpire between the receipt of any two successive bytes of a complete HSMS message before a communications failure is considered to have occurred.
 
-TCP/IP — Transmission Control Protocol/Internet Protocol. A method of communications which provides reliable, connection-oriented message exchange between computers within a network.
+`TCP/IP` — Transmission Control Protocol/Internet Protocol. A method of communications which provides reliable, connection-oriented message exchange between computers within a network.
 
-TLI — Transport Level Interface. One particular API provided by certain implementations of TCP/IP which provides a transport protocol and operating system independent deﬁnition of the use of any Transport Level protocol.
+`TLI` — Transport Level Interface. One particular API provided by certain implementations of TCP/IP which provides a transport protocol and operating system independent deﬁnition of the use of any Transport Level protocol.
 
-transaction — A primary message and its associated Reply message, if required. Also, an HSMS Control Message of the request (.req) type, and its response Control Message (.rsp), if required.
+`transaction` — A primary message and its associated Reply message, if required. Also, an HSMS Control Message of the request (.req) type, and its response Control Message (.rsp), if required.
 
-unconﬁrmed service (HSMS) — An HSMS service requested by sending a message from the initiator to the responding entity which requires no indication of completion from the responding entity.
+`unconﬁrmed service (HSMS)` — An HSMS service requested by sending a message from the initiator to the responding entity which requires no indication of completion from the responding entity.
 
 ## 5. HSMS Overview and State Diagram HSMS概述和状态图
 
@@ -428,6 +428,7 @@ The applicable upper layer standard is identiﬁed by the message type. The type
 ### 7.4 Deselect Procedure
 
 The Deselect procedure is used to provide a graceful end to HSMS communication for an entity prior to breaking the TCP/IP connection. HSMS requires that the connection be in the SELECTED state. The procedure is as follows.
+
 > deselect流程用于在TCP/IP连接中断之前提供一个优雅的方式断开HSMS连接。要求HSMS连接处于SELECTED状态。
 
 ![1685695937171](image/SEMIE37文档记录/1685695937171.png)
@@ -563,54 +564,66 @@ The Reject procedure is used in response to an otherwise valid HSMS message rece
 
 1. The entity receiving the inappropriate message responds with a Reject.req message.
    > 在非正常状态下收到了正常的HSMS消息的响应方，要使用reject.req消息进行回复。
+   >
 
 HSMS requires the reject procedure for the receipt of a data message in the NOT SELECTED state, or the receipt of a message whose SType or PType (see next section: Message Format) is not deﬁned for the entity receiving the message. Subsidiary standards may deﬁne other conditions which require the Reject Proce- dure. In general, receipt of a reject message is an indi- cation of an improperly conﬁgured system or a software programming error.
+
 > 当处于NOT SELECTED状态下收到了data message或者当SType或者PType未定义时，HSMS要使用reject流程。通常来说，收到reject消息说明系统错误或者软件编程错误。
 
 ## 8. HSMS Message Foramt HSMS Message 格式
 
 This section deﬁnes the detailed format of the messages used by the procedures in the previous section.
+
 > 本章定义了上一章流程中使用的消息的详细格式
 
 ### 8.1 General Message Format 基本消息格式
 
 8.1.1 Byte Structure 字节结构
 Within HSMS, a byte contains eight (8) bits.  The bits in a byte are numbered from Bit 7 (most significant) to Bit 0 (least significant).
+
 > 在HSMS中，一个字节包含8位（bit）。
 
 8.1.2 Message Format 消息格式
 An HSMS Message is transmitted as a single contiguous stream of bytes in the following order:
+
 > HSMS消息包含以下几个部分
 
 ![1685772975141](image/SEMIE37文档记录/1685772975141.png)
 
 8.1.3   Message Length
 Message Length is a four- byte unsigned integer value which specifies the length in bytes of the Message Header plus the Message Text. Message Length is transmitted most significant byte (MSB) first and least significant byte (LSB) last. The minimum possible Message Length is 10 (Header only). The maximum possible Message Length is implementation-speciﬁc.
+
 > Message Length是一个4字节的无符号整数值，指定了Message Header和Message Text的长度（以字节为单位）。Message Length的最小值为10（仅包含Message Header）。
 
 8.1.4   Message Header
 The Message Header is a ten-byte field. The bytes in the header are numbered from byte 0 (first byte transmitted) to byte 9 (last byte transmitted). The format of the Message Header is as follows:
+
 > Message Header是一个10字节的字段。Message Header的字节如下所示：
 
 ![1685773023759](image/SEMIE37文档记录/1685773023759.png)
 
 The physical byte order is designed to correspond as closely as possible to the SECS-I header.
+
 > 物理字节顺序被设计为尽可能和SECS-I Message Header类似。
 
 8.1.4.1 Session ID
 Session ID is a 16-bit unsigned integer value, which occupies bytes 0 and 1 of the header (byte 0 is MSB, 1 is LSB). Its purpose is to pro- vide an association by reference between control messages (particularly Select and Deselect) and subsequent data messages.  It is the role of HSMS sub- sidiary standards to specify this association further.
+
 > Session ID是一个16位的无符号整数值，占用前两个字节。目的是为了提供control message和后续data message之间的关联。
 
 8.1.4.2   Header Byte 2
 This header byte is used in different ways for different HSMS messages. For Con- trol Messages (see SType, below) it contains zero or a status code. For a Data Message whose PType (see below) = 0, it contains the W-Bit and SECS Stream. For a Data Message with PType not equal to 0, see "Special Considerations."
+
 > 该字节不同的HSMS消息有所不同。对于control message，包含0或者状态代码。对于PType = 0的data message，他包含W-bit和stream编号。
 
 8.1.4.3   Header Byte 3
 This header byte is used in different ways for different HSMS messages. For Con- trol Messages, it contains zero or a status code. For a Data Message whose PType (see below) = 0, it con- tains the SECS Function. For a Data Message with PType not equal to 0, see "Special Considerations."
+
 > 该字节不同的HSMS消息有所不同，对于control message，包含0或者状态代码。对于PType = 0的data message，它包含function编号。
 
 8.1.4.4   PType
 PType (Presentation Type) is an 8- bit unsigned integer value which occupies byte 4 of the header. PType is intended as an enumerated type defining the presentation layer message type:  how the Message Header and Message Text are encoded. Only PType = 0 is defined by HSMS to mean SECS-II mes- sage encoding. For non-zero PType values, see "Spe- cial Considerations."
+
 > PType(Presentation Type)是一个8位无符号整数值，占用Message Header的第四个字节，PType定义了消息的编码。对于SECS-II消息，PType = 0。
 
 ![1685774287829](image/SEMIE37文档记录/1685774287829.png)
@@ -625,21 +638,26 @@ SType (Session Type) is a one-byte unsigned integer value which occupies header 
 
 8.1.4.6  System Bytes
 System Bytes is a four-byte field occupying header bytes 6-9. System Bytes is used to identify a transaction uniquely among the set of open transactions.
+
 > System Byte是一个4字节的字段，占用Message Header的6-9个字节。System Bytes用于在所有打开的transaction中标识唯一的transaction
 
 Uniqueness — The System Bytes of a Primary Data Message, Select.req, Deselect.req, or Linktest.req message must be unique from those of all other currently open transactions initiated from the same end of the connection. They must also be unique from those of the most recently completed transaction.
+
 > 唯一性——在同一端发起的Primary Data Message，select.req, deselect.req或者linktest.req消息的System Bytes必须保持唯一。
 
 Reply Message — The System Bytes of a Reply Data Message must be the same as those of the corresponding Primary Message. The System Bytes of a Select.rsp, Deselect.rsp, or Linktest.rsp must be the same as those of the respective ".req" message.
+
 > 回复消息 —— data message的系统字节必须和相应的主消息的系统字节相同。select.rsp，deselect.rsp和linktest.rsp的系统字节必须和各自的req消息相同。
 
 ### 8.2 HSMS Message Formats by Type 按类型分类的HSMS消息格式
 
 The specific interpretation of the header bytes in an HSMS message is dependent on the specific HSMS message type as defined by the value of the SType field. The complete set of messages defined is summarized in the table below, shown for PType = 0 (SECS-II message format).
+
 > HSMS Message Header 中具体字节的意义取决于SType字段的值。下表总结了在PType = 0时的消息集合的定义
 
 ![1685928034115](image/SEMIE37文档记录/1685928034115.png)
 ![1685928049636](image/SEMIE37文档记录/1685928049636.png)
+
 > *的意思是由附属标准进一步规范
 
 8.2.1 SType = 0:Data Message
@@ -656,19 +674,29 @@ The HSMS Message Header is as follows:
 > HSMS Message Header 如下所示：
 
 - Session ID — As described above. Speciﬁc value subject to subsidiary standards.
-   > Session ID —— 描述参考8.1.4.1 Session ID，具体的值依赖于附属标准
+
+  > Session ID —— 描述参考8.1.4.1 Session ID，具体的值依赖于附属标准
+  >
 - Header Byte 2 — For messages with PType value = 0 (SECS-II), header byte 2 is formatted as shown below.
+
   > Header Byte 2 —— 对于SECS-II消息（PType = 0），header byte 2的格式如下所示：
-  ![1685928530203](image/SEMIE37文档记录/1685928530203.png)
-  
+  > ![1685928530203](image/SEMIE37文档记录/1685928530203.png)
+  >
+
   The most signiﬁcant bit (bit 7) of Header Byte 2 is the W-Bit. In a Primary Message, the W-Bit indicates whether the Primary Message expects a Reply message. A Primary Message which expects a Reply should set the W-Bit to 1. A Primary Message which does not expect a Reply should set the W-Bit to 0. A Reply Message should always set the W-Bit to 0. The low-order 7 bits (bits 6-0) of Header Byte 2 contain the SECS Stream for the message. The Stream is a 7-bit unsigned integer value, which identiﬁes a major topic of the message, and its use is deﬁned within SEMI E5 (SECS-II).
+
   > header byte 2 中最重要的一位(第七位)是W-bit。在主消息中W-bit用于表示主消息是否需要回复。需要回复的主消息将W-bit设置为1，否则设置为0。次消息中W-bit永远为0。header byte 2的低7位（6-0）表示消息的SECS消息的stream编号。stream是一个7位的无符号整数值，用于表示消息的主题，具体参考SEMI E5。
+  >
 - Header Byte 3 — For messages whose PType value=0, header Byte 3 contains the SECS Function for the message. The Function is an 8-bit unsigned integer value which identiﬁes a minor topic of the message (within the Stream), and its use is deﬁned within SEMI E5 (SECS-II). The least signiﬁcant bit (bit 0) of the Function deﬁnes whether the Data Message is Primary or Reply; the value 1 indicates Primary and the value 0 indicates Reply.
+
   > header byte 3 —— 在SECS-II消息（PType = 0）的消息中，header byte 3包含消息的function编号，是一个8位的无符号整数，用于定义stream中的特定功能。具体参考SEMI E5。function的奇偶性（最低位为0或1）表示消息是主消息还是次消息，奇数表示主消息，偶数表示次消息。
+  >
 - PType —— PType = 0表示SECS-II消息
 - SType —— SType = 0表示data message
 - System Bytes —— For PType=0 (SECS-II), the following deﬁnition applies. For a Primary Message, System Bytes contain a value uniquely identifying this transaction from all other open transactions initiated from the same end of the Connection. For a Reply Message, System Bytes contain the same value as the corresponding Primary Message.
+
   > 对于SECS-II消息（PType = 0）,使用如下定义：对于主消息，system bytes的值用于唯一标识从HSMS连接的同一端发起的事务。对于次消息，system bytes的值和主消息保持一致。
+  >
 
 The HSMS Message Text contains the text of the Data Message (if any), formatted as speciﬁed by the PType ﬁeld. For PType = 0, the text will be formatted as SECS-II messages.
 
@@ -687,19 +715,22 @@ An HSMS message with SType 1 is a "Select Request" Control Message, which is use
 1. Message Length is always 10 (Header only).
 
    > Message Length为10，即仅包含Message Header
-
+   >
 2. The HSMS Message Header is as follows:
 
    > Message Header如下所示
+   >
 
    - SessionID — As described above. Speciﬁc value subject to subsidiary standards.
      > Session ID——参考Session ID
+     >
    - Header Byte 2 = 0
    - Header Byte 3 = 0
    - PType = 0.
    - SType = 1
    - System Bytes — A unique value among open transactions.
      > 在所有打开的事务里是唯一的
+     >
 
 8.2.3 SType = 2：Select.rsp
 An HSMS message with SType 2 is a "Select Response" Control Message, used as the response to a Select.req Control message in the procedure for establishing HSMS communications. The message format is as follows:
@@ -712,7 +743,8 @@ An HSMS message with SType 2 is a "Select Response" Control Message, used as the
 - SessionID -- must be equal to the value of the session ID in the corresponding Select.req.
 - Header Byte 2 =0
 - Header Byte 3 — SelectStatus.  A code of zero indicates success of the Select operation. A non-zero code indicates failure.
-   > 响应代码为0表示Select过程成功，非0表示失败
+  > 响应代码为0表示Select过程成功，非0表示失败
+  >
 
 ![1685943880310](image/SEMIE37文档记录/1685943880310.png)
 ![1685943964311](image/SEMIE37文档记录/1685943964311.png)
@@ -798,10 +830,13 @@ The HSMS Message Header is as follows:
 
 - SessionID — equal to the value of the Session ID in the message being rejected.
   > 等于被拒绝消息的Session ID
+  >
 - Header Byte 2 — For ReasonCode = PType Not Supported, equal to the PType in the message being rejected. Otherwise equal to the value of the SType in the message being rejected.
   > 当PType不支持时，相应代码为被拒绝消息的PType（SECS-II消息中PType非0时不支持）。否则该值表示被拒绝消息的SType。
+  >
 - Header Byte 3 — reason code (always non-zero)
   > 相应代码，永远都是非0值
+  >
 
 ![1685944504045](image/SEMIE37文档记录/1685944504045.png)
 
@@ -809,13 +844,15 @@ The HSMS Message Header is as follows:
 - SType = 7
 - System Bytes — Equal to System Bytes in corresponding message being rejected.
   > 和相应的被拒绝的消息的System Bytes相同
+  >
 
 8.2.9   SType=9: Separate.req
 
 An HSMS message with SType = 9 is used to terminate HSMS communications immediately. With the exception of the SType value, it is identical to the Deselect.req message. Its purpose is to end HSMS communications immediately and without exception. No response is defined.
+
 > SType = 9的HSMS消息用于立即中止HSMS通信。除了SType值外，和Deselect.req消息完全相同，用于单方面的立即中止HSMS通信。该消息不需要响应。
 
-## 第九章 特殊情况
+## 9. 特殊情况
 
 ### 9.1 General Considerations
 
@@ -824,6 +861,7 @@ An HSMS message with SType = 9 is used to terminate HSMS communications immediat
 Communications Failures
 
 If a communications failure is detected, the entity should terminate the TCP/IP connection. Upon termination of the connection, the entity may, at this point, attempt to reestablish communications.
+
 > 如果检测到communication failure，则该entity应中止TCP/IP连接，进入NOT CONNECTED状态。连接终端后，该entity可以在此时尝试重新建立通信。
 
 ### 9.2 TCP/IP Considerations
@@ -831,6 +869,7 @@ If a communications failure is detected, the entity should terminate the TCP/IP 
 > TCP/IP情况
 
 Connect Separation Time(T5)
+
 > 连接分离时间（T5）
 
 The connect procedures initiate some network activity. Frequent use of the active mode connect procedure to the IP Address and Port Number of an entity not yet ready to accept connections can be hostile to TCP/IP operations. The passive mode does not generate network activity and is not considered hostile to the network, although it may affect local application performance. An Entity initiating a connection in the active mode should limit its use of the connect procedure in a man- ner that is equivalent to the procedure described here.
@@ -838,24 +877,31 @@ The connect procedures initiate some network activity. Frequent use of the activ
 > 连接过程启动一些网络活动。频繁使用主动模式连接到还没有准备好接受的IP地址和端口对TCP/IP操作有影响。被动模式不会产生网络活动，也不会认为对网络有影响，尽管他可能会影响本地程序的性能。
 
 After an active connect procedure terminates by any means (successfully or unsuccessfully), the Entity should not initiate another active connect procedure (for the same Remote Entity) until the T5 Connect Separation Time has elapsed. The separation of connect operations will be the sum of the T5 Connect Sep- aration Time interval, plus the duration of the connect operation itself.
+
 > 在一个主动连接过程通过任何方式中断后，某entity不应该立即启动另一个主动连接，直到T5 Connect Separate Time过去。连接操作的间隔，应该是T5连接间隔时间加上连接操作本身的时间的总和。
 
 NOT SELECTED Timeout(T7)
+
 > NOT SELECTED 超时（T7）
 
 Entry into the NOT SELECTED state is achieved either by state transition #2 (establishment of a TCP/IP connection). There is a time limit on how long an entity is required to remain in the NOT SELECTED state before either entering the SELECTED state or by returning to the NOT CONNECTED state.
+
 > 可以通过#2状态转换（建立TCP/IP连接）进入NOT SELECTED状态。在entity进入SELECTED状态或者返回NOT CONNECTED状态有一个时间限制，因此定义了T7。
 
 Some entities, particularly those unable to accept more than a single TCP/IP connection, may be impaired in their operation by remaining in their NOT SELECTED state as they will be unavailable for communications with other entities. Such entities shall disconnect the TCP/IP connection (State Transition Event #3) if com- munication remains in the NOT SELECTED state for longer than the T7 timeout period.
+
 > 一些实体，尤其是那些无法接受多个TCP/IP连接的实体，可能会因为保持NOT SELECTED状态而无法和其他entity进行通信。如果通信保持在NOT SELECTED状态的时间超过T7，则该entity应断开TCP/IP连接（#3状态转换）
 
 Network Intercharacter Timeout (T8)
+
 > 网络字符间超时（T8）
 
 Because TCP/IP is a stream rather than a message pro- tocol, it is possible that bytes which are all part of a single HSMS message may be transmitted in separate TCP/IP messages without any violation of the TCP/IP protocol. Since it is possible that these separate mes- sages may be separated by a substantial period of time, the Network Intercharacter Timeout (T8) is defined.
+
 > 因为TCP/IP是一个流而不是一个消息协议，所以单个HSMS消息的一部分字节可能在单独的TCP/IP消息中传输，而不会违反TCP/IP协议。由于这些单独的消息可能相隔一段相当长的时间，因此定义了网络字符间超时（T8）
 
 T8 is similar in purpose to the SECS-I T1 timer except that the communications issues which necessitate T8 are not entirely in the control of the sender of the mes- sage. Therefore, it is deﬁned only in terms of the receiver of the message. In particular, if after receipt of a partial message, the T8 timeout period expires prior to receipt of the complete message, the receiving entity shall consider such case as a communications failure, as deﬁned above.
+
 > T8在墓地上与SECS-I的T1计时器相同，应由消息的响应方定义。如果在收到部分消息后，T8超时时间内没有收到完整消息，响应方应视为communication failure。
 
 Multiple Connection Requests Directed to a Single Published Port
@@ -879,15 +925,20 @@ A passive mode entity unable to service more than a single TCP/IP connec- tion f
 > 无法接受多个TCP/IP连接请求的被动模式的entity，将按照以下的方式处理额外请求
 
 1. Accept the connection, but always respond to any subsequent HSMS select procedures with the Com- munication Already Active response code. For the purpose of the HSMS State Diagram, the connect procedure terminates successfully (enters CONNECTED state), but HSMS communications are never established (remain in NOT SELECTED substate). This is the preferred option in that it can provide the most information to the remote entity as to why the connection is refused (see HSMS Select Procedure), but places an addition imple- mentation requirement on the local entity.
+
    > 接受连接，但总是用"通信已激活"响应代码响应后续所有的select过程。在HSMS状态图中，连接过程成功结束（进入CONNECTED状态），但HSMS通信未建立（保持在NOT SELECTED子状态）。这是首选项，因为它可以向remote entity提供连接被拒绝最多原因，但是对local entity提出了额外的实现要求。
-
+   >
 2. Actively reject the connection request. This can be done in a TLI implementation using the t_snddis procedure. This will cause the connect procedure in the remote entity to terminate unsuccessfully. This option may not be available to all implementations because some API’s, notably some implementa- tions of BSD Sockets, do not provide for initiating an active reject. Note, however, that all TCP/IP implementations, including BSD Sockets, properly respond to an active reject from the remote entity.
-   > 主动拒绝连接请求。这可以使用t_snddis过程中的TLI实现。这会导致remote entity的连接过程非正常中断。这种方式不使用于所有的情况，因为一些TCP/IP的API不提供主动拒绝的操作。但是所有TCP/IP都响应来自remote entity的主动拒绝。
 
+   > 主动拒绝连接请求。这可以使用t_snddis过程中的TLI实现。这会导致remote entity的连接过程非正常中断。这种方式不使用于所有的情况，因为一些TCP/IP的API不提供主动拒绝的操作。但是所有TCP/IP都响应来自remote entity的主动拒绝。
+   >
 3. Refuse to listen for or accept the connect request. No action is taken in the local entity: the remote entity's connect procedure will eventually time out. This option is permitted, but not recommended, as it can cause considerable delay on the part of the remote entity.  However, it may be the only alterna- tive available to implementations with network resource limitations.
+
    > 拒绝监听或者接受连接请求。在local entity中不采取任何操作，remote entity的连接过程最终将超时。这个选型是允许的但是不推荐使用，因为他可能会导致remote entity有相当大的延迟。对于网络资源有限的实体来说，这可能是唯一可用的替代方案。
+   >
 
 The documentation of the passive local entity shall indicate which means it uses to refuse connections.
+
 > 被动模式的local entity的文档要写明要使用何种方式拒绝连接。
 
 ### 9.3 HSMS特有的情况
@@ -896,7 +947,7 @@ The documentation of the passive local entity shall indicate which means it uses
 
 > 控制事务T6控制超时
 
-A number of the control messages are part of procedures which require a message exchange or transaction: <xx>.req from the initiator of the control service, fol- lowed by an <xx>.rsp from the receiver of the <xx>.req in response to it. A control transaction is considered open from the time the <xx>.req request is sent until the time the <xx>.rsp is received.
+A number of the control messages are part of procedures which require a message exchange or transaction: `<xx>`.req from the initiator of the control service, fol- lowed by an `<xx>`.rsp from the receiver of the `<xx>`.req in response to it. A control transaction is considered open from the time the `<xx>`.req request is sent until the time the `<xx>`.rsp is received.
 
 > 许多控制消息是信息交换和事务前提一部分：由发起者的req消息，和响应者的rsp消息组成。控制事务是从发送req消息开始，收到rsp消息结束。
 
@@ -945,16 +996,21 @@ When a Sender sends a Primary Message with W-Bit 1 (Reply Expected), the Sender 
 > 当发送方发送w-bit为1的主消息时，发送方应该期望收到一个Message Header满足以下要求的回复消息
 
 - The SessionID of the Reply must match the SessionID of the Primary Message.
+
   > 次消息的SessionID必须和主消息的SessionID相同
-
+  >
 - The Stream of the Reply must match the Stream of the Primary Message.
+
   > 次消息的stream必须和主消息的steam相同
-
+  >
 - The Function of the Reply must be one greater than the Function of the Primary Message, or else the Function of the Reply must be 0 (Function Zero Reply).
-  > 次消息的function必须比主消息的function大1，否则次消息的function必须为0
 
+  > 次消息的function必须比主消息的function大1，否则次消息的function必须为0
+  >
 - The System Bytes of the Reply must match the System Bytes of the Primary Message.
+
   > 次消息的System Bytes必须和主消息的System Bytes相同
+  >
 
 9.4.1.1 T3 Reply Timeout
 
