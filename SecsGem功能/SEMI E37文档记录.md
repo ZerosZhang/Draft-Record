@@ -1038,19 +1038,32 @@ The SECS-II standard defines error messages S9F1, S9F3, S9F5, S9F7, S9F9, and S9
 
 When using SECS-II with HSMS, MHEAD and SHEAD should contain the ten bytes of the HSMS Message Header.
 
-> 当HSMS使用SECS-II消息是，MHead和SHead应该包含10个字节的HSMS Message Header。
+> 当HSMS使用SECS-II消息时，MHead和SHead应该包含10个字节的HSMS Message Header。
 
 ## 10 HSMS Documentation
 
 An HSMS implementation is required to document the following information:
 
+> 实现HSMS需要文档有如下信息：
+
 1. Method for setting protocol parameters (see Section 10.1).
+   > 设置协议参数的方法（参考10.1）
 2. Range allowed and resolution for each parameter.
+   > 每个参数允许的范围和分辨率
 3. The option used for refusing incoming connection requests if the implementation uses the passive mode for TCP/IP connection establishment.
+   > 如果使用TCP/IP连接的被动模式建立HSMS，则必须提供拒绝传入连接请求的选项
 4. Maximum message size which can be received.
+   > 可以接受消息的最大尺寸
 5. Maximum expected size of messages sent.
+   > 可以发送消息的最大尺寸
 6. Maximum number of supported concurrent open transactions.
+   > 打开事务支持的最大数量
 
 10.1   Parameter Setting
 
 Implementations of HSMS must provide for installation time setting of the following parameters. The range and resolution of all param- eters must be at least as shown in the table. All parameters must be stored in such a manner that the settings will be retained if the power fails or if the sys- tem software is reloaded.
+
+> HSMS实现的时候必须提供下面参数的安装时间设置。所有参数的范围和分辨率必须如下表所示，所有参数的存储方式要求能在电源故障或者系统重新加载时保留设置。
+
+![1686015375950](image/SEMIE37文档记录/1686015375950.png)
+
