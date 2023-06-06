@@ -224,96 +224,194 @@ This section contains four limits monitoring examples to help clarify the use of
 
 An alarm is related to any abnormal situation on the equipment that may endanger people, equipment, or material being processed. Such abnormal situations are defined by the equipment manufacturer based on physical safety limitations. Equipment activities potentially impacted by the presence of an alarm shall be inhibited.
 
+> 报警与设备的非正常情况有关，这些非正常情况可能导致人，机器或者材料的损伤。类似的异常情况由设备制造商根据物理安全限制定义。受警报影响的设备活动应该停止。
+
 2.1.1 Note that exceeding control limits associated with process tolerance does not constitute an alarm nor do normal equipment events such as the start or completion of processing.
 
-2.2 capabilities
+> 请注意，工艺公差相关的超限控制并不构成警报，也不构成正常设备事件，如工艺的开始或完成。
+
+## 2.2 capabilities
+
+> 功能
 
 Capabilities are operations performed by semiconductor manufacturing equipment. These operations are initiated through the communications interface using sequences of SECS-II messages (or scenarios). An example of a capability is the setting and clearing of alarms.
 
-2.3 collection event
+> 功能是由半导体设备执行的操作，这些操作通过使用通信接口发起，这些通信使用的是SECS-II消息。如设置或者清除报警。
+
+## 2.3 collection event
+
+> 收集事件
 
 A collection event is an event (or grouping of related events) on the equipment that is considered to be significant to the host.
 
-2.4  communication failure
+> 收集事件是equipment上被认为对host有重要意义的事件
+
+## 2.4  communication failure
+
+> 通信失败
 
 A communication failure is said to occur when an established communications link is broken. Such failures are protocol specific. Refer to the appropriate protocol standard (e.g., SEMI E4 or SEMI E37) for a protocol-specific definition of communication failure.
 
-2.5 communication fault
+> 当已建立的通信链路中断时，就会发生通信失败，这部分非本协议的内容，具体参考SEMI E4或者SEMI E37。
+
+## 2.5 communication fault
+
+> 通信错误
 
 A communication fault occurs when the equipment does not receive an expected message, or when either a transaction timer or a conversation timer expires.
 
-2.6 control
+> 当设备没有接受到预期的消息，或者事务/会话计时器超时时，就会发生通信错误
+
+## 2.6 control
+
+> 控制
 
 To control is to exercise directing influence.
 
-2.7 equipment model — An equipment model is a definition based on capabilities, scenarios, and SECS-II messages that manufacturing equipment should perform to support an automated manufacturing environment. (See also Generic Equipment Model.)
+> 控制是运动的的直接影响
 
-2.8 event
+## 2.7 equipment model
+
+> 设备模型
+
+An equipment model is a definition based on capabilities, scenarios, and SECS-II messages that manufacturing equipment should perform to support an automated manufacturing environment. (See also Generic Equipment Model.)
+
+> 设备模型是基于设备功能，场景和SECS-II消息的定义，制造设备应执行这些信息以支持自动化制造环境。
+
+## 2.8 event
+
+> 事件
 
 An event is a detectable occurrence significant to the equipment.
 
-2.9  GEM compliance
+> 事件指的是对设备有意义且可以检测到的事件
+
+## 2.9  GEM compliance
+
+> 符合GEM标准
 
 The term “GEM Compliance” is defined with respect to individual GEM capabilities to indicate adherence to the GEM standard for a specific capability. Section 8 includes more detail on GEM Compliance.
 
-2.10 Generic Equipment Model
+> 术语"GEM Compliance"是针对个别GEM功能定义的，以表明这些功能符合GEM标准。
+
+## 2.10 Generic Equipment Model
+
+> 通用设备模型
 
 The Generic Equipment Model is used as a reference model for any type of equipment. It contains functionality that can apply to most equipment, but does not address unique requirements of specific equipment.
 
-2.11 host
+> 通用设备模型是任何类型设备的参考模型，包含适用于绝大多数设备的功能，但不涉及特定设备的特殊要求。
+
+## 2.11 host
+
+> 主机
 
 The SEMI E4 and E5 standards define Host as “the intelligent system that communicates with the equipment.”
 
-2.12  message fault
+> SEMI E4和E5标准将主机定义为与设备通信的智能系统
+
+## 2.12  message fault
+
+> 消息错误
 
 A message fault occurs when the equipment receives a message that it cannot process because of a defect in the message.
 
-2.13 operational script
+> 当设备收到的消息由于信息的缺陷而无法处理时，就会发生信息故障
+
+## 2.13 operational script
+
+> 操作脚本
 
 An operational script is a collection of scenarios arranged in a sequence typical of actual factory operations. Example sequences are system initialization powerup, machine setup, and processing.
 
-2.14  operator
+> 操作脚本是一个场景的集合，按照实际工厂操作的典型顺序排列。例如：系统初始化开机 ，机器设置和加工等序列。
+
+## 2.14  operator
+
+> 操作员
 
 A human who operates the equipment to perform its intended function (e.g., processing). The operator typically interacts with the equipment via the equipment supplied operator console.
 
-2.15 process unit
+> 操作设备以执行其预定功能的人。操作员通常通过设备提供的操作台与设备进行互动。
+
+## 2.15 process unit
+
+> 加工单元
 
 A process unit refers to the material that is typically processed as a unit via single run command, process program, etc. Common process units are wafers, cassettes, magazines, and boats.
 
-2.16 processing cycle
+> 加工单元是指通常通过单次运行命令，加工程序等作为一个单元进行加工的材料。常见的加工单元有晶圆，料带，料盒等。
 
-A processing cycle is a sequence wherein all of the material contained in a typical process unit is processed. This is often used as a measure of action or time.
+## 2.16 processing cycle
 
-2.17 scenario
+> 加工周期
+
+A processing cycle is a sequence where in all of the material contained in a typical process unit is processed. This is often used as a measure of action or time.
+
+> 一个加工周期是一个序列，在这个序列中，一个加工单元中包含的所有材料都被加工。这通常被用于作为CT的标准。
+
+## 2.17 scenario
+
+> 场景
 
 A scenario is a group of SECS-II messages arranged in a sequence to perform a capability. Other information may also be included in a scenario for clarity.
 
-2.18 SECS-I
+> 场景是一组按顺序排列的SECS-II信息，用于执行某一个功能。
+
+## 2.18 SECS-I
+
+> SECS-I
 
 SEMI Equipment Communications Standard 1 (SEMI E4). This standard specifies a method for a message transfer protocol with electrical signal levels based upon EIA RS232-C.
 
-2.19 SECS-II
+> SECS-I（SEMI E4）规定了一种基于RS232串口的信息传输协议。
+
+## 2.19 SECS-II
+
+> SECS-II
 
 SEMI Equipment Communications Standard 2 (SEMI E5). This standard specifies a group of messages and the respective syntax and semantics for those messages relating to semiconductor manufacturing equipment control.
 
-2.20  SMS
+> SECS-II（SEMI E5）规定了与半导体设备控制有关消息的语法和语义。
+
+## 2.20  SMS
+
+> SMS
 
 SECS Message Service. An alternative to SECS-I to be used when sending SECS-II formatted messages over a network.
 
-2.21 state model
+> SECS消息服务。在网络上发送SECS-II格式的信息，是SECS-I的替代方案。
+
+## 2.21 state model
+
+> 状态模型
 
 A State Model is a collection of states and state transitions that combine to describe the behavior of a system. This model includes definition of the conditions that delineate a state, the actions/reactions possible within a state, the events that trigger transitions to other states, and the process of transitioning between states.
 
-2.22 system default
+> 状态模型是一个状态和状态转换的集合，结合起来描述一个系统的行为。这个模型包括对进入一个状态条件的定义，在一个状态下可能的操作，触发向其他状态过渡的事件，以及状态间的转换过程。
+
+## 2.22 system default
+
+> 系统默认
 
 Refers to state(s) in the equipment behavioral model that are expected to be active at the end of system initialization. It also refers to the value(s) that specified equipment variables are expected to contain at the end of system initialization.
 
-2.23 system initialization
+> 指设备行为模型中预计在系统初始化结束时的状态。这也是在系统初始化结束时，指定的设备变量应包含的值。
+
+## 2.23 system initialization
+
+> 系统初始化
 
 The process that an equipment performs at power-up, system activation, and/or system reset. This process is expected to prepare the equipment to operate properly and according to the equipment behavioral models.
 
-2.24 user
+> 设备在开机，系统复位时执行的过程。这个过程预计会使设备做好准备，按照设备预定的操作正常运行。
+
+## 2.24 user
+
+> 使用者
 
 A human or humans who represent the factory and enforce the factory operation model. A user is considered to be responsible for many setup and configuration activities that cause the equipment to best conform to factory operations practices.
+
+> 工厂里执行工厂事务的人。用户负责设备的设置和调试，使设备符合工厂运营管理。
 
 ## 3. State Models
