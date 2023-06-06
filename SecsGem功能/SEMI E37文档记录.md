@@ -32,7 +32,7 @@ SEMI E5  — SEMI Equipment Communication Standard 2 — Message Content (SECS-I
 
 ## 4. Terminology 术语
 
-`API `— Application Program Interface. In the case of TCP/IP, a set of programming conventions used by an application program to prepare for or invoke TCP/IP capabilities.
+`API`— Application Program Interface. In the case of TCP/IP, a set of programming conventions used by an application program to prepare for or invoke TCP/IP capabilities.
 
 > API：应用程序接口。在TCP/IP下，应用程序使用的一组编程约定，用于调试TCP/IP功能
 
@@ -1066,4 +1066,3 @@ Implementations of HSMS must provide for installation time setting of the follow
 > HSMS实现的时候必须提供下面参数的安装时间设置。所有参数的范围和分辨率必须如下表所示，所有参数的存储方式要求能在电源故障或者系统重新加载时保留设置。
 
 ![1686015375950](image/SEMIE37文档记录/1686015375950.png)
-
