@@ -500,233 +500,94 @@ A further narrowing of the definition of event is repre- sented by the term “c
 
 The Communications State Model defines the behavior of the equipment in relation to the existence or absence of a communications link with the host. Section 4.1 expands on this section by defining the Establish Communications capability. This model pertains to a logical connection between equipment and host rather than a physical connection.
 
-3.2.1 Terminology — The terms communication fail-
-ure, connection transaction failure, and communication
-link are defined for use within this document only and
-should not be confused with the same or similar terms
-used elsewhere.
-• See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for
-a protocol specific definitions of communications
-failure.
-• A connection transaction failure occurs when
-attempting to establish communications and is
-caused by
-— a communication failure,
-— the failure to receive an S1,F14 reply within a
-reply timeout limit, or
-— receipt of S1,F14 that has been improperly
-formatted or with COMMACK2  not set to 0.
-• A reply timeout period begins after the successful
-transmission of a complete primary message for
-which a reply is expected. (See SEMI E4 (SECS-I)
-or SEMI E37 (HSMS) for a protocol-specific
-definition of reply timeout.)
-• A communication link is established following the
-first successful completion of any one S1,F13/F14
-transaction with an acknowledgement of “accept”.
-The establishment of this link is logical rather than
-physical.
-• Implementations may have mechanisms which
-allow outgoing messages to be stored temporarily
-prior to being sent. The noun queue is used to cover
-such stored messages. They are queued when
-placed within the queue and are dequeued by
-removing them from this storage.
-• Send includes “queue to send” or “begin the
-process of attempting to send” a message. It does
-not imply the successful completion of sending a
-message.
-• The host may attempt to establish communications
-with equipment at any time due to the initialization
-of the host or by independent detection of a
-communications failure by the host. Thus, the host
-may initiate an S1,F13/F14 transaction at any time.
-3.2.2 CommDelay Timer — The CommDelay timer
-represents an internal timer used to measure the interval
-between attempts to send S1,F13. The length of this
-interval is equal to the value in the EstablishCommuni-
-cationsTimeout. The CommDelay timer is not directly
-visible to the host.
-EstablishCommunicationsTimeout is the user-configur-
-able equipment constant that defines the delay, in
-seconds, between attempts to send S1,F13. This value is
-used to initialize the CommDelay timer.
-The CommDelay timer is initialized to begin timing.
-The CommDelay timer is initialized only when the state
-WAIT DELAY is entered.
-The CommDelay timer is expired when it “times out,”
-and the time remaining in the interval between attempts
-to send is zero. When the timer expires during the state
-WAIT DELAY, it triggers a new attempt to send
-S1,F13 and the transition to the state WAIT CRA3 .
-3.2.3  Conventions
-• The attempt to send S1,F13 is made only upon
-transit into the state WAIT CRA. The CommDelay
-Timer should be set to “expired” at this time.
-• The CommDelay timer is initialized only upon
-transit into the state WAIT DELAY. A next attempt
-to send S1,F13 shall occur only upon a transit to
-the state WAIT CRA.
-3.2.4 Communication States — There are two major
-states of SECS communication, DISABLED and
-ENABLED. The system default state must be user-
-configurable at the equipment (e.g., via a jumper setting
-or non-volatile memory variable).
-Once system initialization has been achieved, the opera-
-tor shall be able to change the communication state
-selection at any time via equipment terminal functions
-or momentary switch. A two-position type switch must
-not be used due to possible conflict with the system
-default.
-The ENABLED state has two substates, NOT COM-
-MUNICATING and COMMUNICATING, described
-below. The equipment must inform the operator of the
-current communication state via continuous display at
-the equipment, including the NOT COMMUNI-
-CATING and COMMUNICATING sub-states.
-In the event of a connection transaction failure, a user-
-configurable equipment constant EstablishCommunica-
-tionsTimeout is used to establish the interval between
-attempts to send an S1,F13 (Establish Communications
-Request) while in the NOT COMMUNICATING sub-
-state.
-Figure 3.2.1 shows the relationship between the
-superstates and substates of the Communications State
-Model. A description of the events triggering state
-transitions and the actions taken is given in Table 3.2.
+3.2.1 Terminology — The terms communication failure, connection transaction failure, and communication link are defined for use within this document only and should not be confused with the same or similar terms used elsewhere.
 
+- See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for a protocol specific definitions of communications failure.
+- A connection transaction failure occurs when attempting to establish communications and is caused by
+  - a communication failure,
+  - the failure to receive an S1,F14 reply within a reply timeout limit, or
+  - receipt of S1,F14 that has been improperly formatted or with COMMACK2  not set to 0.
+- A reply timeout period begins after the successful transmission of a complete primary message for which a reply is expected. (See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for a protocol-specific definition of reply timeout.)
+- A communication link is established following the first successful completion of any one S1,F13/F14 transaction with an acknowledgement of “accept”. The establishment of this link is logical rather than physical.
+- Implementations may have mechanisms which allow outgoing messages to be stored temporarily prior to being sent. The noun queue is used to cover such stored messages. They are queued when placed within the queue and are dequeued by removing them from this storage.
+- Send includes “queue to send” or “begin the process of attempting to send” a message. It does not imply the successful completion of sending a message.
+- The host may attempt to establish communications with equipment at any time due to the initialization of the host or by independent detection of a communications failure by the host. Thus, the host may initiate an S1,F13/F14 transaction at any time.
+
+3.2.2 CommDelay Timer
+
+The CommDelay timer represents an internal timer used to measure the interval between attempts to send S1,F13. The length of this interval is equal to the value in the EstablishCommuni- cationsTimeout. The CommDelay timer is not directly visible to the host.
+
+EstablishCommunicationsTimeout is the user-configurable equipment constant that defines the delay, in seconds, between attempts to send S1,F13. This value is used to initialize the CommDelay timer.
+
+The CommDelay timer is initialized to begin timing. The CommDelay timer is initialized only when the state WAIT DELAY is entered.
+
+The CommDelay timer is expired when it “times out,” and the time remaining in the interval between attempts to send is zero. When the timer expires during the state WAIT DELAY, it triggers a new attempt to send S1,F13 and the transition to the state WAIT CRA3 .
+
+3.2.3  Conventions
+
+- The attempt to send S1,F13 is made only upon transit into the state WAIT CRA. The CommDelay Timer should be set to “expired” at this time.
+- The CommDelay timer is initialized only upon transit into the state WAIT DELAY. A next attempt to send S1,F13 shall occur only upon a transit to the state WAIT CRA.
+
+3.2.4 Communication States
+
+There are two major states of SECS communication, DISABLED and ENABLED. The system default state must be user- configurable at the equipment (e.g., via a jumper setting or non-volatile memory variable).
+
+Once system initialization has been achieved, the opera tor shall be able to change the communication stat selection at any time via equipment terminal function or momentary switch. A two-position type switch mus not be used due to possible conflict with the syste default.
+
+The ENABLED state has two substates, NOT COMMUNICATING and COMMUNICATING, described below. The equipment must inform the operator of the current communication state via continuous display at the equipment, including the NOT COMMUNICATING and COMMUNICATING sub-states.
+
+In the event of a connection transaction failure, a user-configurable equipment constant EstablishCommunica- tionsTimeout is used to establish the interval between attempts to send an S1,F13 (Establish Communications Request) while in the NOT COMMUNICATING sub- state.
+
+Figure 3.2.1 shows the relationship between the superstates and substates of the Communications State Model. A description of the events triggering state transitions and the actions taken is given in Table 3.2.
+
+![1686114517058](image/SEMIE30文档记录/1686114517058.png)
 Figure 3.2.1
 Communications State Diagram
 
-The states of the Communications State Model are
-defined as follows:
+The states of the Communications State Model are defined as follows:
+
 DISABLED
-In this state SECS-II communication with a host
-computer is non-existent. If the operator switches
-from ENABLED to DISABLED, all SECS-II
-communications must cease immediately. Any
-messages queued to send shall be discarded, and all
-further action on any open transactions and
-conversations shall be terminated.4 Handling of
-messages currently being transmitted is an issue for
-lower level message transfer protocols and is not
-addressed in this standard.
-The DISABLED state is a possible system default.
+In this state SECS-II communication with a host computer is non-existent. If the operator switches from ENABLED to DISABLED, all SECS-II communications must cease immediately. Any messages queued to send shall be discarded, and all further action on any open transactions and conversations shall be terminated.4 Handling of messages currently being transmitted is an issue for lower level message transfer protocols and is not addressed in this standard. The DISABLED state is a possible system default.
+
 ENABLED
-ENABLED has two substates, COMMUNICA-
-TING and NOT COMMUNICATING. Whenever
-communications are enabled, either during system
-initialization or through operator selection, the
-substate of NOT COMMUNICATING is active
-until communications are formally established.
-Lower-level protocols (such as SECS-I) are
-assumed to be functioning normally in that they are
-capable of supporting the communication of SECS-
-II syntax.
+ENABLED has two substates, COMMUNICA- TING and NOT COMMUNICATING. Whenever communications are enabled, either during system initialization or through operator selection, the substate of NOT COMMUNICATING is active until communications are formally established. Lower-level protocols (such as SECS-I) are assumed to be functioning normally in that they are capable of supporting the communication of SECS- II syntax.
 The ENABLED state is a possible system default.
+
 ENABLED/NOT COMMUNICATING
-No messages other than S1,F13, S1,F14, and S9,Fx
-shall be sent while this substate is active. The
-equipment shall discard any messages received
-from the host other than S1,F13 or S1,F14
-(Establish Communications Acknowledge). It shall
-also periodically attempt to establish
-communication with a host computer by issuing an
-S1,F13 until communications are successfully
-established. However, only one equipment-initiated
-S1,F13 transaction may be open at any time.
-The NOT COMMUNICATING state has two AND
-substates, HOST-INITIATED CONNECT and
-EQUIPMENT-INITIATED CONNECT, both of
-which are active whenever the equipment is NOT
-COMMUNICATING. These two substates clarify
-the behavior of the equipment in the event that both
-the equipment and the host attempt to establish
-communications during the same period of time5 .
-NOT COMMUNICATING/EQUIPMENT-INITIATED
-CONNECT
-This state has two substates, WAIT CRA and
-WAIT DELAY. Upon any entry to the NOT
-COMMUNICATING state, whenever
-EQUIPMENT-INITIATED CONNECT first
-becomes active, a transition to WAIT CRA occurs,
-the CommDelay timer is set to “expired,” and an
-immediate attempt to send S1,F13 is made.
-NOT COMMUNICATING/EQUIPMENT-INITIATED
-CONNECT/WAIT CRA
-An Establish Communications Request has been
-sent. The equipment waits for the host to
-acknowledge the request.
-NOT COMMUNICATING/EQUIPMENT-INITIATED
-CONNECT/WAIT DELAY
-A connection transaction failure has occurred. The
-CommDelay timer has been initialized. The
-equipment waits for the timer to expire.
-NOT COMMUNICATING/HOST-INITIATED CON-
-NECT
-This state describes the behavior of the equipment
-in response to a host-initiated S1,F13 while NOT
-COMMUNICATING is active.
-NOT COMMUNICATING/HOST-INITIATED CON-
-NECT/WAIT CR FROM HOST
-The equipment waits for an S1,F13 from the host.
-If an S1,F13 is received, the equipment attempts to
-send an S1,F14 with COMMACK = 0.
+No messages other than S1,F13, S1,F14, and S9,Fx shall be sent while this substate is active. The equipment shall discard any messages received from the host other than S1,F13 or S1,F14 (Establish Communications Acknowledge). It shall also periodically attempt to establish communication with a host computer by issuing an S1,F13 until communications are successfully established. However, only one equipment-initiated S1,F13 transaction may be open at any time.
+
+The NOT COMMUNICATING state has two AND substates, HOST-INITIATED CONNECT and EQUIPMENT-INITIATED CONNECT, both of which are active whenever the equipment is NOT COMMUNICATING. These two substates clarify the behavior of the equipment in the event that both the equipment and the host attempt to establish communications during the same period of time5 .
+
+NOT COMMUNICATING/EQUIPMENT-INITIATED CONNECT
+This state has two substates, WAIT CRA and WAIT DELAY. Upon any entry to the NOT COMMUNICATING state, whenever EQUIPMENT-INITIATED CONNECT first becomes active, a transition to WAIT CRA occurs, the CommDelay timer is set to “expired,” and an immediate attempt to send S1,F13 is made.
+
+NOT COMMUNICATING/EQUIPMENT-INITIATED CONNECT/WAIT CRA
+An Establish Communications Request has been sent. The equipment waits for the host to acknowledge the request.
+
+NOT COMMUNICATING/EQUIPMENT-INITIATED CONNECT/WAIT DELAY
+A connection transaction failure has occurred. The CommDelay timer has been initialized. The equipment waits for the timer to expire.
+
+NOT COMMUNICATING/HOST-INITIATED CONNECT
+This state describes the behavior of the equipment in response to a host-initiated S1,F13 while NOT COMMUNICATING is active.
+
+NOT COMMUNICATING/HOST-INITIATED CONNECT/WAIT CR FROM HOST
+The equipment waits for an S1,F13 from the host. If an S1,F13 is received, the equipment attempts to send an S1,F14 with COMMACK = 0.
+
 ENABLED/COMMUNICATING
-Communications have been established. The
-equipment may receive any message from the host,
-including S1,F13. When the equipment is
-COMMUNICATING, SECS communications with
-a host computer must be maintained. This state
-remains active until communications are disabled
-or a communication failure occurs. If the equipment
-receives S1,F13 from the host while in the
-COMMUNICATING substate, it should respond
-with S1,F14 with COMMACK set to zero. If the
-equipment receives S1,F14 from a previously sent
-S1,F13, no action is required.
-In the event of communication failure, the
-equipment shall return to the NOT
-COMMUNICATING substate and attempt to re-
-establish communications with the host.
-It is possible that the equipment may be waiting for
-an S1,F14 from the host in EQUIPMENT-
-INITIATED CONNECT/WAIT CRA at the time
-an S1,F13 is received from the host in HOST-
-INITIATED CONNECT/WAIT CR FROM HOST.
-When this situation occurs, both equipment and
-host have an open S1,F13/S1,F14 transaction.
-Since communications are successfully established
-on the successful completion of any S1,F13/S1,F14
-transaction, either of these two transactions may be
-the first to complete successfully and to cause the
-transition from NOT COMMUNICATING state to
-COMMUNICATING. In this event, the other
-transaction shall remain open regardless of the
-transition to COMMUNICATING until it is closed
-in a normal manner.
-If the equipment has not yet sent6 an S1,F14 to a
-previously received S1,F13 at the time when
-COMMUNICATING becomes active, the S1,F14
-response shall be sent in a normal manner. A failure
-to send the S1,F14 is then treated as any other
-communication failure.
-If the equipment-initiated S1,F13/S1,F14 is still
-open when the transition to COMMUNICATING
-occurs,  subsequent  failure to receive a reply from
-the host is considered a communication fault by
-equipment. An S9,F9 should be sent when a
-transaction timer timeout occurs7. (See Section 4.9
-for definitions of communication faults and
-message faults, as well as detail on Stream 9 Error
-Messages.)
-3.2.5 State Transitions — Table 3.2 contains a full
-description of the state transitions depicted in Figure
-3.2.1.
-When the operator switches from the DISABLED state
-to the ENABLED state, no collection event shall occur,
-since no messages can be sent until communications
-have been established. The process of establishing
-communications serves to notify the host that
-communications are ENABLED. No other collection
-events are defined for the Communications State Model.
+Communications have been established. The equipment may receive any message from the host, including S1,F13. When the equipment is COMMUNICATING, SECS communications with a host computer must be maintained. This state remains active until communications are disabled or a communication failure occurs. If the equipment receives S1,F13 from the host while in the COMMUNICATING substate, it should respond with S1,F14 with COMMACK set to zero. If the equipment receives S1,F14 from a previously sent S1,F13, no action is required.
+
+In the event of communication failure, the equipment shall return to the NOT COMMUNICATING substate and attempt to re- establish communications with the host.
+
+It is possible that the equipment may be waiting for an S1,F14 from the host in EQUIPMENT- INITIATED CONNECT/WAIT CRA at the time an S1,F13 is received from the host in HOST- INITIATED CONNECT/WAIT CR FROM HOST. When this situation occurs, both equipment and host have an open S1,F13/S1,F14 transaction. Since communications are successfully established on the successful completion of any S1,F13/S1,F14 transaction, either of these two transactions may be the first to complete successfully and to cause the transition from NOT COMMUNICATING state to COMMUNICATING. In this event, the other transaction shall remain open regardless of the transition to COMMUNICATING until it is closed in a normal manner.
+
+If the equipment has not yet sent6 an S1,F14 to a previously received S1,F13 at the time when COMMUNICATING becomes active, the S1,F14 response shall be sent in a normal manner. A failure to send the S1,F14 is then treated as any other communication failure.
+
+If the equipment-initiated S1,F13/S1,F14 is still open when the transition to COMMUNICATING occurs,  subsequent  failure to receive a reply from the host is considered a communication fault by equipment. An S9,F9 should be sent when a transaction timer timeout occurs7. (See Section 4.9 for definitions of communication faults and message faults, as well as detail on Stream 9 Error Messages.)
+
+3.2.5 State Transitions
+
+Table 3.2 contains a full description of the state transitions depicted in Figure 3.2.1.
+
+When the operator switches from the DISABLED state to the ENABLED state, no collection event shall occur, since no messages can be sent until communications have been established. The process of establishing communications serves to notify the host that communications are ENABLED. No other collection events are defined for the Communications State Model.
+
+![1686114794550](image/SEMIE30文档记录/1686114794550.png)
