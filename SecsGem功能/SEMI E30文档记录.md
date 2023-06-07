@@ -498,35 +498,71 @@ A further narrowing of the definition of event is repre- sented by the term “c
 
 ### 3.2 Communications State Model
 
+> 通讯状态模型
+
 The Communications State Model defines the behavior of the equipment in relation to the existence or absence of a communications link with the host. Section 4.1 expands on this section by defining the Establish Communications capability. This model pertains to a logical connection between equipment and host rather than a physical connection.
 
-3.2.1 Terminology — The terms communication failure, connection transaction failure, and communication link are defined for use within this document only and should not be confused with the same or similar terms used elsewhere.
+> 通信状态模型定义了和主机之间是否存在通讯链路的设备行为。4.1节通过定义建立通讯能力对本节内容进行了扩展。这个模型适用于设备和主机之间的逻辑连接，而非物理连接。
+
+3.2.1 Terminology
+
+> 术语
+
+The terms communication failure, connection transaction failure, and communication link are defined for use within this document only and should not be confused with the same or similar terms used elsewhere.
+
+> 术语`communication failure`,`connection transaction failure`,`communication link`的定义只在本文内有效，不要和其他地方使用的类似的术语混淆。
 
 - See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for a protocol specific definitions of communications failure.
+  > 参考SEMI E4（SECS-I）或者SEMI E37（HSMS）了解通信故障的协议定义。
 - A connection transaction failure occurs when attempting to establish communications and is caused by
+
   - a communication failure,
   - the failure to receive an S1,F14 reply within a reply timeout limit, or
   - receipt of S1,F14 that has been improperly formatted or with COMMACK2  not set to 0.
+
+  > 尝试建立通信时发生连接事务失败，可能的原因如下所示：
+  >
+  > - 通信故障
+  > - 未能在回复超时前收到S1F14回复
+  > - 收到格式不正确或者COMMACK2非零的S1F14
+
 - A reply timeout period begins after the successful transmission of a complete primary message for which a reply is expected. (See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for a protocol-specific definition of reply timeout.)
+  > 回复超时倒计时从成功传输需要回复的主消息之后开始（具体参考E37 HSMS）
 - A communication link is established following the first successful completion of any one S1,F13/F14 transaction with an acknowledgement of “accept”. The establishment of this link is logical rather than physical.
+  > 在首次完成S1F13/F14事务并确认接受后，就会建立通讯联系。这种联系的建立是逻辑上的，而不是物理上的。
 - Implementations may have mechanisms which allow outgoing messages to be stored temporarily prior to being sent. The noun queue is used to cover such stored messages. They are queued when placed within the queue and are dequeued by removing them from this storage.
+  > 用队列来实现允许在发送消息之前临时存储发出消息的机制
 - Send includes “queue to send” or “begin the process of attempting to send” a message. It does not imply the successful completion of sending a message.
+  > 发送包括"发送队列""开始尝试发送"并非成功完成了发送消息
 - The host may attempt to establish communications with equipment at any time due to the initialization of the host or by independent detection of a communications failure by the host. Thus, the host may initiate an S1,F13/F14 transaction at any time.
+  > 主机可能随时和设备建立通信事务，因此主机可以在任何时候启动S1F13/F14
 
 3.2.2 CommDelay Timer
 
-The CommDelay timer represents an internal timer used to measure the interval between attempts to send S1,F13. The length of this interval is equal to the value in the EstablishCommuni- cationsTimeout. The CommDelay timer is not directly visible to the host.
+> 通讯延时计时器
+
+The CommDelay timer represents an internal timer used to measure the interval between attempts to send S1,F13. The length of this interval is equal to the value in the Establish Communications Timeout. The CommDelay timer is not directly visible to the host.
+
+> 通讯延时计时器是一个内部计时器，用于规定多次发送S1F13之间的间隔，这个时间间隔为EstablishCommunicationsTimeout的值。对主机来说，该超时不可见。
 
 EstablishCommunicationsTimeout is the user-configurable equipment constant that defines the delay, in seconds, between attempts to send S1,F13. This value is used to initialize the CommDelay timer.
 
+> EstablishCommunicationsTimeout是用户可以配置的设备常量（EC），用于定义多次发送S1F13之间的间隔。该值用于初始化CommDelay计时器
+
 The CommDelay timer is initialized to begin timing. The CommDelay timer is initialized only when the state WAIT DELAY is entered.
 
+> 初始化CommDelay计时器后开始计时，只有在进入状态WAITDELAY时，才会初始化CommDelay计时器
+
 The CommDelay timer is expired when it “times out,” and the time remaining in the interval between attempts to send is zero. When the timer expires during the state WAIT DELAY, it triggers a new attempt to send S1,F13 and the transition to the state WAIT CRA3 .
+
+> CommDelay计时器在超时时结束，并且可以再次尝试发送消息。当计时器在WAITDELAY状态下超时时，会尝试发送一次S1F13并且进入WAIT CRA3状态
 
 3.2.3  Conventions
 
 - The attempt to send S1,F13 is made only upon transit into the state WAIT CRA. The CommDelay Timer should be set to “expired” at this time.
+  > 发送S1F13的尝试只在进入WAIT CRA状态时才进行，此时要将CommDelay计时器设置为超时。
 - The CommDelay timer is initialized only upon transit into the state WAIT DELAY. A next attempt to send S1,F13 shall occur only upon a transit to the state WAIT CRA.
+  > 只有在状态进入WAIT DELAY时，才会初始化CommDelay计时器。下次发送S1F13只会发生在WAIT CRA状态的转换过程中。
 
 3.2.4 Communication States
 
