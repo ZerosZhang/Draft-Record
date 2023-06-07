@@ -415,3 +415,83 @@ A human or humans who represent the factory and enforce the factory operation mo
 > 工厂里执行工厂事务的人。用户负责设备的设置和调试，使设备符合工厂运营管理。
 
 ## 3. State Models
+
+The following sections contain state models for semiconductor manufacturing equipment. These state models describe the behavior of the equipment from a host perspective in a compact and easy to understand format. State models for different equipment will be identical in some areas (e.g., communications), but may vary in other areas (e.g., processing). It is desirable to divide the equipment into parallel components that can be modeled separately and then combined. An example of a component overview of an equipment is provided as Figure 3.0.
+
+> 以下各节包含半导体设备的状态模型。这些状态模型从主机的角度描述设备的行为。不同设备的状态模型在某些方面（如通信）是相同的，在某些方面（如处理）是不同的。将设备划分为并联的部件，这些部件可以单独建模，然后组合。
+
+Equipment manufacturers must document the operational behavior of their equipment using state model methodology. State models are discussed in Sections 3.1 and A.5 and in a referenced article. Documentation of a state model shall include the following three elements:
+
+> 设备制造商必须用状态模型方法记录其设备的操作行为。状态模型具体参考3.1节和A.5节。状态模型的文档应包含以下三个要素：
+
+- A state diagram showing the possible states of the system or components of a system and all of the possible transitions from one state to another. The states and transitions must each be labeled. Use of the Harel notation (see A.5) is recommended.
+  > 状态图显示了系统状态或者系统中组件的状态，和他们从一种状态到另一种状态所有可能的转换。状态和转换必须分别标记，建议使用Harel符号（参考A.5）
+- A transition table listing each transition, the beginning and end states, what stimulus triggers the transition, and any actions taken as a result of the transition.
+  > 一个转换表，用于列出每个转换开始和结束的状态，触发转换的条件，以及转换后的行为。
+- A definition of each state specifying system behavior when that state is active.
+  > 每个状态的定义，指定该状态激活时的系统行为
+
+Examples of the above elements are provided in Section A.5.
+
+> 上述举例参考A.5
+
+The benefits of providing state models are:
+
+> 提供状态模型的好处在于
+
+1. State machine models are a useful specification tool,
+
+   > 状态机是一种有用的规范工具
+
+2. A host system can anticipate machine behavior based upon the state model,
+
+   > host可以根据状态模型预测equipment的行为
+
+3. End-users and equipment programmers have a common description of machine behavior from which to work,
+
+   > 终端用户和设备程序员对设备的行为有一个共同的描述
+
+4. “Legal” operations can be defined pertaining to any machine state,
+
+   > 合法操作可以被定义为属于任何状态
+
+5. External event notifications can be related to internal state transitions,
+
+   > 外部事件通知可以与内部状态转换相关
+
+6. External commands can be related to state transitions,
+
+   > 外部命令可以与状态转换相关
+
+7. State model components describing different aspects of machine control can be related to one another (example: processing state model with material transport state model; processing state model with internal machine safety systems).
+
+   > 描述设备控制不同方面的状态模型组件可以相互关联。
+
+### 3.1 State Model Methodology、
+
+> 状态模型方法
+
+To document the expected functionality of the various capabilities described in this document, the “Statechart” notation developed by David Harel has been adopted. An article by Harel is listed in Section 1.5 and should be considered “must” reading for a full understanding of the notation. The convention used in this and following sections is to describe the dynamic functionality of a capability with three items: a textual description of each state or substate defined, a table that describes the possible transitions from one state to another, and a graphical figure that uses the symbols defined by Harel to illustrate the relationships of the states and transitions. The combination of these items define the state model for a system or component. A summary of the Harel notation and a more detailed description of the text, table, and figure used to define behavior with this methodology is contained in the Application Note A.5.
+
+> 为了记录本文中描述的各种功能的预期功能，我们采用了David Harel开发的StateChart标记法。本章和后面的章节使用的习惯是用以下三点来描述功能：
+>
+> - 定义每个状态或者子状态的文本描述
+> - 描述从一个状态到另一个状态可能转换的表格
+> - 用Harel符号来说明状态和转换关系的图形
+>
+> 这些项的组合定义了系统或组件的状态模型。
+
+The basic unit of a state model is the state. A state is a static set of conditions. If the conditions are met, the state is current. These conditions might involve sensor readings, switch positions, time of day, etc. Also part of a state definition is a description of reactions to specific stimuli (e.g., if message Sx,Fy is received, generate reply message Sx,Fy + 1). Stimuli may be quite varied but for semiconductor equipment would include received SECS messages, expired timers, operator input at an equipment terminal, and changes in sensor readings.
+
+> 状态模型的基本单位是状态。状态是一组静态的条件，如果满足这些条件，则进入该状态。这些状态可能涉及到传感器的读数，开关的状态，一天的时间等。状态定义的另一部分是对特定事件的反应（比如收到信息SxFy，回复信息SxFy+1）。这些事件多种多样，半导体设备主要包含收到的SECS信息，定时器，操作员在设备终端的输入，以及传感器读数的变化。
+
+To help clarify the interpretation of this document and the state models described herein, it is useful to distin- guish between a state and an event and the relationship of one to the other. An event is dynamic rather than static. It represents a change in conditions, or more specifically, the awareness of such a change. An event might involve a sensor reading exceeding a limit, a switch changing position, or a time limit exceeded.
+
+> 为了帮助解释本文档描述的状态模型，有必要区分状态、事件和他们之间的关系。事件是动态的而不是静态的，他代表着条件的变化，或者更具体的说，是检测到这些变化。事件可能涉及到传感器读数超过阈值，开关位置改变或者超时。
+
+A change to a new active state (state transition) must always be prompted by a change in conditions, and thus an event. In addition, a state transition may itself be termed an event. In fact, there are many events that may occur on an equipment, so it is important to classify events based on whether they can be detected and whether they are of interest. In this document, the term event has been more narrowly defined as a detectable occurrence that is significant to the equipment.
+
+> 状态转换必须由事件触发。此外状态转换本身也可以称之为事件。事实上，设备上可能发生许多事件，因此根据是否可以检测到事件以及对事件的分类很重要。在本文中，事件被定义为对设备有意义且可以检测到的事件。
+
+A further narrowing of the definition of event is repre- sented by the term “collection event,” which is an event (or group of related events) on the equipment that is considered significant to the host. It is these events that (if enabled) are reported to the host. By this definition, the list of collection events for an equipment would typ- ically be only a subset of total events. The state models in this document are intended to be limited to the level of detail in which the host is interested. Thus, all state transitions defined in this standard, unless otherwise specified, shall correspond to collection events.
+> 事件的定义进一步缩小为术语`Collection Event`。`Collection Event`是在设备上被认为对主机有意义的事件，这些事件可以被报告给主机。本文档中的状态模型被限制在对主机有意义的情况下，除非另有声明，否则本标准中所有的状态转换都对应于`Collection Event`
