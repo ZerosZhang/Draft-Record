@@ -566,15 +566,27 @@ The CommDelay timer is expired when it “times out,” and the time remaining i
 
 3.2.4 Communication States
 
+> 通讯模型
+
 There are two major states of SECS communication, DISABLED and ENABLED. The system default state must be user- configurable at the equipment (e.g., via a jumper setting or non-volatile memory variable).
+
+> SECS通信主要有两种状态：禁用和启用。系统的默认状态对于用户应该是可配置的。
 
 Once system initialization has been achieved, the opera tor shall be able to change the communication stat selection at any time via equipment terminal function or momentary switch. A two-position type switch mus not be used due to possible conflict with the syste default.
 
+> 一旦系统初始化完成，操作员可以随时通过设备终端功能或者瞬时开关改变通信状态。由于可能和系统默认设置发生冲突，因此不能使用双位置类型开关。
+
 The ENABLED state has two substates, NOT COMMUNICATING and COMMUNICATING, described below. The equipment must inform the operator of the current communication state via continuous display at the equipment, including the NOT COMMUNICATING and COMMUNICATING sub-states.
+
+> ENABLE有两个状态，NOT COMMUNICATING和COMMUNICATING。设备必须在设备上显示当前的通信状态。
 
 In the event of a connection transaction failure, a user-configurable equipment constant EstablishCommunica- tionsTimeout is used to establish the interval between attempts to send an S1,F13 (Establish Communications Request) while in the NOT COMMUNICATING sub- state.
 
+> 在连接事务失败的情况下，通过CommunicationTimeout来建立NOT COMMUNICATION子状态下发送S1F13的时间间隔。
+
 Figure 3.2.1 shows the relationship between the superstates and substates of the Communications State Model. A description of the events triggering state transitions and the actions taken is given in Table 3.2.
+
+> 图3.2.1显示了通信状态模型。表3.2给出了触发状态转换事件和采取操作的描述
 
 ![1686114517058](image/SEMIE30文档记录/1686114517058.png)
 Figure 3.2.1
@@ -582,12 +594,19 @@ Communications State Diagram
 
 The states of the Communications State Model are defined as follows:
 
+> 通信状态模式被定义如下：
+
 DISABLED
 In this state SECS-II communication with a host computer is non-existent. If the operator switches from ENABLED to DISABLED, all SECS-II communications must cease immediately. Any messages queued to send shall be discarded, and all further action on any open transactions and conversations shall be terminated.4 Handling of messages currently being transmitted is an issue for lower level message transfer protocols and is not addressed in this standard. The DISABLED state is a possible system default.
+
+> DISABLE
+> 在这种状态下，和主机之间不存在SECS-II通信。如果操作员从启用切换到禁用，所有的SECS-II通信必须立即停止。任何等待发送的消息都会被丢弃，任何打开的事务和会话都会立即中止。处理正在发送的消息不在本标准的范围内。
 
 ENABLED
 ENABLED has two substates, COMMUNICA- TING and NOT COMMUNICATING. Whenever communications are enabled, either during system initialization or through operator selection, the substate of NOT COMMUNICATING is active until communications are formally established. Lower-level protocols (such as SECS-I) are assumed to be functioning normally in that they are capable of supporting the communication of SECS- II syntax.
 The ENABLED state is a possible system default.
+> ENABLE
+> ENABLE有两个子状态，COMMUNICATING和NOT COMMUNICATING。无论何时启用通讯，无论是系统初始化期间还是通过操作员的操作，默认激活的都是NOT COMMUNICATING状态，直到通信正式建立。
 
 ENABLED/NOT COMMUNICATING
 No messages other than S1,F13, S1,F14, and S9,Fx shall be sent while this substate is active. The equipment shall discard any messages received from the host other than S1,F13 or S1,F14 (Establish Communications Acknowledge). It shall also periodically attempt to establish communication with a host computer by issuing an S1,F13 until communications are successfully established. However, only one equipment-initiated S1,F13 transaction may be open at any time.
