@@ -671,3 +671,70 @@ When the operator switches from the DISABLED state to the ENABLED state, no coll
 ![1686114794550](image/SEMIE30文档记录/1686114794550.png)
 
 ### 3.3 Control State Model
+
+> Control状态模型
+
+The CONTROL state model defines the level of cooperation between the host and equipment. It also specifies how the operator may interact at the different levels of host control. While the COMMUNICATIONS state model addresses the ability for the host and equipment to exchange messages, the CONTROL model addresses the equipment’s responsibility to act upon messages that it receives.
+
+> Control状态模型定义了主机和设备之间的控制等级。他还规定了操作员如何在主机控制的不同等级上进行交互。通信状态模型解决了主机和设备交换信息的能力，而控制状态模型解决了设备对他所收到信息而采取的行动。
+
+The CONTROL model provides the host with three basic levels of control. In the highest level (REMOTE), the host may control the equipment to the full extent possible. The middle level (LOCAL) allows the host full access to information, but places some limits on how the host can affect equipment operation. In the lowest level (OFF-LINE), the equipment allows no host control and only very limited information.
+
+> 控制模式为主机提供了三个基本的控制级别。
+>
+> 1. 最高控制级别为remote，主机可以在最大程度上控制设备。
+> 2. 中间级别为local，允许主机完全访问信息，但对主机如何影响设备的运行有一些限制
+> 3. 最低级别为off-line，设备不允许主机控制，只允许非常有限的信息
+
+The control model and communications model (when implemented) do not interact directly. That is, no action or state of one model directly causes a change in behavior of the other. It is true, however, that when the communication state is NOT COMMUNICATING then most message transaction are not functional. When messages cannot be transmitted, the control capabilities and all other GEM capabilities are affected.
+
+> 控制模型和通信模型是相互独立的，一个模型的动作/状态并不会影响另一个模型。然而当通信状态为Not Communicating时，大多数的事务都不起作用。当消息无法发送时，控制能力和其他Gem功能都会受到影响。
+
+Refer to Figure 3.3 as the CONTROL substates and state transitions are defined.
+
+> Control状态和转换的定义参考图3.3，
+
+OFF-LINE
+When the OFF-LINE state is active, operation of the equipment is performed by the operator at the operator console. While the equipment is OFF-LINE, message transfer is possible. However the use of messaging for any automation purpose is severely restricted. While the OFF-LINE state is active, the equipment will only respond to those messages used for the establishment of communications or a host request to activate the ON- LINE state.
+> Off-line
+> 当Off-line状态激活时，设备的操作由操作员在设备上进行。当设备处于Off-Line状态时，可以进行信息传输。但是任何自动化的使用信息传递都会受到严格限制。当Off-Line状态激活时，设备只对那些用于建立通信的信息或者主机要求激活On-Line状态的信息做出反应。
+
+While OFF-LINE, the equipment will respond with an Sx,F0 to any primary message from the host other than S1,F13 or S1,F17. It will process and respond to S1,F13 and S1,F17. S1,F17 is used by the host to request the equipment to transition to the ON-LINE state. The equipment will accept this request and send a positive response only when the HOST OFF-LINE state is active (see transition 11 definition below).
+> 在off-line状态下，设备将以SxF0响应主机发送的除S1F13或S1F17以外的任何主消息，仅响应和处理S1F13和S1F17。S1F17被主机用来请求设备过渡到On-Line状态。只有当Host-OffLine状态激活时，设备才会接受这个请求，并发送一个响应，参考转换11
+
+While the OFF-LINE state is active, the equipment shall attempt to send no primary message other than S1,F13,10 S9,Fx,11 and S1,F1 (see ATTEMPT ON-LINE substate). If the equipment receives a reply message from the host other than S1,F14 or S1,F2, this message is discarded.
+> 当Off-Line状态激活时，虽然设备可以尝试发送除了S1F13，S9Fy，和S1F1以外的任何主消息，但是设备受到主机发出的S1F14或者S1F2以外的任何次消息，都不会进行响应。
+
+No messages enter the spool when the system is OFF- LINE. Spooling may be active when the Communications State of NOT COMMUNICATING is active. This might occur during OFF-LINE, but since the equipment will not attempt to send messages except as mentioned in the previous paragraph12, no messages will enter the spool.
+
+> 当系统处于Off-Line状态时，没有信息进入spool。当通信状态为Not Communicating时，spooling也可能激活。由于在Off-Line状态下，设备不会试图发送消息，没有信息会进入spool
+
+OFF-LINE has three substates: EQUIPMENT OFF-LINE, ATTEMPT ON-LINE, and HOST OFF-LINE.
+
+> Off-Line有三个子状态，Equipment OffLine，Attempt OnLine，Host OffLine
+
+OFF-LINE/EQUIPMENT OFF-LINE
+While this state is active, the system maintains the OFF-LINE state. It awaits operator instructions to attempt to go ON-LINE.
+> OffLine/Equipment OffLine
+> 当这个状态被激活时，系统会一直保持OffLine状态，直到操作员尝试进入OnLine状态
+
+OFF-LINE/ATTEMPT ON-LINE
+While the ATTEMPT ON-LINE state is active, the equipment has responded to an operator instruction to attempt to go to the ON-LINE state. Upon activating this state, the equipment attempts to send an S1,F1 to the host.
+> OffLine/Attempt OnLine
+> 当这个状态被激活时，表示设备已经响应了操作员的指令，正在尝试进入OnLine状态。激活该状态后，设备会向主机发送S1F1
+
+Note that when this state is active, the system does not respond to operator actuation of either the ON-LINE or the OFF-LINE switch.
+> 注意，当这个状态被激活时，系统不会响应操作员对OnLine和OffLine开关的操作。
+
+![1686557580047](image/SEMIE30文档记录/1686557580047.png)
+
+OFF-LINE/HOST OFF-LINE
+While the HOST OFF-LINE state is active, the operator’s intent is that the equipment be ON-LINE. However, the host has not agreed. Entry to this state may be due to a failed attempt to go ON-LINE or to the host’s request that the equipment go OFF-LINE from ON-LINE (see the transition table for more detail). While this state is active, the equipment shall positively respond to any host’s request to go ON-LINE (S1,F17). Such a request shall be denied when the HOST OFF- LINE state is not active.
+
+> OffLine/Host OffLine
+> 当该状态被激活的时候，表示设备的状态是OnLine，但是主机并没有同意。进入该状态可能是由于尝试进入OnLine状态失败，或者是由于主机要求设备从OnLine状态进入OffLine状态。当此状态激活时，设备要响应任何主机的OnLine请求S1F17。当Host OffLine状态未激活时，S1F17会被拒绝。
+
+ON-LINE
+While the ON-LINE state is active, SECS-II messages may be exchanged and acted upon. Capabilities that may be available to the host should be similar to those available from the operator console wherever practical.
+
+> 在OnLine状态下，可以交换SECS-II信息，并对其采取行动。在可行的情况下，主机具备的功能应与设备提供的功能类似。
