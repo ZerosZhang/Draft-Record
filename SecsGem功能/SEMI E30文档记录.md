@@ -610,39 +610,64 @@ The ENABLED state is a possible system default.
 
 ENABLED/NOT COMMUNICATING
 No messages other than S1,F13, S1,F14, and S9,Fx shall be sent while this substate is active. The equipment shall discard any messages received from the host other than S1,F13 or S1,F14 (Establish Communications Acknowledge). It shall also periodically attempt to establish communication with a host computer by issuing an S1,F13 until communications are successfully established. However, only one equipment-initiated S1,F13 transaction may be open at any time.
+> Enable/Not Communicating
+> 当这个子状态激活时，除了S1F13，S1F14和S9Fy之外，不能发送任何消息。除了S1F13和S1F14外，设备丢弃接受到的其他消息。设备定期发送S1F13命令与主机进行通信，直到通信成功建立。
 
 The NOT COMMUNICATING state has two AND substates, HOST-INITIATED CONNECT and EQUIPMENT-INITIATED CONNECT, both of which are active whenever the equipment is NOT COMMUNICATING. These two substates clarify the behavior of the equipment in the event that both the equipment and the host attempt to establish communications during the same period of time5 .
+> Not Communicating状态包含两个子状态，Host initiated connect和Equipment initiated connect【主机启动连接】和【设备启动连接】。当设备处于Not Communicating状态时，两个子状态都处于激活状态。这两个子状态阐明和主机在同一时间段内试图建立通信时的设备行为。
 
 NOT COMMUNICATING/EQUIPMENT-INITIATED CONNECT
 This state has two substates, WAIT CRA and WAIT DELAY. Upon any entry to the NOT COMMUNICATING state, whenever EQUIPMENT-INITIATED CONNECT first becomes active, a transition to WAIT CRA occurs, the CommDelay timer is set to “expired,” and an immediate attempt to send S1,F13 is made.
+> Not Communicating/Equipment initiated connect
+> Equipment initiated connect包含两个分支，wait cra和wait delay。在Not Communicating状态下，只要Equipment initiated connect第一次激活，就会发生wait cra状态的转换。CommDelay计时器被设置为超时，并立即尝试发送S1F13
 
 NOT COMMUNICATING/EQUIPMENT-INITIATED CONNECT/WAIT CRA
 An Establish Communications Request has been sent. The equipment waits for the host to acknowledge the request.
+> Not Communicating/Equipment initiated connect/wait cra
+> 建立通信请求已经发送，设备等待主机确认请求。
 
 NOT COMMUNICATING/EQUIPMENT-INITIATED CONNECT/WAIT DELAY
 A connection transaction failure has occurred. The CommDelay timer has been initialized. The equipment waits for the timer to expire.
+> Not Communicating/Equipment initiated connect/wait delay
+> 发生了连接事务失败。CommDelay计时器已被初始化，设备等待CommDelay计时器超时。
 
 NOT COMMUNICATING/HOST-INITIATED CONNECT
 This state describes the behavior of the equipment in response to a host-initiated S1,F13 while NOT COMMUNICATING is active.
+> Not Communicating/Host Initiated Connect
+> 该状态描述了在Not Communicating状态下，设备对主机发起的S1F13的响应行为
 
 NOT COMMUNICATING/HOST-INITIATED CONNECT/WAIT CR FROM HOST
 The equipment waits for an S1,F13 from the host. If an S1,F13 is received, the equipment attempts to send an S1,F14 with COMMACK = 0.
+> Not Communicating/Host initiated connect/wait cr from host
+> 设备等待来自主机的S1F13。如果收到了S1F13，设备发送CommAck=0的S1F14
 
 ENABLED/COMMUNICATING
 Communications have been established. The equipment may receive any message from the host, including S1,F13. When the equipment is COMMUNICATING, SECS communications with a host computer must be maintained. This state remains active until communications are disabled or a communication failure occurs. If the equipment receives S1,F13 from the host while in the COMMUNICATING substate, it should respond with S1,F14 with COMMACK set to zero. If the equipment receives S1,F14 from a previously sent S1,F13, no action is required.
+> Enable/Communicating
+> 通信已经建立。设备可以接受来自主机的任何信息，包括S1F13。当设备处于Communicating状态时，必须保持与主机的SECS通信。该状态一直处于激活状态，直到通信被禁止或者发生通信故障。如果设备在Communicating状态下收到了来自主机的S1F13，应该用CommAck=0的S1F14消息响应。如果设备从之前发送的S1F13中收到了S1F14，则不需要任何动作。
 
 In the event of communication failure, the equipment shall return to the NOT COMMUNICATING substate and attempt to re- establish communications with the host.
+> 在communication failure的情况下，设备应返回到Not Communicating子状态，并尝试与主机重新建立通信
 
 It is possible that the equipment may be waiting for an S1,F14 from the host in EQUIPMENT- INITIATED CONNECT/WAIT CRA at the time an S1,F13 is received from the host in HOST- INITIATED CONNECT/WAIT CR FROM HOST. When this situation occurs, both equipment and host have an open S1,F13/S1,F14 transaction. Since communications are successfully established on the successful completion of any S1,F13/S1,F14 transaction, either of these two transactions may be the first to complete successfully and to cause the transition from NOT COMMUNICATING state to COMMUNICATING. In this event, the other transaction shall remain open regardless of the transition to COMMUNICATING until it is closed in a normal manner.
+> 设备在Equipment initiated connect/wait cra状态下等待主机的S1F14消息时，有可能在Host initiated connect/wait cr from host状态下收到来自主机的S1F13。在这种情况发生时，设备和主机都会存在一个打开的S1F13/S1F14事务。由于通信是在任何S1F13/S1F14事务成功完成后建立的，这两个事务中的任何一个都可能第一个成功且使状态从Not Communicating过渡到Communicating。在这种情况下，另一个事务保持开放，直到收到S1F14后关闭事务，此时无状态转换。
 
 If the equipment has not yet sent6 an S1,F14 to a previously received S1,F13 at the time when COMMUNICATING becomes active, the S1,F14 response shall be sent in a normal manner. A failure to send the S1,F14 is then treated as any other communication failure.
+> 如果在Communicating激活时，设备没有对之前的收到的S1F13响应S1F14，则应以正常方式发送S1F14响应。没有成功发送S1F14的情况会触发communication failure。
 
 If the equipment-initiated S1,F13/S1,F14 is still open when the transition to COMMUNICATING occurs,  subsequent  failure to receive a reply from the host is considered a communication fault by equipment. An S9,F9 should be sent when a transaction timer timeout occurs7. (See Section 4.9 for definitions of communication faults and message faults, as well as detail on Stream 9 Error Messages.)
+> 如果在过渡到Communicating状态时，设备发起的S1F13/S1F14事务还是开放的，且随后没有能收到主机的回复，会被认为是设备的通信故障。当发生事务计时器超时时，应发送S9F9，详细参考4.9
 
 3.2.5 State Transitions
 
+> 设备转换
+
 Table 3.2 contains a full description of the state transitions depicted in Figure 3.2.1.
+> 表3.2包含了对图3.2.1中描述的状态转换的完整描述
 
 When the operator switches from the DISABLED state to the ENABLED state, no collection event shall occur, since no messages can be sent until communications have been established. The process of establishing communications serves to notify the host that communications are ENABLED. No other collection events are defined for the Communications State Model.
+> 当操作员从Disable切换到Enable状态时，不会触发任何collection event，因为在建立通信之前不能发送任何消息。建立通信的过程的目的是为了通知主机，通信是enable的。
 
 ![1686114794550](image/SEMIE30文档记录/1686114794550.png)
+
+### 3.3 Control State Model
