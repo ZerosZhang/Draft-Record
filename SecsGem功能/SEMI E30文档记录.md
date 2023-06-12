@@ -758,6 +758,7 @@ The host shall have the following capabilities and restrictions when the LOCAL s
 - During processing, the host shall be prohibited from modifying any equipment constants that affect that process. Other equipment constants shall be changeable during processing. The host shall be able to modify all available equipment constants when no processing is in progress.
   > 在设备处理过程时，禁止主机修改任何影响该过程的设备常量。其他设备常量在处理过程中应该是可以改变的。在没有进行处理过程的时候，主机可以修改所有可用的设备常量。
 - The host shall be capable of initiating the upload and download of recipes to/from the recipe storage area on the equipment. The host shall be capable of selecting recipes for execution so long as this action does not affect any currently executing recipe.
+  > 
 - The host shall be able to configure automatic data reporting capabilities including alarms, event reporting, and trace data reporting. The host shall receive all such reports at the appropriate times.
 - The host shall be able to inquire for data from the equipment, including status data, equipment constants, event reports, process program directories, and alarms.
 - The equipment shall be able to perform Terminal Services as defined in GEM.
