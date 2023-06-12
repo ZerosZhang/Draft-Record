@@ -738,3 +738,46 @@ ON-LINE
 While the ON-LINE state is active, SECS-II messages may be exchanged and acted upon. Capabilities that may be available to the host should be similar to those available from the operator console wherever practical.
 
 > 在OnLine状态下，可以交换SECS-II信息，并对其采取行动。在可行的情况下，主机具备的功能应与设备提供的功能类似。
+
+The use of Sx,F0 messages is not required while the ON-LINE state is active. Their use is discouraged in this case. The only allowed use is to close open transactions in conjunction with message faults.
+
+ON-LINE/LOCAL
+Operation of the equipment is implemented by direct action of an operator. All operation commands shall be available for input at the local operator console of the equipment.
+
+The host shall have the following capabilities and restrictions when the LOCAL state is active:
+
+- The host shall be prohibited from the use of remote commands that cause physical movement or which initiate processing. During processing, the host shall be prohibited from the use of any remote command that affects that process.
+- During processing, the host shall be prohibited from modifying any equipment constants that affect that process. Other equipment constants shall be changeable during processing. The host shall be able to modify all available equipment constants when no processing is in progress.
+- The host shall be capable of initiating the upload and download of recipes to/from the recipe storage area on the equipment. The host shall be capable of selecting recipes for execution so long as this action does not affect any currently executing recipe.
+- The host shall be able to configure automatic data reporting capabilities including alarms, event reporting, and trace data reporting. The host shall receive all such reports at the appropriate times.
+- The host shall be able to inquire for data from the equipment, including status data, equipment constants, event reports, process program directories, and alarms.
+- The equipment shall be able to perform Terminal Services as defined in GEM.
+
+The host shall be allowed any other capabilities that were not specifically restricted in the above items as long as the LOCAL state is active.
+
+NOTE 2: Capabilities mentioned above which are not implemented on a specific equipment may be ignored in this context.
+
+ON-LINE/REMOTE
+For equipment which supports the GEM capability of remote control (see Section 4.4), while the REMOTE state is active, the host shall have access, through the communications interface, to the necessary commands to operate the equipment through the full process cycle in an automated manner. The equipment does not restrict any host capabilities when REMOTE is active. The degree of control executed by the host may vary from factory to factory. In some cases, the operator maybe required to interact during remotely controlled processes. This interaction may involve set-up operations, operator assist situations, and others. This state is intended to be flexible enough to accommodate these different situations.
+
+To support the different factory automation policies and procedures, it shall be possible to configure the equipment to restrict the operator in specific non-emergency procedures. These restrictions shall be configurable so that the equipment may be set up to allow the operator to perform necessary functions without contention with the host. The categories for configuration shall include (but are not limited to):
+
+- change equipment constants (process-related),
+- change equipment constants (non-process-related),
+- initiate process program download,
+- select process program,
+- start process program,
+- pause/resume process program,
+- operator assist,
+- material movement to/from equipment,
+- equipment-specific commands (on a command-by-command basis if needed).
+
+NOTE 3: Capabilities mentioned above which are not implemented on a specific equipment may be ignored in this context.
+
+No capabilities that are available to the operator when the LOCAL state is active should be unconditionally restricted when the REMOTE state is active. The supplier may provide for configurable restriction of operator capabilities not included in the list above if desired. No configurability is necessary for any operator functions not available to the host.
+
+The control functions must be shared to some degree between the host and the local operator. At the very least, the operator must have the capability to change the CONTROL state, actuate an Emergency Stop, and interrupt processing (e.g., STOP, ABORT, or PAUSE).
+
+All of these capabilities except Emergency Stop may be access-limited.13
+
+The host software should be designed to be compatible with the capabilities allotted to the operator.
