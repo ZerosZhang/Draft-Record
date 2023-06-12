@@ -741,13 +741,22 @@ While the ON-LINE state is active, SECS-II messages may be exchanged and acted u
 
 The use of Sx,F0 messages is not required while the ON-LINE state is active. Their use is discouraged in this case. The only allowed use is to close open transactions in conjunction with message faults.
 
+> 在OnLine状态下，不需要使用SxF0信息。唯一允许的使用是和message fault一起关闭开放的事务
+
 ON-LINE/LOCAL
 Operation of the equipment is implemented by direct action of an operator. All operation commands shall be available for input at the local operator console of the equipment.
 
+> OnLine/Local
+> 设备的操作是由操作员直接操作的，所有的操作都可以在设备上实现
+
 The host shall have the following capabilities and restrictions when the LOCAL state is active:
 
+> 当local状态激活时，主机应具备以下能力：
+
 - The host shall be prohibited from the use of remote commands that cause physical movement or which initiate processing. During processing, the host shall be prohibited from the use of any remote command that affects that process.
+  > 主机被禁止使用引起物理运动或者启动处理的远程命令。在设备运动过程中，禁止主机使用任何影响该运动的远程命令
 - During processing, the host shall be prohibited from modifying any equipment constants that affect that process. Other equipment constants shall be changeable during processing. The host shall be able to modify all available equipment constants when no processing is in progress.
+  > 在设备处理过程时，禁止主机修改任何影响该过程的设备常量。其他设备常量在处理过程中应该是可以改变的。在没有进行处理过程的时候，主机可以修改所有可用的设备常量。
 - The host shall be capable of initiating the upload and download of recipes to/from the recipe storage area on the equipment. The host shall be capable of selecting recipes for execution so long as this action does not affect any currently executing recipe.
 - The host shall be able to configure automatic data reporting capabilities including alarms, event reporting, and trace data reporting. The host shall receive all such reports at the appropriate times.
 - The host shall be able to inquire for data from the equipment, including status data, equipment constants, event reports, process program directories, and alarms.
