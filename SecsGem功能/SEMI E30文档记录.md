@@ -758,19 +758,32 @@ The host shall have the following capabilities and restrictions when the LOCAL s
 - During processing, the host shall be prohibited from modifying any equipment constants that affect that process. Other equipment constants shall be changeable during processing. The host shall be able to modify all available equipment constants when no processing is in progress.
   > 在设备处理过程时，禁止主机修改任何影响该过程的设备常量。其他设备常量在处理过程中应该是可以改变的。在没有进行处理过程的时候，主机可以修改所有可用的设备常量。
 - The host shall be capable of initiating the upload and download of recipes to/from the recipe storage area on the equipment. The host shall be capable of selecting recipes for execution so long as this action does not affect any currently executing recipe.
-  > 
+  > 主机能够从设备的配方存储区上传和下载配方。主机能够选择要执行的配方，只要该行动不影响任何当前执行的配方
 - The host shall be able to configure automatic data reporting capabilities including alarms, event reporting, and trace data reporting. The host shall receive all such reports at the appropriate times.
+  > 主机能配置自动数据报告功能，包括报警，事件报告和跟踪数据报告。主机应能在适当的时候接受这些报告
 - The host shall be able to inquire for data from the equipment, including status data, equipment constants, event reports, process program directories, and alarms.
+  > 主机能从设备中查询数据，包括状态数据，设备常量，事件报告，过程程序目录和报警
 - The equipment shall be able to perform Terminal Services as defined in GEM.
+  > 设备能执行GEM中定义的终端服务
 
 The host shall be allowed any other capabilities that were not specifically restricted in the above items as long as the LOCAL state is active.
 
+> 只要Local状态被激活，就应该允许主机具有上述能力
+
 NOTE 2: Capabilities mentioned above which are not implemented on a specific equipment may be ignored in this context.
+
+> 注意：上面提到的能力如果没有在具体设备上实现，在此情况下可以忽略
 
 ON-LINE/REMOTE
 For equipment which supports the GEM capability of remote control (see Section 4.4), while the REMOTE state is active, the host shall have access, through the communications interface, to the necessary commands to operate the equipment through the full process cycle in an automated manner. The equipment does not restrict any host capabilities when REMOTE is active. The degree of control executed by the host may vary from factory to factory. In some cases, the operator maybe required to interact during remotely controlled processes. This interaction may involve set-up operations, operator assist situations, and others. This state is intended to be flexible enough to accommodate these different situations.
 
+> OnLine-Remote
+> 对于支持GEM远程控制能力的设备（见4.4节）当remote状态激活时，主机应该能通过通信接口获得必要的命令，以自动方式操作设备。当Remote处于激活状态时，设备不限制任何主机能力。主机执行的控制程度可能因工厂而异。在某些情况下，操作员可能需要在远程控制过程中进行互动。这种互动可能涉及设置操作，操作者协助等情况。这种状态的目的是为了灵活的适应这些不同的情况。
+
 To support the different factory automation policies and procedures, it shall be possible to configure the equipment to restrict the operator in specific non-emergency procedures. These restrictions shall be configurable so that the equipment may be set up to allow the operator to perform necessary functions without contention with the host. The categories for configuration shall include (but are not limited to):
+
+> 为了支持不同的工厂自动化政策和程序，应能对设备进行配置，以便在特定的非紧急程序中限制操作员。这些限制应是可配置的，以便设备可以被设置未允许操作员执行必要的功能，而不与主机发生争执。
+> 配置的类别应包括但不限于：
 
 - change equipment constants (process-related),
 - change equipment constants (non-process-related),
@@ -782,12 +795,31 @@ To support the different factory automation policies and procedures, it shall be
 - material movement to/from equipment,
 - equipment-specific commands (on a command-by-command basis if needed).
 
+> - 改变与工艺有关的设备常量
+> - 改变与工艺无关的设备常量
+> - 工艺程序下载
+> - 选择工艺程序
+> - 启动工艺程序
+> - 暂停/恢复工艺程序
+> - 操作员协助
+> - 设备特定的命令
+
 NOTE 3: Capabilities mentioned above which are not implemented on a specific equipment may be ignored in this context.
+
+> 上面提到的能力如果没有在设备上实现，可以忽略
 
 No capabilities that are available to the operator when the LOCAL state is active should be unconditionally restricted when the REMOTE state is active. The supplier may provide for configurable restriction of operator capabilities not included in the list above if desired. No configurability is necessary for any operator functions not available to the host.
 
+> 当本地状态激活时，操作员可用的任何能力都不在远程状态激活时被无条件限制。如果需要，供应商可以对不包括上述列表中的操作员能力进行可配置的限制。对于主机无法使用的操作员功能，没有必要进行配置
+
 The control functions must be shared to some degree between the host and the local operator. At the very least, the operator must have the capability to change the CONTROL state, actuate an Emergency Stop, and interrupt processing (e.g., STOP, ABORT, or PAUSE).
+
+> 控制功能必须在一定程序上由主机和本地操作者共享。至少，操作者必须有能力改变控制状态，执行紧急停止以及中断处理。
 
 All of these capabilities except Emergency Stop may be access-limited.13
 
+> 除了紧急停止外，所有这些功能都可以限制访问
+
 The host software should be designed to be compatible with the capabilities allotted to the operator.
+
+> 主机软件的设计应和分配给操作员的能力兼容
