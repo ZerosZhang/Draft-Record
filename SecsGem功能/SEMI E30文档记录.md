@@ -52,14 +52,19 @@ The GEM standard is intended to specify the following:
 > GEM标准旨在规范以下内容
 
 - A model of the behavior to be exhibited by semiconductor manufacturing equipment in a SECS-II communication environment
+  
   > 半导体制造设备在SECS-II通信环境中的行为模型
 - A description of information and control functions needed in a semiconductor manufacturing environment,
+  
   > 半导体制造环境中所需的信息和功能的描述
 - A definition of the basic SECS-II communications capabilities of semiconductor manufacturing equipment,
+  
   > 半导体制造设备基于SECS-II通信能力的定义
 - A single consistent means of accomplishing an action when SECS-II provides multiple possible methods, and
+  
   > 当SECS-II提供了多种可能的方法时，完成某一行为的同一方式
 - Standard message dialogues necessary to achieve useful communications capabilities.
+  
   > 实现常用通信能力必须的标准消息会话
 
 The GEM standard contains two types of requirements:
@@ -67,8 +72,10 @@ The GEM standard contains two types of requirements:
 > GEM标准包含两类要求：
 
 - fundamental GEM requirements and
+  
   > GEM的基本功能
 - requirements of additional GEM capabilities.
+  
   > GEM的额外功能
 
 The fundamental GEM requirements form the foundation of the GEM standard. The additional GEM capabilities provide functionality required for some types of factory automation or functionality applicable to specific types of equipment. A detailed list of the fundamental GEM requirements and additional GEM capabilities can be found in Chapter 8, GEM Compliance. Figure 1.2 illustrates the components of the GEM standard.
@@ -425,10 +432,13 @@ Equipment manufacturers must document the operational behavior of their equipmen
 > 设备制造商必须用状态模型方法记录其设备的操作行为。状态模型具体参考3.1节和A.5节。状态模型的文档应包含以下三个要素：
 
 - A state diagram showing the possible states of the system or components of a system and all of the possible transitions from one state to another. The states and transitions must each be labeled. Use of the Harel notation (see A.5) is recommended.
+  
   > 状态图显示了系统状态或者系统中组件的状态，和他们从一种状态到另一种状态所有可能的转换。状态和转换必须分别标记，建议使用Harel符号（参考A.5）
 - A transition table listing each transition, the beginning and end states, what stimulus triggers the transition, and any actions taken as a result of the transition.
+  
   > 一个转换表，用于列出每个转换开始和结束的状态，触发转换的条件，以及转换后的行为。
 - A definition of each state specifying system behavior when that state is active.
+  
   > 每个状态的定义，指定该状态激活时的系统行为
 
 Examples of the above elements are provided in Section A.5.
@@ -513,6 +523,7 @@ The terms communication failure, connection transaction failure, and communicati
 > 术语`communication failure`,`connection transaction failure`,`communication link`的定义只在本文内有效，不要和其他地方使用的类似的术语混淆。
 
 - See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for a protocol specific definitions of communications failure.
+  
   > 参考SEMI E4（SECS-I）或者SEMI E37（HSMS）了解通信故障的协议定义。
 - A connection transaction failure occurs when attempting to establish communications and is caused by
 
@@ -527,14 +538,19 @@ The terms communication failure, connection transaction failure, and communicati
   > - 收到格式不正确或者COMMACK2非零的S1F14
 
 - A reply timeout period begins after the successful transmission of a complete primary message for which a reply is expected. (See SEMI E4 (SECS-I) or SEMI E37 (HSMS) for a protocol-specific definition of reply timeout.)
+  
   > 回复超时倒计时从成功传输需要回复的主消息之后开始（具体参考E37 HSMS）
 - A communication link is established following the first successful completion of any one S1,F13/F14 transaction with an acknowledgement of “accept”. The establishment of this link is logical rather than physical.
+  
   > 在首次完成S1F13/F14事务并确认接受后，就会建立通讯联系。这种联系的建立是逻辑上的，而不是物理上的。
 - Implementations may have mechanisms which allow outgoing messages to be stored temporarily prior to being sent. The noun queue is used to cover such stored messages. They are queued when placed within the queue and are dequeued by removing them from this storage.
+  
   > 用队列来实现允许在发送消息之前临时存储发出消息的机制
 - Send includes “queue to send” or “begin the process of attempting to send” a message. It does not imply the successful completion of sending a message.
+  
   > 发送包括"发送队列""开始尝试发送"并非成功完成了发送消息
 - The host may attempt to establish communications with equipment at any time due to the initialization of the host or by independent detection of a communications failure by the host. Thus, the host may initiate an S1,F13/F14 transaction at any time.
+  
   > 主机可能随时和设备建立通信事务，因此主机可以在任何时候启动S1F13/F14
 
 3.2.2 CommDelay Timer
@@ -560,8 +576,10 @@ The CommDelay timer is expired when it “times out,” and the time remaining i
 3.2.3  Conventions
 
 - The attempt to send S1,F13 is made only upon transit into the state WAIT CRA. The CommDelay Timer should be set to “expired” at this time.
+  
   > 发送S1F13的尝试只在进入WAIT CRA状态时才进行，此时要将CommDelay计时器设置为超时。
 - The CommDelay timer is initialized only upon transit into the state WAIT DELAY. A next attempt to send S1,F13 shall occur only upon a transit to the state WAIT CRA.
+  
   > 只有在状态进入WAIT DELAY时，才会初始化CommDelay计时器。下次发送S1F13只会发生在WAIT CRA状态的转换过程中。
 
 3.2.4 Communication States
@@ -754,16 +772,22 @@ The host shall have the following capabilities and restrictions when the LOCAL s
 > 当local状态激活时，主机应具备以下能力：
 
 - The host shall be prohibited from the use of remote commands that cause physical movement or which initiate processing. During processing, the host shall be prohibited from the use of any remote command that affects that process.
+  
   > 主机被禁止使用引起物理运动或者启动处理的远程命令。在设备运动过程中，禁止主机使用任何影响该运动的远程命令
 - During processing, the host shall be prohibited from modifying any equipment constants that affect that process. Other equipment constants shall be changeable during processing. The host shall be able to modify all available equipment constants when no processing is in progress.
+  
   > 在设备处理过程时，禁止主机修改任何影响该过程的设备常量。其他设备常量在处理过程中应该是可以改变的。在没有进行处理过程的时候，主机可以修改所有可用的设备常量。
 - The host shall be capable of initiating the upload and download of recipes to/from the recipe storage area on the equipment. The host shall be capable of selecting recipes for execution so long as this action does not affect any currently executing recipe.
+  
   > 主机能够从设备的配方存储区上传和下载配方。主机能够选择要执行的配方，只要该行动不影响任何当前执行的配方
 - The host shall be able to configure automatic data reporting capabilities including alarms, event reporting, and trace data reporting. The host shall receive all such reports at the appropriate times.
+  
   > 主机能配置自动数据报告功能，包括报警，事件报告和跟踪数据报告。主机应能在适当的时候接受这些报告
 - The host shall be able to inquire for data from the equipment, including status data, equipment constants, event reports, process program directories, and alarms.
+  
   > 主机能从设备中查询数据，包括状态数据，设备常量，事件报告，过程程序目录和报警
 - The equipment shall be able to perform Terminal Services as defined in GEM.
+  
   > 设备能执行GEM中定义的终端服务
 
 The host shall be allowed any other capabilities that were not specifically restricted in the above items as long as the LOCAL state is active.
@@ -1007,3 +1031,225 @@ Attempting to establish communications is not a low-level connectivity issue, bu
 4.1.5 Scenarios
 
 > 4.1.5 场景
+
+4.1.5.1 Host Attempts to Establish Communications
+
+> 主机尝试建立通信
+
+```mermaid
+sequenceDiagram
+      Host ->> Equipment: S1F13
+      Note left of Host : 建立通讯请求
+      
+      Equipment -->> Host: S1F14
+      Note right of Equipment: 回复COMMACK且通信状态变为Communicating
+```
+
+4.1.5.2  Equipment Attempts to Establish Communications and Host Acknowledges
+
+> 设备尝试建立通信且主机回复
+
+```mermaid
+sequenceDiagram
+      Note over Host, Equipment : 通信状态为Not Communicating
+      Equipment ->> Host: S1F13
+      Note right of Equipment: 循环发送
+      
+      Host ->> Equipment: S1F14
+      Note left of Host: 建立通讯确认
+      
+      Note right of Equipment: 如果在超时时间内收到了S1F14<br>且收到的COMMACK = Accept<br>则结束循环<br>否则等待建立通信超时时间后再次发送S1F13
+```
+
+4.1.5.3 Simultaneous Attempts to Establish Communications
+
+> 同时尝试建立通信
+
+For equipment that supports interleaving, it is possible that either the host or equipment could send an Establish Communications Request before receiving the request from its partner. As communications are established by the successful acceptance of any one Establish Communications Request, it is immaterial who sends the request first. The roles of host and equipment may be reversed.
+Equipment Receives S1,F14 From Host Before Sending S1,F14:
+
+> 主机和设备可能在等待回复的时候，收到一个建立通信的请求。由于通信是通过成功接收任何一个建立通信请求而建立的，因此谁先发送请求并不重要，主机和设备的角色可以颠倒。
+> 设备先收到S1F14
+
+```mermaid
+sequenceDiagram
+      Note over Host, Equipment : 通信状态为Not Communicating
+      Note right of Equipment: 建立通信请求
+      Equipment ->> Host: S1F13
+      Note left of Host: 建立通信请求
+      Host ->> Equipment: S1F13
+
+      Note left of Host: 回复COMMACK = Accept
+      Host ->> Equipment: S1F14
+      
+      
+      Note right of Equipment: 收到S1F14后通信建立，通信状态变为Communicating
+      Note right of Equipment: 回复COMMACK = Accept
+      Equipment ->> Host: S1F14
+```
+
+> 主机先收到S1F14
+
+```mermaid
+sequenceDiagram
+      Note over Host, Equipment : 通信状态为Not Communicating
+      Note right of Equipment: 建立通信请求
+      Equipment ->> Host: S1F13
+      Note left of Host: 建立通信请求
+      Host ->> Equipment: S1F13
+
+      Note right of Equipment: 回复COMMACK = Accept
+      Equipment ->> Host: S1F14
+      Note right of Equipment: 通信建立，通信状态变为Communicating
+      
+      Note left of Host: 回复COMMACK = Accept
+      Host ->> Equipment: S1F14
+      Note right of Equipment: 无状态改变
+```
+
+### 4.2 Data Collection
+
+> 数据收集
+
+Data collection allows the host to monitor equipment activity via event reporting, trace data reporting, limits monitoring, and query of selected status or other variable data.
+
+> 数据收集允许主机通过事件报告，跟踪数据报告，极限监控，以及对状态和变量数据的查询来检测设备活动
+
+4.2.1 Event Data Collection
+
+Event data collection provides a dynamic and flexible method for the user to tailor the equipment to meet individual needs with respect to data representation and presentation to the host. The event-based approach to data collection provides automatic notification to the host of equipment activities and is useful in monitoring the equipment and in maintaining synchronization with the equipment.
+
+> 4.2.1 事件数据收集
+> 事件数据收集为用户提供了一种动态和灵活的方法，使设备在的数据表示和向主机展示方面满足自定义需求。基于事件的数据收集方法，为主机提供了设备活动的自动通知，在监控设备保持与设备的同步方面非常有用。
+
+Event data collection may be broken into two logical parts: host notification when an event occurs and dynamic configuration of the data attached to the event notification.
+> 事件数据收集分为两个逻辑部分：
+>
+> 1. 事件发生时的事件通知
+> 2. 事件通知时发送数据的动态配置
+
+4.2.1.1 Event Notification
+This section describes the method of notifying the host when equipment collection events occur.
+
+> 4.2.11 事件通知
+> 本节介绍当设备采集事件发生时，通知主机的方法
+
+4.2.1.1.1 Purpose
+This capability provides data to the host at specified points in equipment operation. This asynchronous reporting eliminates the need for the host to poll the equipment for this information. Events on the equipment may trigger activity on the part of the host. Also, knowledge of the occurrence of events related to the equipment state models allows the host to track the equipment state. An equipment’s behavior is related to its current state. Thus, this capability helps the host understand how an equipment will behave and how it will react to host behavior.
+
+> 4.2.1.1.1 目的
+> 该功能在设备运行的指定点向主机提供数据。这种异步报告消除了主机为了获得信息而轮询的必要。设备上的事件可能会触发主机方面的活动。另外，和设备状态模型有关的事件发生，可以使主机能够跟踪设备状态。一个设备的行为可能与它当前状态有关。因此这种功能有助于主机了解设备即将做的事情，以及对主机的行为做出的反应。
+
+4.2.1.1.2  Definitions
+
+Collection Event — An event (or grouping of related events) on the equipment that is considered significant to the host.
+
+Collection Event ID (CEID) — A unique identifier of a collection event. See the SEMI E5 Standard for a full definition of this data item.
+
+Event — A detectable occurrence significant to the equipment.
+
+Report — A set of variables predefined by the equipment or defined by the host via S2,F33/F34.
+
+> 4.2.1.1.1 定义
+>
+> - Collection Event 采集事件
+> 设备上的对主机有意义的事件（或一组相关的事件）
+> - Collection Event ID 采集事件ID（CEID）
+> 采集事件的唯一标识符，关于数据项的完整定义，参考SEMI E5
+> - Event 事件
+> 对设备有意义的且可检测的事件
+> - Report 报告
+> 一组由设备预定义或者由主机通过S2F33/S2F34定义的变量
+
+4.2.1.1.3 Detailed Description
+
+> 详细说明
+
+The equipment supplier must provide a set of predefined collection events. Specific collection events are required by individual capabilities and state models. Examples of collection events include:
+
+> 设备供应商必须提供一套预定义的收集事件。具体的收集事件是由设备的功能和状态模型决定的，收集事件的例子如下：
+
+- The completion of each action initiated by a host requested command,
+- Selected processing and material handling activities,
+- Operator action detected by the equipment,
+- A state transition,
+- The setting or clearing of an alarm condition on the equipment, and
+- Exception conditions not considered alarms.
+
+> - 由主机发起命令的动作的完成
+> - 选定的加工和材料处理活动
+> - 设备检测到的操作员的动作
+> - 状态转换
+> - 设备上的报警的设置或者清楚
+> - 不属于报警的其他情况
+
+See Section 6 for a list of required collection events.
+
+> 所需收集事件的清单参考第六章
+
+The reporting of a collection event may be disabled per event by the user to eliminate unwanted messages. An event report message shall be sent to the host upon the occurrence of a particular collection event if the collection event (CEID) has been enabled. Attached to each event message is one or more event reports which contain variable data. Section 4.2.1.2 describes the capability which allows for the dynamic customization of event reports. The values of any data contained in an event report message must be current upon the occurrence of the event. This implies that event reports be built at the time of the event occurrence.
+
+> 用户可以禁止每个事件的收集事件报告，以消除不需要的信息。如果采集事件（CEID）已被启用，再特定采集事件发生时，应向主机发送事件报告信息。每个事件信息都附有一个或多个事件报告，其中包含变量数据。4.2.1.2节描述了允许动态定制事件报告的能力。事件报告消息中包含的任何数据的值再事件发生时必须是最新的，这意味着报告是再事件发生时建立的。
+
+The equipment shall also provide the S6,F15/F16 transaction to allow the host to request the data from a specific event report.
+
+> 设备还应提供S6F15/S6F16事务，以允许主机请求特定事件报告的数据
+
+4.2.1.1.4  Requirements
+
+> 4.2.1.1.4 要求
+
+- The equipment supplier shall provide documentation of all collection events defined on the equipment and the conditions for each event to occur.
+- The equipment supplier shall provide unique CEIDs for each of the various collection events that are available for reporting.
+- The equipment supplier shall provide a method for enabling and disabling the reporting of each event. This method shall either be available via the host interface (see Section 4.2.1.2) or the equipment’s operator console.
+- For each event, the equipment supplier shall provide either
+  1. a default set of report(s) linked to the event which contain data pertinent to that event, or
+  2. the ability for the user to configure the data linked to that event via the equipment’s operator console or host interface (see Section 4.2.1.2).
+
+> 设备供应商应提供设备上定义的所有采集事件的文档，以及每个事件发生的条件
+> 设备供应商应提供可用于报告的每个收集事件的唯一CEID
+> 设备供应商应提供启用和禁用每个事件报告的方法，该方法应通过主机接口或设备的操作台提供
+> 对于每个事件，设备供应商应提供以下其中之一
+>
+> - 一套与事件相关的默认报告，其中包含与该事件有关的数据
+> - 用户能够通过设备的操作台或主机接口配置与该事件相关的数据
+
+4.2.1.1.5  Scenarios
+
+Collection Event Occurs on the Equipment:
+
+> 设备触发采集事件
+
+```mermaid
+sequenceDiagram
+participant Host
+participant Equipment
+
+      Note right of Equipment: 如果事件报告是多块的，需要申请多块权限
+      Equipment ->> Host: S6F5
+      Note left of Host: 多块允许
+      Host ->> Equipment : S6F6
+      Note right of Equipment : 设备发送事件报告
+      Equipment ->> Host : S6F11
+      Note left of Host : 主机确认
+      Host ->> Equipment : S6F12
+```
+
+Host Requests Event Report:
+
+> 主机请求事件报告
+
+```mermaid
+sequenceDiagram
+participant Host
+participant Equipment
+
+      Note left of Host: 主机请求一个事件报告
+      Host ->> Equipment : S6F15
+      Note right of Equipment : 设备发送事件报告
+      Equipment ->> Host : S6F16
+```
+
+4.2.1.2 Dynamic Event Report Configuration
+
+> 事件报告动态配置
