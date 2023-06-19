@@ -1253,3 +1253,71 @@ participant Equipment
 4.2.1.2 Dynamic Event Report Configuration
 
 > 事件报告动态配置
+
+This section describes a capability which allows the host to dynamically modify the equipment event reporting setup.
+
+> 本节介绍一种允许主机动态修改设备事件报告设置的能力
+
+4.2.1.2.1 Purpose
+
+This capability is defined to provide the data reporting flexibility required in some manufacturing environments. It allows the host to increase or decrease the data flow according to need. For example, if the performance of an equipment degrades, the data flow from that equipment may be increased to help diagnose the problem.
+
+> 4.2.1.2.1 目的
+> 该功能的定义是为了提供某些制造环境所需的数据报告的灵活性，它允许主机根据需要增加或者减少数据流。例如一个设备的性能下降，就可以增加来自该设备的数据流以帮助诊断问题
+
+4.2.1.2.2  Definitions
+
+EventsEnabled — A variable data item that consists of a list of currently enabled collection events (CEIDs). See SEMI E5 for a full definition of this variable data item.
+Report ID (RPTID) — A unique identifier of a specific report. See SEMI E5 for a full definition of this data item.
+Variable Data (V) — A data item containing status (SV), data (DVVAL), or constant (ECV) values. See SEMI E5 for a full definition of this data item.
+Variable Data ID (VID) — A unique identifier of a variable data item. The set of VID’s is the union of all SVID’s, ECID’s, and ID’s for DVVAL’s (DVNAME’s). See SEMI E5 for a full definition of this data item.
+
+> 4.2.1.2.2 定义
+>
+> - Events Enable
+> 一个变量数据项，由当前启用的采集事件（CEID）列表组成。有关该变量数据项的完整定义，参考SEMI E5
+> - 变量数据（V）
+> 包含状态（SV）数据（DVVAL）或者常量（ECV）的数据项。有关该数据项的完整定义，参考SEMI E5。
+> - 变量数据ID（VID）
+> 变量数据项的唯一ID。VID的集合是所有SVID，ECID和DVID的集合。有关该数据项的完整定义，参考SEMI E5
+
+4.2.1.2.3  Detailed Description
+
+The equipment shall support the following event report configuration functionality through the SECS-II interface:
+— Host definition/deletion of custom reports,
+— Host linking/unlinking of defined reports to specified collection events, and
+— Host enabling/disabling the reporting of specified collection events.
+NOTE 4: The equipment may also supply alternative means for defining reports and linking reports to events (e.g., via the operator console). Implementation of alternate means is not required.
+
+The equipment can be instructed by the host to enable or disable reporting of collection events on an individual or collective basis. A status value (SV) shall be available that consists of a list of enabled collection events. (See Section 5.2, Variable Item List, EventsEnabled variable.)
+
+Reports may be attached to an event report message (S6,F11). These reports are specifically linked to the desired event and typically contain variable data relating to that event. The reports may be provided by the equipment supplier or created by the user. The user must be able to create reports and link them to events via the SECS-II interface.
+
+The data reported in the event report messages may consist of Status Values (SV’s), Equipment Constant Values (ECV’s), or Data Values (DVVAL’s). Note that data values shall be valid and current on certain events and certain states and might not be current at other times. The implementor shall document when a data value will be current and available for reporting.
+
+> 4.2.1.2.3 详细说明
+> 设备应通过SECS-II接口支持以下事件报告配置功能
+>
+> - 主机对自定义报告的定义/删除
+> - 主机将定义的报告与指定的收集事件链接或者断开链接
+> - 主机启用/禁用指定采集事件的报告
+> 注意：设备也可以提供定义报告和将报告与事件链接的方法，不强制要求
+>
+> 主机可以指示设备再个别或者集体的基础上启用或禁用事件的报告。应提供一个SV，包括所有已启用的收集事件的列表。（参考5.2节，变量项列表，EventsEnable变量）
+>
+> 报告可以附在事件报告函数（S6F11）中。这些报告专门与所需的事件相联系，通常包含与该事件有关的变量数据。报告可以由设备供应商或者由用户创建。用户必须能够创建报告，并通过SECS-II接口将其与事件联系起来。
+>
+> 事件报告函数中报告的数据可由状态值（SV），设备常量值（ECV）或数据值（DVVal）组成。注意，数据值在某些事件和某些状态下必须是有效的且是最新的。在其他时间下，可能不是最新的。实施者应记录数据值何时有效并可用于报告。
+
+4.2.1.2.4  Requirements
+— The equipment manufacturer must provide documentation of all variable data available from the equipment. This is to include variable name, variable type or class (SV, ECV, DVVAL), units, format codes, possible range of values, and a description of the meaning and use of this variable.
+— The equipment manufacturer must provide unique VIDs for the various variable data (V) available for data collection in the equipment. For example, this means that no SV shall have a VID which is the same as the VID of any ECV or DVVAL.
+— All variable data must be available for report definition and event data collection. See Section 5.2, Variable Item List, for a list of required variable data.
+— All report definitions, report-to-event links, and enable/disable status of event reports must be retained in non-volatile storage.
+
+> 4.2.1.2.4 要求
+>
+> 设备制造商必须提供设备中所有变量数据的文档。这要包含变量名称，变量类型或类别（SV，ECV，DVVal），单位，格式代码，可能的取值类型，以及该变量的意义和用途的描述
+> 设备制造商必须为设备中可用于数据采集的各种变量数据（V）提供唯一的VID。例如，SV的VID不可以和任何ECV或DVVal的VID相同
+> 所有变量数据必须可以用于报告定义和事件数据收集。有关所需变量数据的清单，参考5.2节，变量项目列表
+> 所有报告定义，报告到事件链接以及事件报告的启用/禁用必须保存在非易失性存储中
