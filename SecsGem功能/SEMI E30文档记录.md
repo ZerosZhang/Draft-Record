@@ -1321,3 +1321,52 @@ The data reported in the event report messages may consist of Status Values (SV�
 > 设备制造商必须为设备中可用于数据采集的各种变量数据（V）提供唯一的VID。例如，SV的VID不可以和任何ECV或DVVal的VID相同
 > 所有变量数据必须可以用于报告定义和事件数据收集。有关所需变量数据的清单，参考5.2节，变量项目列表
 > 所有报告定义，报告到事件链接以及事件报告的启用/禁用必须保存在非易失性存储中
+
+4.2.1.2.5  Scenario
+
+> 4.2.1.2.4 场景
+
+Collection Event Reporting Set-up:
+
+> 采集事件报告配置
+
+```mermaid
+sequenceDiagram
+participant Host
+participant Equipment
+
+    rect rgb(158, 118, 221)
+      Note left of Host: 如果定义报告是多块的，<br>则申请多块权限
+      Host ->> Equipment : S2F39
+      Note right of Equipment : 允许多块请求
+      Equipment ->> Host : S2F40
+    end
+      
+    rect rgb(195, 221, 139)
+      Note left of Host: 发送报告的定义
+      Host ->> Equipment : S2F33
+      Note right of Equipment : 接收DataID，ReportID，VID。<br>DRACK=0表示报告是OK的
+      Equipment ->> Host : S2F34
+    end
+      
+    rect rgb(158, 118, 221)
+      Note left of Host: 如果链接Event/Report是多块的，<br>则申请多块权限
+      Host ->> Equipment : S2F39
+      Note right of Equipment : 允许多块请求
+      Equipment ->> Host : S2F40
+    end
+      
+    rect rgb(0, 214, 221)
+      Note left of Host: 链接报告到事件上
+      Host ->> Equipment : S2F35
+      Note right of Equipment : 接收CEID和相应的RPID。<br>LRACK=0表示链接成功
+      Equipment ->> Host : S2F36
+    end
+      
+    rect rgb(221, 195, 27)
+      Note left of Host: 启用特定的采集事件
+      Host ->> Equipment : S2F37
+      Note right of Equipment : 接收启用/禁用代码（CEED）和各自的事件报告<br>ERACK=0表示当收集事件发生时，将生成指定的报告
+      Equipment ->> Host : S2F38
+    end
+```
