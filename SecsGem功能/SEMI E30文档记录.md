@@ -823,3 +823,187 @@ All of these capabilities except Emergency Stop may be access-limited.13
 The host software should be designed to be compatible with the capabilities allotted to the operator.
 
 > 主机软件的设计应和分配给操作员的能力兼容
+
+![1687141728893](image/SEMIE30文档记录/1687141728893.png)
+
+### 3.4 Equipment Processing States
+
+> 设备处理状态
+
+The behavior of the equipment in the performance of its intended function must be documented. This processing state model is highly dependent on the equipment process, technology, and style. However, there are expected to be common aspects to these models.
+
+> 设备在执行预定功能时的行为必须被记录下来。这种处理状态模型很大程度上取决于设备的工艺，技术和风格。然而，这些状态模型有一些共性的内容。
+
+The Processing State Diagram, Figure 3.4, is provided as an example of an implementation model. This model demonstrates the expected nature of the processing state model documentation. There is no requirement that these specific states be implemented.
+
+> 处理状态图，图3.4，是一个例子。这个模型展示了处理状态模型文件的预期，并非所有的状态都必须要实现
+
+The equipment must generate collection events for each processing state transition, as well as provide status variables (ProcessState, PreviousProcessState) whose values are the current processing state and the previous processing state.
+
+> 设备必须为每个处理状态的转换产生Collection Event，以及提供状态变量（Process State 和 Previous Process State）这两个值分别为当前处理状态和上一个处理状态。
+
+In referring to the Processing State Diagram, note that the initialization state INIT is not an actual processing state. It is shown here simply to indicate that the IDLE processing state is entered upon completion of equipment system initialization. On the following pages detailed descriptions are provided for the equipment processing states and state transitions (numbered) as shown in the diagram.
+
+> 在参考处理状态图时，注意初始化状态Init并非一个实际的处理状态。在这里他只表示系统系统初始化完成后进入IDLE处理状态。后续将对图中所示的设备处理状态和状态转换（编号）进行详细描述。
+
+3.4.1 Description of Equipment Processing States
+
+> 3.4.1 设备处理状态的描述
+
+IDLE
+In this state the equipment is awaiting instructions.
+
+> 空闲
+> 在这种状态下，设备在等待指令
+
+PROCESSING ACTIVE
+This state is the parent of all substates where the context of process program execution exists.
+
+> 运行激活
+> 这个状态是所有子状态的父状态，这些子状态存在程序执行
+
+PROCESS
+This state is the parent of those substates that refer to the active preparation and execution of a process program.
+
+> 运行
+> 该状态是指主动准备和执行进程的子状态的父状态
+
+SETUP
+In this state all external conditions necessary for process execution are satisfied, such as ensuring material is present at the equipment, input/output ports are in the proper state, parameters such as temperature and pressure values are within limits, etc. If all setup operations are already complete, then this becomes a fall through state and a transition to the next state takes place.
+
+> 设置
+> 在该状态下，所有工艺执行所需的外部条件都得到了满足，例如，确保材料在设备上，输入/输出端口处于合适的状态，温度和压力值等参数在限制范围内等等。如果所有的设置操作都已经完成，那么这就成为一个过渡状态，并过渡到下一个状态
+
+READY
+In this state the equipment is ready for process execution and is awaiting a START command from the operator or the host.
+
+> 准备就绪
+> 在此状态下，设备已准备好执行工艺，并等待操作人员或者主机发出的启动命令
+
+EXECUTING
+Executing is the state in which the equipment is executing a process program automatically and can continue to do so without external intervention.
+
+> 执行
+> 执行是指设备自动执行Process Program的状态，并且可以在没有外部干预的情况下持续执行
+
+PAUSE
+In this state processing is suspended and the equipment is awaiting a command.
+
+> 暂停
+> 在这种状态下，处理被暂停，设备等待一个指令
+
+Each state transition is defined in the following table. Note that all transitions in this table should be considered collection events.
+
+> 每个状态的转换在下表中有定义。请注意，本表中所有的转换都应被视为Collection Event
+
+![1687142373479](image/SEMIE30文档记录/1687142373479.png)
+
+![1687144163226](image/SEMIE30文档记录/1687144163226.png)
+
+## 4. Equipment Capabilities and Scenarios
+
+> 第四章 设备能力和场景
+
+This section describes the details of the capabilities required by GEM and provides scenarios for their use. Capabilities are operations performed by semiconductor manufacturing equipment. These operations are initiated through the communications interface using SECS-II messages. A scenario is a group of SECS-II messages arranged in a sequence to perform a capability. Other information may be included with the scenario for clarity. For each capability, the reader is provided with a statement of purpose, pertinent definitions, a detailed description, requirements, and scenarios.
+
+> 本章描述了GEM要求的功能的细节，并且提供了使用方案。功能指的是半导体设备可以执行的操作。这些操作是通过信息接口使用SECS-II信息启动的，一个场景指的是一组按顺序排列的SECS-II信息，以执行一个功能。为了清楚起见5，场景中还可以包含其他信息。对于每一个功能，读者可以获得目的定义，详细描述，要求和场景。
+
+The following capabilities are discussed:
+
+> 下面这些功能会被讨论
+
+- Establish Communications | 建立通讯
+- Event Notification  | 事件通知
+- Dynamic Event Report Configuration | 动态事件报告配置
+- Variable Data Collection  | 变量数据收集
+- Trace Data Collection | 追踪数据收集
+- Limits Monitoring | 极限监控
+- Status Data Collection  | 状态数据收集
+- On-line Identification  | 在线识别
+- Alarm Management  | 报警管理
+- Remote Control  | 远程控制
+- Equipment Constants | 设备常量
+- Process Program Management  | 工艺程序管理
+- Material Movement | 物料输送
+- Equipment Terminal Services | 设备终端服务
+- Error Messages  | 错误信息
+- Clock | 时钟
+- Spooling  | 脱机
+- Control | 控制
+
+### 4.1 Establish Communications
+
+> 建立通讯
+
+The Establish Communications capability provides a means of formally establishing communications following system initialization or any loss of communications between communicating partners, and thus of notifying the communication partner that a period of non-communication has occurred.
+
+> 建立通信功能提供一个方法，用于在系统初始化后或者通信丢失后正式建立通信，从而通知Host发生了一段时间的非通信。
+
+4.1.1 Purpose
+Communications between host and equipment are formally established through use of the Establish Communications Request/Establish Communications Acknowledge transaction. The use of S1,F1/F2 for this purpose is ambiguous since the transaction can be used for other purposes and may occur at any time.
+
+> 目的
+> 通过使用"建立通信请求/建立通信确认"事务，正式建立Host和Equipment之间的通信。不能使用S1F1/S1F2事务，因为该事务可以用于其他目的，并且可以在任何时候发生。
+
+The S1,F13/F14 transaction, used in conjunction with the Communications State Model, provides a means for equipment to notify the host, or the host to notify the equipment, that there has been a period of inability to communicate. The successful completion of this transaction also signals a possible need for synchronization activities between host and equipment.
+> S1F13/S1F14事务和通信状态模型一起使用，表示设备和主机之间有一段时间无法通信。该事务的成功也预示着主机和设备之间可能需要进行同步活动。
+
+4.1.2  Definitions
+
+> 定义
+
+- COMMACK
+
+Acknowledge code returned in the Establish Communications Acknowledge message. See the SEMI E5 Standard for a full definition of this data item.
+
+> 建立通信确认消息中返回的确认代码。有关该数据项的完整定义，参考SEMI E5
+
+- EstablishCommunicationsTimeout
+
+An equipment constant used to initialize the interval between attempts to re-send an Establish Communications Request. This value specifies the number of seconds for the interval. See the SEMI E5 Standard for a full definition of this variable data item.
+
+> 设备常量，用于初始化尝试重新发送建立通信请求的间隔时间。该值规定了间隔时间的秒数，有关该变量数据项的完整定义，参考SEMI E5
+
+4.1.3 Description
+
+> 描述
+
+There are potential problems when one side of the communications link fails and the other side does not detect it. From the point of view of the host, a loss of communications has many possible causes. In some cases, host-controlled settings on the equipment may need to be reset. In other cases, the equipment may have continued an automatic processing sequence during the period of no communication and may have changed states. The definition of a formal protocol for establishing communications alerts the host to the need to synchronize itself with the equipment’s current status.
+
+> 当通信链路的一方出现故障，而另一方没有发现时，就会出现潜在的问题。从主机的角度来看，通信中断有许多可能的原因。在某些情况下，设备上由主机控制的设置可能需要重置。在其他情况下，设备可能在无通信期间自动处理序列，并可能改变了状态。建立通信的正式协议的定义提醒主机需要将自己和设备的当前状态同步。
+
+Equipment shall consider communications as formally established whenever either of the following conditions have been satisfied:
+
+> 只要满足以下任一条件，设备就应认为通信正式建立：
+
+- Communications Request has been sent to the host and an Establish Communications Acknowledge has been received within the transaction timeout period and with an acknowledge code of Accept, or
+- Communications Request has been received from the host, and an Establish Communications Acknowledge response has been successfully sent with an acknowledge code of Accept.
+
+> - 已向主机发送通信请求，并在事务超时期间内收到建立通信代码为接受的确认信息
+> - 从主机收到通信请求，并且成功发送了响应代码为接受的建立通信响应
+
+When the equipment sends an Establish Communications Request to the host, this notifies the host of the possible need to synchronize itself with the equipment.
+
+> 当设备向主机发送建立通信请求时，这就通知主机可能需要与设备同步
+
+When the equipment is attempting to establish communications, an Establish Communications Request shall be sent periodically until communications have been formally established as described above. The interval between attempts must be user-configurable and begins as soon as a connection transaction failure is detected (see Section 3.2).
+
+> 当设备试图建立通信时，应定期发送建立通信请求，直到按照上述说明正式建立通信。尝试和尝试之间的间隔必须是用户可以配置的，并且在检测到连接事务失败时立即开始。
+
+Attempting to establish communications is not a low-level connectivity issue, but rather a logical application issue used by either party to notify its partner that the host may need to perform synchronization activities with the equipment.
+
+> 试图建立通信不是一个低层次的连接问题，而是一个逻辑应用问题，由任何一方来通知对方，主机可能需要与设备进行活动同步
+
+4.1.4  Requirements
+
+- Equipment must support the Communication State Model (see Section 3.2).
+- Equipment must provide the EstablishCommunicationsTimeout equipment constant described above.
+
+> 要求
+>
+> - 设备必须支持通信状态模型
+> - 设备必须提供 Establish Communication Timeout 设备常量
+
+4.1.5 Scenarios
+
+> 4.1.5 场景
