@@ -1370,3 +1370,192 @@ participant Equipment
       Equipment ->> Host : S2F38
     end
 ```
+
+4.2.2 Variable Data Collection
+
+> 数据变量收集
+
+4.2.2.1  Purpose
+
+> 目的
+
+This capability allows the host to query for the equipment data variables and is useful during initialization and synchronization.
+
+> 该功能允许主机查询设备变量数据，在初始化和同步期间非常有用
+
+4.2.2.2  Definitions
+
+> 定义
+
+- Report ID (RPTID)
+A unique identifier of a specific report. See SEMI E5 for a full definition of this data item.
+- Variable Data (V)
+A variable data item containing status, discrete, or constant data. See SEMI E5 for a full definition of this data item.
+
+> Report ID(RPID)
+> 报告的唯一标识符。该数据项的完整定义见SEMI E5
+> 变量数据（V）
+> 包含状态，离散或恒定数据的变量。该数据项的完整定义参考SEMI E5
+
+4.2.2.3 Detailed Description
+The host may request a report containing data variables from the equipment by specifying the RPTID. It is assumed that the report has been previously defined (e.g., using the Define Report S2,F33 transaction (see Section 4.2.1)). The values of any status variables (SV’s) and equipment constants (ECV’s) contained within the report must be current. Discrete data values (DVVAL’s) are only guaranteed to be valid upon the occurrence of a specific collection event. If DVVAL cannot be specified in equipment due to some restrictions depend on hardware and/or software conditions, the zero length item is reported.
+
+> 4.2.2.3 详细描述
+> 主机可以通过指定的RPID，向设备请求一份包含数据变量的报告。假设该报告之前已经被定义。报告中包含的任何SV和EC的值都必须是最新的。离散数据值DVVal只保证在特定事件发生时有效。如果由于某些原因导致DVVal无法获取，则报告为长度为0的列表
+
+4.2.2.4  Requirements
+— Variable data items (V’s) and associated units of measure must be provided by the equipment manufacturer.
+
+> 4.2.2.4 要求
+> 变量数据和相关的计量单位必须由设备制造商提供
+
+4.2.2.5 场景
+
+```mermaid
+sequenceDiagram
+participant Host
+participant Equipment
+
+      Note left of Host: 主机请求访问包含在RPID中的数据变量
+      Host ->> Equipment : S6F19
+      Note right of Equipment : 设备根据RPID发送数据变量列表
+      Equipment ->> Host : S6F20
+```
+
+4.2.3 Trace Data Collection
+
+> 追踪数据采集
+
+4.2.3.1 Purpose
+
+Trace data collection provides a method of sampling data on a periodic basis. The time- based approach to data collection is useful in tracking trends or repeated applications within a time window, or monitoring of continuous data.
+
+> 目的
+> 追踪数据采集提供了一种定期采集数据的方法。基于时间的数据采集方法在监测连续数据时非常有用。
+
+4.2.3.2  Definitions
+
+Data Sample Period (DSPER) — The time delay between samples. See SEMI E5 for a full definition of this data item.
+
+Reporting Group Size (REPGSZ) — The number of samples included per trace report transmitted to the host. See SEMI E5 for a full definition of this data item.
+
+Status Variable (SV) — Status data item (included in trace report). See SEMI E5 for a full definition of this data item.
+
+Status Variable ID (SVID) — A unique identifier of a status variable. See SEMI E5 for a full definition of this data item.
+
+Total Samples (TOTSMP) — Number of samples to be taken during a complete trace period. See SEMI E5 for a full definition of this data item.
+
+Trace Request ID (TRID) — An identifier associated with a trace request definition. See SEMI E5 for a full definition of this data item.
+
+> 定义
+>
+> - 数据采样周期（DSPER）
+> 数据采集之间的时间间隔。该数据项的完整定义参考SEMI E5
+> - 报告组大小（REPGSZ）
+> 传输给主机的每份跟踪报告所包含的样品数量。该数据项的完整定义参考SEMI E5
+> - 状态变量（SV）
+> 状态数据项（包括在跟踪报告中）。该数据项的完整定义见SEMI E5。
+> - 状态变量ID（SVID）
+> 状态变量的唯一标识。该数据项的完整定义见SEMI E5。
+> - 总样本（TOTSMP）
+> 在一个完整的跟踪期内要采集的样本数量。该数据项的完整定义见SEMI E5。
+> - 追踪请求ID（TRID）
+> 与追踪请求定义相关的标识符。该数据项的完整定义见SEMI E5。
+
+4.2.3.3 Detailed Description
+
+> 详细描述
+
+The equipment shall establish a trace report as instructed by the host (S2,F23). For a trace report (S6,F1), the host shall designate a name for the trace report (TRID), a time interval for data sampling (DSPER), the total number of samples to be taken (TOTSMP), the number of samples per trace report (REPGSZ), and a listing of which data will be sent with the report (SVID’s). The number of trace reports sent to the host is determined by total samples divided by reporting group size (TOTSMP/REPGSZ).
+
+> 设备应按照主机（S2F23）的指示建立一个跟踪报告。对于跟踪报告（S6F1），主机应指定跟踪报告的名称（TRID）、数据采样的时间间隔（DSPER）、要采集的样品总数（TOTSMP）、每份跟踪报告的样品数（REPGSZ），并列出哪些数据将与报告一起发送（SVID）。发送给主机的跟踪报告的数量由总样本除以报告组大小（TOTSMP/REPGSZ）决定。
+
+The equipment shall sample the specified data (SV’s) at the interval designated by the host (DSPER) and shall send a predefined trace report to the host for the specified reporting group size (REPGSZ). The trace report definition shall be automatically deleted from the equipment after the last trace report has been sent.
+
+> 设备应在主机指定的时间间隔（DSPER）对指定的数据（SV）进行采样，并应向主机发送指定报告组大小（REPGSZ）的预定义跟踪报告。在发送完最后一份跟踪报告后，跟踪报告定义应从设备中自动删除。
+
+The host may modify or re-initiate a trace function currently in progress by specifying the same TRID in a trace request definition, at which point the old trace shall be terminated and the new trace shall be initiated, or the host can instruct the equipment to terminate a trace report prior to its completion by specifying TOTSMP = 0 for that TRID, at which point the trace report definition shall be deleted.
+
+> 主机可以通过在跟踪请求定义中指定相同的TRID来修改或重新启动当前正在进行的跟踪功能，此时旧的跟踪应被终止，新的跟踪应被启动，或者主机可以通过为该TRID指定TOTSMP=0来指示设备在跟踪报告完成前终止，此时跟踪报告定义应被删除。
+
+A detailed example is included as Application Note A.4.
+
+> 一个详细的例子包括在应用说明A.4中
+
+4.2.3.4  Requirements
+
+> 要求
+
+— The equipment must have a local mechanism (e.g., internal clock) for triggering the periodic sampling and transmission of trace reports to the host.
+
+> 设备必须有一个本地机制（如内部时钟）来触发定期采样和向主机传输跟踪报告。
+
+— A minimum of four (4) concurrent traces shall be supported by the equipment. The same SVID may be collected in multiple traces simultaneously.
+
+> 设备应支持至少4个并发的追踪。同一个SVID可以同时被收集到多个跟踪中。
+
+— All SVID’s available at the equipment shall be supported for trace data collection. The exception to this is any SV that will not fit into a single block.
+
+> 设备应支持所有可用的SVID来收集跟踪数据。这方面的例外情况是任何不适合在一个区块内的SV。
+
+NOTE 5: SEMI E5 provides for SV’s to be of a list format. Since this may in practice be a variable list, there is a potential problem with such an SV supported by the Trace Data Collection capability. This is a problem with the SEMI E5 standard. Care should be exercised in the use of SV’s using the list format.
+
+> 注5： SEMI E5规定SV是一种列表格式。由于这实际上可能是一个变量列表，因此跟踪数据采集功能支持的这种SV存在一个潜在的问题。这是SEMI E5标准中的一个问题。在使用列表格式的SV时，应谨慎行事。
+
+4.2.4 Limits Monitoring
+
+This capability relates to the monitoring of selected equipment variables and has three primary aspects:
+— Defines a standard set of monitoring zones and limits.
+— Provides for reporting to the host when selected equipment variables transition between monitoring zones.
+— Empowers the host to modify the values of the variable limit attributes for these same selected equipment variables.
+4.2.4.1 Purpose
+
+The limits monitoring capability provides the host a means of monitoring equipment conditions by a flexible, efficient, and asynchronous method which is consistent across equipment. It eliminates the need for constant polling of equipment by the host for current status values. Further, this capability allows the host to implement changes in the monitoring range as needed. This capability has application to both production operation and diagnostic/testing scenarios, and it also has applicability to statistical process control.
+
+4.2.4.2  Definitions
+
+LimitVariable — DVVAL containing the VID of a specific equipment variable for which a zone transition collection event has been generated.
+
+EventLimit — DVVAL containing the LIMITID of the limit crossed by LimitVariable.
+
+TransitionType — DVVAL which defines the direction of the zone transition which has occurred: 0 = transition from lower to upper zone, 1 = transition from upper to lower zone.
+
+Limit — Used in this section to represent the set of variable limit attributes that completely describe a variable monitoring “barrier.” The attributes include VID, Units, UPPERDB, LOWERDB, LIMITMAX, and LIMITMIN. In some contexts it may be interpreted more narrowly as the combination of UPPERDB and LOWERDB.
+
+LIMITIDn — Refers to the identifier of a specific limit (as defined by UPPERDB and LOWERDB) among the set of limits for a monitored equipment variable. LIMITIDs are consecutively numbered, beginning at one through the number of limits possible (seven minimum).
+
+Monitoring Zone — A subset of the possible range of values for a variable of interest to the host. A single limit divides the range into two zones. Multiple limits may be combined to divide the range even further.
+
+Zone Transition — The movement of a variable value from one monitoring zone to another. This transition is a collection event and has a corresponding CEID.
+
+Deadband — An overlap of two zones implemented to prevent constant zone transitions by a variable sitting on or near a limit (i.e., “chattering”).
+
+UPPERDB — A variable limit attribute that defines the upper boundary of the deadband of a limit.18  The value applies to a single limit (LIMITID) for a specified VID. Thus, UPPERDB and LOWERDB as a pair define a limit.
+
+LOWERDB — A variable limit attribute that defines the lower boundary of the deadband of a limit.18 The value applies to a single limit (LIMITID) for a specified VID. Thus, UPPERDB and LOWERDB as a pair define a limit.
+
+UPPER ZONE — The range of values lying above a limit.
+
+LOWERZONE — The range of values lying below a limit.
+
+LIMITMAX — The maximum value for any limits of a specific equipment variable. This value is set by the equipment manufacturer and typically coincides with the maximum value allowed for the monitored variable.
+
+LIMITMIN — The minimum value for any limits of a specific equipment variable.19 This value is set by the equipment manufacturer and typically coincides with the minimum value allowed for the monitored variable.
+
+Undefined — When used in reference to variable limits, it indicates that monitoring/reporting of zone transitions involving that particular limit are disabled.
+
+4.2.4.3 Description
+
+The limits monitoring capability provides the host with a minimum of seven configurable limits or barriers that may be applied to selected equipment status variables (SV’s) of the types floating point, integer, and boolean. When one of these barriers is crossed, a collection event is generated to alert the host to a change in monitoring zone or state of the monitored variable. These seven limits may be combined in a variety of ways to match the needs of the host system.19  An illustration of a combination of five of the limits to provide one type of variable monitoring is shown in Figure 4.2.1.20 This section describes the key aspects of limits monitoring. Detailed implementation examples of limits monitoring are provided as Application Note A.7.
+
+NOTE 6: While the SEMI E5 standard allows SV’s to be lists, such variable lists are not allowed under this capability.
+
+4.2.4.3.1 Monitoring Limit Characteristics — A limit is defined by a set of attributes that include the variable (VID) to which the limit corresponds, the units of that variable, the maximum and minimum possible values of the limit (LIMITMAX and LIMITMIN) and the specific borders of the limit (UPPERDB and LOWERDB). See Figure 4.2.2. There is a limitation to the values of UPPERDB and LOWERDB which may be stated as:
+
+LIMITMAX≥UPPERDB≥LOWERDB≥LIMITMIN
+
+A limit divides the possible range of variable values into two parts, the upper zone and the lower zone. At any time, the monitored variable is considered to be in one and only one of these zones. However, as Figure 4.2.2 shows, these two zones have an area of overlap. This is called the deadband.
+
+![1687245436723](image/SEMIE30文档记录/1687245436723.png)
+
+![1687245449300](image/SEMIE30文档记录/1687245449300.png)
