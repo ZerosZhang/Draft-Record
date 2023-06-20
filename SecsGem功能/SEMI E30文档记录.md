@@ -1508,6 +1508,14 @@ This capability relates to the monitoring of selected equipment variables and ha
 — Defines a standard set of monitoring zones and limits.
 — Provides for reporting to the host when selected equipment variables transition between monitoring zones.
 — Empowers the host to modify the values of the variable limit attributes for these same selected equipment variables.
+
+> 限值监控
+> 这种功能和设备变量的监控有关，主要在三个方面
+>
+> 1. 定义一套标准的监测和极限
+> 2. 当选定的设备变量在检测区之间变化时，向主机报告
+> 3. 授权主机位这些设备变量修改极限值
+
 4.2.4.1 Purpose
 
 The limits monitoring capability provides the host a means of monitoring equipment conditions by a flexible, efficient, and asynchronous method which is consistent across equipment. It eliminates the need for constant polling of equipment by the host for current status values. Further, this capability allows the host to implement changes in the monitoring range as needed. This capability has application to both production operation and diagnostic/testing scenarios, and it also has applicability to statistical process control.
@@ -1552,7 +1560,7 @@ NOTE 6: While the SEMI E5 standard allows SV’s to be lists, such variable list
 
 4.2.4.3.1 Monitoring Limit Characteristics — A limit is defined by a set of attributes that include the variable (VID) to which the limit corresponds, the units of that variable, the maximum and minimum possible values of the limit (LIMITMAX and LIMITMIN) and the specific borders of the limit (UPPERDB and LOWERDB). See Figure 4.2.2. There is a limitation to the values of UPPERDB and LOWERDB which may be stated as:
 
-LIMITMAX≥UPPERDB≥LOWERDB≥LIMITMIN
+LIMITMAX ≥ UPPERDB ≥ LOWERDB ≥ LIMITMIN
 
 A limit divides the possible range of variable values into two parts, the upper zone and the lower zone. At any time, the monitored variable is considered to be in one and only one of these zones. However, as Figure 4.2.2 shows, these two zones have an area of overlap. This is called the deadband.
 
