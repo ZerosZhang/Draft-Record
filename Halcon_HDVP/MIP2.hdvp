@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.0.1">
+<procedure name="MIP2">
+<interface>
+<io>
+<par name="InputImage" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="OutPutImage" base_type="iconic" dimension="0"/>
+<par name="OutPutRegion" base_type="iconic" dimension="0"/>
+<par name="OutPutImgColor" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="GenColor" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="Result_ex" base_type="ctrl" dimension="0"/>
+<par name="Result" base_type="ctrl" dimension="0"/>
+<par name="Result_value" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<c></c>
+<c></c>
+<c>*是否报错</c>
+<l>try</l>
+<c>    </c>
+<l>dev_update_off ()</l>
+<c></c>
+<l>median_image (InputImage, ImageMedian, 'circle', 9, 'mirrored')</l>
+<l>mean_image (ImageMedian, ImageMean, 3, 3)</l>
+<l>get_image_size (ImageMean, Width, Height)</l>
+<l>threshold (ImageMean, Region, 0, 32767)</l>
+<l>connection (Region, ConnectedRegions)</l>
+<l>select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 400000, 1000000)</l>
+<l>count_obj (SelectedRegions, Number)</l>
+<c></c>
+<c></c>
+<l>dev_get_window (WindowHandle)</l>
+<l>dev_set_window_extents (0, 0, Width, Height)</l>
+<l>dev_set_part (0, 0, Height, Width)</l>
+<c></c>
+<l>dev_set_draw ('margin')</l>
+<l>if (Number=0)</l>
+<l>    Result_ex := 1</l>
+<l>    return ()</l>
+<l>endif</l>
+<l>shape_trans (SelectedRegions, RegionTrans, 'rectangle2')</l>
+<l>area_center (RegionTrans, Area, Row, Column)</l>
+<l>orientation_region (RegionTrans, Phi)</l>
+<l>angle := 0</l>
+<l>PI := 3.1415926535</l>
+<l>if (Phi&gt;PI/2)</l>
+<l>    angle := Phi - PI</l>
+<l>endif</l>
+<c></c>
+<l>if (Phi&lt; -(PI/2))</l>
+<l>    angle := Phi + PI</l>
+<l>endif</l>
+<c></c>
+<l>vector_angle_to_rigid (Row, Column, angle, Row, Column, 0, HomMat2D)</l>
+<l>affine_trans_image (ImageMean, OutPutImage, HomMat2D, 'constant', 'false')</l>
+<c></c>
+<c></c>
+<c>    * 在转正后的图片中，通过定位圆孔定位中心</c>
+<l>    threshold (OutPutImage, Region_Holes, -32768, 0)</l>
+<l>    connection (Region_Holes, ConnectedRegions)</l>
+<l>    select_shape (ConnectedRegions, SelectedRegions, 'area', 'and', 2000, 5000)</l>
+<l>    opening_circle (SelectedRegions, RegionOpening, 28.5)</l>
+<l>    gen_contour_region_xld (RegionOpening, Contours, 'border')</l>
+<l>    fit_circle_contour_xld (Contours, 'algebraic', -1, 0, 0, 3, 2, Row_Circle, Column_Circle, Radius, _, _, _)</l>
+<l>    gen_circle (Circle, Row_Circle, Column_Circle, Radius)</l>
+<l>    tuple_mean (Column_Circle, _center_column)</l>
+<l>    tuple_mean (Row_Circle, _center_row)</l>
+<c></c>
+<c></c>
+<c>    *采集区域周围4个小区域的平均灰度值</c>
+<l>    gen_rectangle1 (Rectangle1, _center_row - 200, _center_column, _center_row - 195, _center_column + 5)</l>
+<l>    gen_rectangle1 (Rectangle2, _center_row + 200, _center_column, _center_row + 205, _center_column + 5)</l>
+<l>    gen_rectangle1 (Rectangle3, _center_row, _center_column - 300, _center_row + 5, _center_column - 295)</l>
+<l>    gen_rectangle1 (Rectangle4, _center_row, _center_column + 300, _center_row + 5, _center_column + 305)</l>
+<c>        </c>
+<c>    *计算指定区域内图像灰度值的平均值和偏差</c>
+<l>    intensity (Rectangle1, OutPutImage, Mean1, _)</l>
+<l>    intensity (Rectangle2, OutPutImage, Mean2, _)</l>
+<l>    intensity (Rectangle3, OutPutImage, Mean3, _)</l>
+<l>    intensity (Rectangle4, OutPutImage, Mean4, _)</l>
+<c></c>
+<l>    XIncrement := (Mean3 - Mean4) / 600</l>
+<l>    YIncrement := (Mean1 - Mean2) / 400</l>
+<c>    </c>
+<l>    dev_update_off ()</l>
+<c>    * 简单的横向平面矫正</c>
+<l>    Increment := 0</l>
+<l>    tuple_gen_sequence (0, Height-1, 1, RowTemp)</l>
+<l>    for Index := 0 to Width-1 by 1</l>
+<l>        tuple_gen_const (Height, Index, ColTemp)</l>
+<l>        get_grayval (OutPutImage, RowTemp, ColTemp, Grayval)</l>
+<l>        PixelNew := Grayval + Increment</l>
+<l>        Increment := Increment + XIncrement</l>
+<l>        set_grayval (OutPutImage, RowTemp, ColTemp, PixelNew)</l>
+<l>    endfor</l>
+<c>    </c>
+<c>    * 简单的纵向平面矫正</c>
+<l>    Increment := 0</l>
+<l>    tuple_gen_sequence (0, Width-1, 1, ColTemp)</l>
+<l>    for Index := 0 to Height-1 by 1</l>
+<l>        tuple_gen_const (Width, Index, RowTemp)</l>
+<l>        get_grayval (OutPutImage, RowTemp, ColTemp, Grayval)</l>
+<l>        PixelNew := Grayval + Increment</l>
+<l>        Increment := Increment + YIncrement</l>
+<l>        set_grayval (OutPutImage, RowTemp, ColTemp, PixelNew)</l>
+<l>    endfor</l>
+<c></c>
+<l>    dev_update_on ()</l>
+<c></c>
+<c>* 添加彩虹</c>
+<l>    if (GenColor=1)</l>
+<l>        dev_set_draw ('fill')</l>
+<l>        dev_display (OutPutImage)</l>
+<l>        Colors := ['navy','blue','green','forest green','yellow','orange','red']</l>
+<l>        Number := |Colors|</l>
+<c>        * 提取有效区域</c>
+<l>        threshold (OutPutImage, Region, -10000, 10000)</l>
+<l>        connection (Region, ConnectedRegions)</l>
+<l>        select_shape (ConnectedRegions, Region, 'area', 'and',  400000, 1000000)</l>
+<l>        get_region_points (Region, Rows, Columns)</l>
+<l>        get_grayval (OutPutImage, Rows, Columns, Grayval)</l>
+<l>        tuple_sort_index (Grayval, Indices)</l>
+<l>        tuple_median (Grayval, Median)</l>
+<l>        tuple_min (Grayval, MinHeight)  </l>
+<l>        tuple_max (Grayval, MaxHeight)    </l>
+<c>    </c>
+<c>        * 每档大致多少像素</c>
+<l>        tuple_round (|Grayval| * (1.0/Number), Step)</l>
+<l>        Begin_Index := 0</l>
+<l>        End_Index := 0</l>
+<l>        Recode_Value := []</l>
+<c>    </c>
+<c>        * 循环，每次从所有像素里（从大到小排序后），取step个像素</c>
+<l>        for Index := 0 to Number-1 by 1</l>
+<l>            End_Index:= Begin_Index + Step</l>
+<l>            if(End_Index&gt;|Indices|-1)</l>
+<l>                End_Index:=|Indices|-1</l>
+<l>            endif</l>
+<c>            *选择Indices数组中Begin_Index至End_Index的元素,即Grayval的索引,也是Rows和Columns的索引</c>
+<l>            tuple_select_range (Indices, Begin_Index, End_Index, SelectedIndex)</l>
+<c>            *选择Rows数组中索引为SelectedIndex的元素。</c>
+<l>            tuple_select (Rows, SelectedIndex, SelectedRow)</l>
+<c>            *选择Columns数组中索引为SelectedIndex的元素。</c>
+<l>            tuple_select (Columns, SelectedIndex, SelectedCol)</l>
+<c>            *按SelectedRow, SelectedCol坐标创建点区域</c>
+<l>            gen_region_points (RegionSub, SelectedRow, SelectedCol)</l>
+<c>            *提取 RegionSub 所在区域图像ImagePart的最大与最小灰度值</c>
+<l>            min_max_gray (RegionSub, OutPutImage, 5, Min, Max, Range)</l>
+<c>            *数组Recode_Value添加值为Min的元素</c>
+<l>            tuple_concat (Recode_Value, Min, Recode_Value)</l>
+<c>            </c>
+<l>            dev_set_color (Colors[Index])</l>
+<l>            dev_display (RegionSub)</l>
+<l>            Begin_Index := End_Index+1</l>
+<l>        endfor</l>
+<c>        *数组Recode_Value添加值为Max的元素</c>
+<l>        tuple_concat (Recode_Value, Max, Recode_Value)</l>
+<c>        *数组Recode_Value元素减去灰度平均值Median</c>
+<l>        tuple_sub (Recode_Value, Median, Recode_Value)</l>
+<c>        </c>
+<c>        *调色板绘制</c>
+<l>        ICO_ColPosition := 20</l>
+<l>        ICO_RowPosition := 100</l>
+<l>        ICO_Width := 30</l>
+<c>        </c>
+<l>        StepHeight := (Height - ICO_RowPosition * 2 ) / Number</l>
+<c>        </c>
+<l>        set_display_font (WindowHandle, 12, 'mono', 'false', 'false')</l>
+<l>        disp_message (WindowHandle, '单位:mm', 'image', ICO_ColPosition- 30, 0, 'black', 'true')</l>
+<l>        set_display_font (WindowHandle, 14, 'mono', 'false', 'false')</l>
+<l>        for Index:=0 to Number-1 by 1</l>
+<l>            dev_set_color (Colors[Number-1-Index])</l>
+<l>            Row_Position:= ICO_RowPosition + Index * StepHeight</l>
+<l>            Col_Position := ICO_ColPosition</l>
+<l>            gen_rectangle1 (Rectangle5, Row_Position, Col_Position, Row_Position+StepHeight, Col_Position+ICO_Width)</l>
+<l>            dev_display (Rectangle5)</l>
+<l>            Display_Value := (Recode_Value[Number-Index]/500)$'.2f'</l>
+<l>            disp_message (WindowHandle, Display_Value, 'image', Row_Position, Col_Position+ICO_Width+5, 'yellow', 'false')</l>
+<l>        endfor</l>
+<l>        Display_Value := (Recode_Value[0] / 500)$'.2f'</l>
+<l>        Row_Position := Row_Position + StepHeight</l>
+<l>        disp_message (WindowHandle, Display_Value, 'image', Row_Position, Col_Position+ICO_Width+5, 'yellow', 'false') </l>
+<l>        dev_set_draw ('margin')</l>
+<c>       </c>
+<l>    endif</l>
+<c></c>
+<c>    </c>
+<c>    </c>
+<c>    </c>
+<c></c>
+<l> _scale := 0.1  </l>
+<l> _distance1 := 38 / _scale / 2.0</l>
+<l> _distance2 := 64 / _scale / 2.0</l>
+<l> _distance3 := 75 / _scale / 2.0</l>
+<c></c>
+<l> _distance6 := 101 / _scale / 2.0</l>
+<c> </c>
+<c> </c>
+<c>  * Y</c>
+<l> _distance4 := 20 / _scale / 2.0</l>
+<l> _distance5 := 40 / _scale / 2.0</l>
+<c> </c>
+<c></c>
+<c> </c>
+<c> </c>
+<l>_position_x1 := _center_column - _distance3</l>
+<l>_position_x2 := _center_column - _distance2</l>
+<l>_position_x3 := _center_column - _distance1</l>
+<l>_position_x4 := _center_column</l>
+<l>_position_x5 := _center_column + _distance1</l>
+<l>_position_x6 := _center_column + _distance2</l>
+<l>_position_x7 := _center_column + _distance3</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c>*最外侧  </c>
+<l>_position_x8 := _center_column - _distance6</l>
+<l>_position_x9 := _center_column + _distance6</l>
+<c></c>
+<c></c>
+<l>_position_y1 := _center_row - _distance5</l>
+<l>_position_y2 := _center_row - _distance4</l>
+<l>_position_y3 := _center_row </l>
+<l>_position_y4 := _center_row + _distance4</l>
+<l>_position_y5 := _center_row + _distance5</l>
+<l>_length := 10</l>
+<c></c>
+<l>gen_rectangle1 (Rectangle1, _position_y3-_length, _position_x4-_length, _position_y3 + _length, _position_x4 + _length)</l>
+<l>gen_rectangle1 (Rectangle2, _position_y1-_length, _position_x4-_length, _position_y1 + _length, _position_x4 + _length)</l>
+<l>gen_rectangle1 (Rectangle3, _position_y1-_length, _position_x3-_length, _position_y1 + _length, _position_x3 + _length)</l>
+<l>gen_rectangle1 (Rectangle4, _position_y1-_length, _position_x1-_length, _position_y1 + _length, _position_x1 + _length)</l>
+<l>gen_rectangle1 (Rectangle5, _position_y3-2, _position_x8-2, _position_y3 + 2, _position_x8 + 2)</l>
+<l>gen_rectangle1 (Rectangle6, _position_y3-_length, _position_x1-_length, _position_y3 + _length, _position_x1 + _length)</l>
+<l>gen_rectangle1 (Rectangle7, _position_y3-_length, _position_x3-_length, _position_y3 + _length, _position_x3 + _length)</l>
+<l>gen_rectangle1 (Rectangle8, _position_y5-_length, _position_x1-_length, _position_y5 + _length, _position_x1 + _length)</l>
+<l>gen_rectangle1 (Rectangle9, _position_y5-_length, _position_x3-_length, _position_y5 + _length, _position_x3 + _length)</l>
+<l>gen_rectangle1 (Rectangle10, _position_y5-_length, _position_x4-_length, _position_y5 + _length, _position_x4 + _length)</l>
+<l>gen_rectangle1 (Rectangle11, _position_y5-_length, _position_x5-_length, _position_y5 + _length, _position_x5 + _length)</l>
+<l>gen_rectangle1 (Rectangle12, _position_y5-_length, _position_x7-_length, _position_y5 + _length, _position_x7 + _length)</l>
+<l>gen_rectangle1 (Rectangle13, _position_y3-2, _position_x9-2, _position_y3 + 2, _position_x9 + 2)</l>
+<l>gen_rectangle1 (Rectangle14, _position_y3-_length, _position_x7-_length, _position_y3 + _length, _position_x7 + _length)</l>
+<l>gen_rectangle1 (Rectangle15, _position_y3-_length, _position_x5-_length, _position_y3 + _length, _position_x5 + _length)</l>
+<l>gen_rectangle1 (Rectangle16, _position_y1-_length, _position_x7-_length, _position_y1 + _length, _position_x7 + _length)</l>
+<l>gen_rectangle1 (Rectangle17, _position_y1-_length, _position_x5-_length, _position_y1 + _length, _position_x5 + _length)</l>
+<l>gen_rectangle1 (Rectangle18, _position_y3-_length, _position_x2-_length, _position_y3 + _length, _position_x2 + _length)</l>
+<l>gen_rectangle1 (Rectangle19, _position_y3-_length, _position_x6-_length, _position_y3 + _length, _position_x6 + _length)</l>
+<l>gen_rectangle1 (Rectangle20, _position_y2-_length, _position_x1-_length, _position_y2 + _length, _position_x1 + _length)</l>
+<l>gen_rectangle1 (Rectangle21, _position_y2-_length, _position_x3-_length, _position_y2 + _length, _position_x3 + _length)</l>
+<l>gen_rectangle1 (Rectangle22, _position_y2-_length, _position_x4-_length, _position_y2 + _length, _position_x4 + _length)</l>
+<l>gen_rectangle1 (Rectangle23, _position_y2-_length, _position_x5-_length, _position_y2 + _length, _position_x5 + _length)</l>
+<l>gen_rectangle1 (Rectangle24, _position_y2-_length, _position_x7-_length, _position_y2 + _length, _position_x7 + _length)</l>
+<l>gen_rectangle1 (Rectangle25, _position_y4-_length, _position_x1-_length, _position_y4 + _length, _position_x1 + _length)</l>
+<l>gen_rectangle1 (Rectangle26, _position_y4-_length, _position_x3-_length, _position_y4 + _length, _position_x3 + _length)</l>
+<l>gen_rectangle1 (Rectangle27, _position_y4-_length, _position_x4-_length, _position_y4 + _length, _position_x4 + _length)</l>
+<l>gen_rectangle1 (Rectangle28, _position_y4-_length, _position_x5-_length, _position_y4 + _length, _position_x5 + _length)</l>
+<l>gen_rectangle1 (Rectangle29, _position_y4-_length, _position_x7-_length, _position_y4 + _length, _position_x7 + _length)</l>
+<c></c>
+<l>gray_features (Rectangle1, OutPutImage, 'mean', Value1)</l>
+<l>gray_features (Rectangle2, OutPutImage, 'mean', Value2)</l>
+<l>gray_features (Rectangle3, OutPutImage, 'mean', Value3)</l>
+<l>gray_features (Rectangle4, OutPutImage, 'mean', Value4)</l>
+<l>gray_features (Rectangle5, OutPutImage, 'mean', Value5)</l>
+<l>gray_features (Rectangle6, OutPutImage, 'mean', Value6)</l>
+<l>gray_features (Rectangle7, OutPutImage, 'mean', Value7)</l>
+<l>gray_features (Rectangle8, OutPutImage, 'mean', Value8)</l>
+<l>gray_features (Rectangle9, OutPutImage, 'mean', Value9)</l>
+<l>gray_features (Rectangle10, OutPutImage, 'mean', Value10)</l>
+<l>gray_features (Rectangle11, OutPutImage, 'mean', Value11)</l>
+<l>gray_features (Rectangle12, OutPutImage, 'mean', Value12)</l>
+<l>gray_features (Rectangle13, OutPutImage, 'mean', Value13)</l>
+<l>gray_features (Rectangle14, OutPutImage, 'mean', Value14)</l>
+<l>gray_features (Rectangle15, OutPutImage, 'mean', Value15)</l>
+<l>gray_features (Rectangle16, OutPutImage, 'mean', Value16)</l>
+<l>gray_features (Rectangle17, OutPutImage, 'mean', Value17)</l>
+<l>gray_features (Rectangle18, OutPutImage, 'mean', Value18)</l>
+<l>gray_features (Rectangle19, OutPutImage, 'mean', Value19)</l>
+<l>gray_features (Rectangle20, OutPutImage, 'mean', Value20)</l>
+<l>gray_features (Rectangle21, OutPutImage, 'mean', Value21)</l>
+<l>gray_features (Rectangle22, OutPutImage, 'mean', Value22)</l>
+<l>gray_features (Rectangle23, OutPutImage, 'mean', Value23)</l>
+<l>gray_features (Rectangle24, OutPutImage, 'mean', Value24)</l>
+<l>gray_features (Rectangle25, OutPutImage, 'mean', Value25)</l>
+<l>gray_features (Rectangle26, OutPutImage, 'mean', Value26)</l>
+<l>gray_features (Rectangle27, OutPutImage, 'mean', Value27)</l>
+<l>gray_features (Rectangle28, OutPutImage, 'mean', Value28)</l>
+<l>gray_features (Rectangle29, OutPutImage, 'mean', Value29)</l>
+<c></c>
+<l>a1 := (Value1 - (Value7 + Value15)/2.0)/500</l>
+<c></c>
+<l>a2 := (Value1 - (Value6 + Value14)/2.0)/500</l>
+<c></c>
+<l>a2_1 := (Value1 - (Value18 + Value19)/2.0)/500</l>
+<c></c>
+<l>a3 := (Value1 - (Value5 + Value13)/2.0)/500</l>
+<c></c>
+<l>a4_1 := (Value7 - (Value1 + Value6)/2.0)/500</l>
+<l>a4_2 := (Value15 - (Value1 + Value14)/2.0)/500</l>
+<c></c>
+<l>a5_1 := (Value6 - (Value5 + Value7)/2.0)/500</l>
+<l>a5_2 := (Value14 - (Value13 + Value15)/2.0)/500       </l>
+<c></c>
+<c></c>
+<c></c>
+<l>a6 := (Value1 - (Value2 + Value10)/2.0)/500</l>
+<c></c>
+<l>a7 := (Value7 - (Value3 + Value9)/2.0)/500</l>
+<c></c>
+<l>a8 := (Value15 - (Value11 + Value17)/2.0)/500</l>
+<c></c>
+<l>a9 := (Value6 - (Value4 + Value8)/2.0)/500</l>
+<c></c>
+<l>a10 := (Value14 - (Value16 + Value12)/2.0)/500</l>
+<c></c>
+<l>a11 := (Value22 - (Value1 + Value2)/2.0)/500</l>
+<c></c>
+<l>a12 := (Value27 - (Value1 + Value10)/2.0)/500</l>
+<c></c>
+<c></c>
+<c></c>
+<l>a13 := (Value21 - (Value3 + Value7)/2.0)/500</l>
+<c></c>
+<l>a14 := (Value26 - (Value7 + Value9)/2.0)/500</l>
+<c></c>
+<l>a15 := (Value20 - (Value4 + Value6)/2.0)/500</l>
+<c></c>
+<l>a16 := (Value25 - (Value6 + Value8)/2.0)/500</l>
+<c></c>
+<l>a17 := (Value23 - (Value15 + Value17)/2.0)/500</l>
+<c></c>
+<l>a18 := (Value28 - (Value11 + Value15)/2.0)/500</l>
+<c></c>
+<l>a19 := (Value24 - (Value14 + Value16)/2.0)/500</l>
+<c></c>
+<l>a20 := (Value29 - (Value12 + Value14)/2.0)/500</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<l>result := ''</l>
+<l>result_Value := ''</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<l>if ( -0.01 &lt;= a1 and a1&lt;= 0.15 )</l>
+<l>    result := result + '0'</l>
+<l>else</l>
+<l>    result := result + '1'</l>
+<l>endif</l>
+<c></c>
+<l>if ( 0.0 &lt;= a2 and a2&lt;= 0.2 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<l>if ( 0.0 &lt;= a2_1 and a2_1 &lt;= 0.2 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<l>if ( (a1-a2_1)&lt; -0.01 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<c></c>
+<c></c>
+<l>if ( 0.0 &lt;= a3 and a3&lt;= 0.15 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<l>if ( 0.0&lt;= a4_1 and a4_1&lt;= 0.15 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<l>if (  0.0&lt;= a4_2 and a4_2&lt;= 0.15 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<c></c>
+<c></c>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<c></c>
+<c></c>
+<l>* if ( -0.09 &lt;= a5_1 and a5_1&lt;= 0.02 )</l>
+<l>*     result := result + ',0'</l>
+<l>* else</l>
+<l>*     result := result + ',1'</l>
+<l>* endif</l>
+<c></c>
+<c></c>
+<l>* if ( -0.09 &lt;= a5_2 and a5_2&lt;= 0.02 )</l>
+<l>*     result := result + ',0'</l>
+<l>* else</l>
+<l>*     result := result + ',1'</l>
+<l>* endif</l>
+<c></c>
+<c></c>
+<l>if ( -0.01 &lt;= a6 and a6&lt;= 0.11 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<l>if ( -0.01 &lt;= a7 and a7&lt;= 0.11 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<c></c>
+<l>if ( -0.01 &lt;= a8 and a8&lt;= 0.11 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<l>if ( -0.01 &lt;= a9 and a9&lt;= 0.11 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<c></c>
+<l>if ( -0.01 &lt;= a10 and a10&lt;= 0.11 )</l>
+<l>    result := result + ',0'</l>
+<l>else</l>
+<l>    result := result + ',1'</l>
+<l>endif</l>
+<c></c>
+<c></c>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<l>result := result + ',0'</l>
+<c></c>
+<c></c>
+<l>Result := result</l>
+<c></c>
+<l>aa := (a1-a2_1)$'.3f'</l>
+<l>a1 := a1$'.3f'</l>
+<l>a2 := a2$'.3f'</l>
+<l>a2_1 := a2_1$'.3f'</l>
+<l>a3 := a3$'.3f'</l>
+<l>a4_1 := a4_1$'.3f'</l>
+<l>a4_2 := a4_2$'.3f'</l>
+<l>a5_1 := a5_1$'.3f'</l>
+<l>a5_2 := a5_2$'.3f'</l>
+<l>a6 := a6$'.3f'</l>
+<l>a7 := a7$'.3f'</l>
+<l>a8 := a8$'.3f'</l>
+<l>a9 := a9$'.3f'</l>
+<l>a10 := a10$'.3f'</l>
+<l>a11 := a11$'.3f'</l>
+<l>a12 := a12$'.3f'</l>
+<l>a13 := a13$'.3f'</l>
+<l>a14 := a14$'.3f'</l>
+<l>a15 := a15$'.3f'</l>
+<l>a16 := a16$'.3f'</l>
+<l>a17 := a17$'.3f'</l>
+<l>a18 := a18$'.3f'</l>
+<l>a19 := a19$'.3f'</l>
+<l>a20 := a20$'.3f'</l>
+<c></c>
+<l>result_Value := a1 + ','+a2 + ','+a2_1+ ','+aa+ ','+a3 + ','+a4_1 +','+a4_2+','+a5_1 + ','+a5_2+','+ a6 + ','+a7 + ','+a8 + ','+a9 + ','+a10 + ','+a11 + ','+a12 + ','+a13 + ','+a14+ ','+a15+ ','+a16+ ','+a17+ ','+a18+ ','+a19+ ','+a20</l>
+<c></c>
+<l>Result_value := result_Value</l>
+<c></c>
+<l>union2 (Rectangle1, Rectangle2, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle3, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle4, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle5, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle6, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle7, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle8, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle9, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle10, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle11, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle12, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle13, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle14, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle15, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle16, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle17, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle18, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle19, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle20, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle21, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle22, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle23, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle24, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle25, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle26, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle27, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle28, OutPutRegion)</l>
+<l>union2 (OutPutRegion, Rectangle29, OutPutRegion)</l>
+<c></c>
+<l>   Result_ex := 0</l>
+<l>   if (GenColor=1)</l>
+<l>       dump_window_image (OutPutImgColor, WindowHandle)</l>
+<l>   endif</l>
+<c>  </c>
+<c></c>
+<l>catch (Exception)</l>
+<l>   Result_ex := Exception</l>
+<l>endtry</l>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+<c></c>
+</body>
+<docu id="MIP2">
+<parameters>
+<parameter id="GenColor"/>
+<parameter id="InputImage"/>
+<parameter id="OutPutImage"/>
+<parameter id="OutPutImgColor"/>
+<parameter id="OutPutRegion"/>
+<parameter id="Result"/>
+<parameter id="Result_ex"/>
+<parameter id="Result_value"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
