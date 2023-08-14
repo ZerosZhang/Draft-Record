@@ -957,7 +957,7 @@ The following capabilities are discussed:
 
 ### 4.1 Establish Communications
 
-> 建立通讯
+> 4.1 建立通讯
 
 The Establish Communications capability provides a means of formally establishing communications following system initialization or any loss of communications between communicating partners, and thus of notifying the communication partner that a period of non-communication has occurred.
 
@@ -966,7 +966,7 @@ The Establish Communications capability provides a means of formally establishin
 4.1.1 Purpose
 Communications between host and equipment are formally established through use of the Establish Communications Request/Establish Communications Acknowledge transaction. The use of S1,F1/F2 for this purpose is ambiguous since the transaction can be used for other purposes and may occur at any time.
 
-> 目的
+> 4.1.1 目的
 > 通过使用"建立通信请求/建立通信确认"事务，正式建立Host和Equipment之间的通信。不能使用S1F1/S1F2事务，因为该事务可以用于其他目的，并且可以在任何时候发生。
 
 The S1,F13/F14 transaction, used in conjunction with the Communications State Model, provides a means for equipment to notify the host, or the host to notify the equipment, that there has been a period of inability to communicate. The successful completion of this transaction also signals a possible need for synchronization activities between host and equipment.
@@ -1502,6 +1502,38 @@ NOTE 5: SEMI E5 provides for SV’s to be of a list format. Since this may in pr
 
 > 注5： SEMI E5规定SV是一种列表格式。由于这实际上可能是一个变量列表，因此跟踪数据采集功能支持的这种SV存在一个潜在的问题。这是SEMI E5标准中的一个问题。在使用列表格式的SV时，应谨慎行事。
 
+4.2.3.5 场景
+
+```mermaid
+
+sequenceDiagram
+participant Host
+participant Equipment
+
+      rect rgb(158, 118, 221)
+          Note left of Host: 跟踪数据初始化请求
+          Host ->> Equipment : S2F23
+          Note right of Equipment : 确认，跟踪数据初始化
+          Equipment ->> Host : S2F24
+      end
+    
+      rect rgb(195, 221, 139)
+          Note left of Host: 数据采集结束后发送
+          Host ->> Equipment : S6F1
+          Note right of Equipment : 确认收到
+          Equipment ->> Host : S6F2
+      end
+      
+      rect rgb(221, 195, 27)
+            Note over Host,Equipment: 可选
+            Note left of Host: 在数据采集完成之前<br>要求停止追踪
+            Host ->> Equipment : S2F23  [TOTSMP=0]
+            Note right of Equipment : 确认提前中止
+            Equipment ->> Host : S2F24
+      end
+
+```
+
 4.2.4 Limits Monitoring
 
 This capability relates to the monitoring of selected equipment variables and has three primary aspects:
@@ -1520,50 +1552,193 @@ This capability relates to the monitoring of selected equipment variables and ha
 
 The limits monitoring capability provides the host a means of monitoring equipment conditions by a flexible, efficient, and asynchronous method which is consistent across equipment. It eliminates the need for constant polling of equipment by the host for current status values. Further, this capability allows the host to implement changes in the monitoring range as needed. This capability has application to both production operation and diagnostic/testing scenarios, and it also has applicability to statistical process control.
 
+> 限值监控功能为主机提供了一种通过灵活、高效和异步方法监控设备状况的手段，这种方法在不同设备之间是一致的。它消除了主机不断轮询设备以获取当前状态值的需要。此外，这种功能还允许主机根据需要更改监控范围。这种功能既适用于生产操作，也适用于诊断/测试方案，还适用于统计过程控制。
+
 4.2.4.2  Definitions
 
 LimitVariable — DVVAL containing the VID of a specific equipment variable for which a zone transition collection event has been generated.
 
+> LimitVariable - DVVAL，包含已生成区段转换收集事件的特定设备变量的 VID。
+
 EventLimit — DVVAL containing the LIMITID of the limit crossed by LimitVariable.
+
+> EventLimit - DVVAL，包含 LimitVariable 所跨越限制的 LIMITID。
 
 TransitionType — DVVAL which defines the direction of the zone transition which has occurred: 0 = transition from lower to upper zone, 1 = transition from upper to lower zone.
 
+> TransitionType - DVVAL，定义已发生的区段转换的方向： 0 = 从下区过渡到上区，1 = 从上区过渡到下区。
+
 Limit — Used in this section to represent the set of variable limit attributes that completely describe a variable monitoring “barrier.” The attributes include VID, Units, UPPERDB, LOWERDB, LIMITMAX, and LIMITMIN. In some contexts it may be interpreted more narrowly as the combination of UPPERDB and LOWERDB.
+
+> Limit - 在本节中用于表示变量限制属性集，以完整描述变量监控 "障碍"。这些属性包括 VID、单位、UPPERDB、LOWERDB、LIMITMAX 和 LIMITMIN。在某些情况下，它可以更狭义地解释为 UPPERDB 和 LOWERDB 的组合。
 
 LIMITIDn — Refers to the identifier of a specific limit (as defined by UPPERDB and LOWERDB) among the set of limits for a monitored equipment variable. LIMITIDs are consecutively numbered, beginning at one through the number of limits possible (seven minimum).
 
+> LIMITIDn - 指受监控设备变量极限集合中特定极限的标识符（由 UPPERDB 和 LOWERDB 定义）。LIMITID 连续编号，从 1 开始，直到可能的限值数（最少 7 个）。
+
 Monitoring Zone — A subset of the possible range of values for a variable of interest to the host. A single limit divides the range into two zones. Multiple limits may be combined to divide the range even further.
+
+> Monitoring Zone - 主机感兴趣的变量可能取值范围的子集。单个限值将范围分为两个区。多个限值可以组合在一起，进一步划分范围。
 
 Zone Transition — The movement of a variable value from one monitoring zone to another. This transition is a collection event and has a corresponding CEID.
 
+> Zone Transition - 变量值从一个监控区域移动到另一个监控区域。这种转换是一个采集事件，并有一个相应的 CEID。
+
 Deadband — An overlap of two zones implemented to prevent constant zone transitions by a variable sitting on or near a limit (i.e., “chattering”).
 
-UPPERDB — A variable limit attribute that defines the upper boundary of the deadband of a limit.18  The value applies to a single limit (LIMITID) for a specified VID. Thus, UPPERDB and LOWERDB as a pair define a limit.
+> Deadband - 两个区段的重叠，以防止变量在限值或接近限值时不断转换区段（即 "颤振"）。
+
+UPPERDB — A variable limit attribute that defines the upper boundary of the deadband of a limit.  The value applies to a single limit (LIMITID) for a specified VID. Thus, UPPERDB and LOWERDB as a pair define a limit.
+
+> UPPERDB - 变量限值属性，用于定义限值死区的上边界。该值适用于指定 VID 的单个限值 (LIMITID)。因此，UPPERDB 和 LOWERDB 作为一对定义了一个限值。
 
 LOWERDB — A variable limit attribute that defines the lower boundary of the deadband of a limit.18 The value applies to a single limit (LIMITID) for a specified VID. Thus, UPPERDB and LOWERDB as a pair define a limit.
 
+> LOWERDB - 变量限值属性，用于定义限值死区的下限18 。该值适用于指定 VID 的单个限值 (LIMITID)。因此，UPPERDB 和 LOWERDB 作为一对定义了一个限值。
+
 UPPER ZONE — The range of values lying above a limit.
+
+> UPPER ZONE（上限值）- 位于限值之上的数值范围。
 
 LOWERZONE — The range of values lying below a limit.
 
+> LOWERZONE （下限值） - 低于限值的数值范围。
+
 LIMITMAX — The maximum value for any limits of a specific equipment variable. This value is set by the equipment manufacturer and typically coincides with the maximum value allowed for the monitored variable.
+
+> LIMITMAX - 特定设备变量任何限制的最大值。该值由设备制造商设定，通常与监控变量允许的最大值一致。
 
 LIMITMIN — The minimum value for any limits of a specific equipment variable.19 This value is set by the equipment manufacturer and typically coincides with the minimum value allowed for the monitored variable.
 
+> LIMITMIN - 特定设备变量任何限值的最小值19 。该值由设备制造商设定，通常与监控变量允许的最小值一致。
+
 Undefined — When used in reference to variable limits, it indicates that monitoring/reporting of zone transitions involving that particular limit are disabled.
+
+> Undefined - 用于指变量限值时，表示禁用涉及该特定限值的区段转换监控/报告。
 
 4.2.4.3 Description
 
-The limits monitoring capability provides the host with a minimum of seven configurable limits or barriers that may be applied to selected equipment status variables (SV’s) of the types floating point, integer, and boolean. When one of these barriers is crossed, a collection event is generated to alert the host to a change in monitoring zone or state of the monitored variable. These seven limits may be combined in a variety of ways to match the needs of the host system.19  An illustration of a combination of five of the limits to provide one type of variable monitoring is shown in Figure 4.2.1.20 This section describes the key aspects of limits monitoring. Detailed implementation examples of limits monitoring are provided as Application Note A.7.
+The limits monitoring capability provides the host with a minimum of seven configurable limits or barriers that may be applied to selected equipment status variables (SV’s) of the types floating point, integer, and boolean. When one of these barriers is crossed, a collection event is generated to alert the host to a change in monitoring zone or state of the monitored variable. These seven limits may be combined in a variety of ways to match the needs of the host system. An illustration of a combination of five of the limits to provide one type of variable monitoring is shown in Figure 4.2.1.20 This section describes the key aspects of limits monitoring. Detailed implementation examples of limits monitoring are provided as Application Note A.7.
+
+> 限值监控功能可为主机提供至少七个可配置的限值或障碍，这些限值或障碍可应用于浮点、整数和布尔类型的选定设备状态变量 (SV)。当越过其中一个障碍时，就会生成一个收集事件，提醒主机监控区域或被监控变量的状态发生变化。图 4.2.1 举例说明了五种限值的组合，以提供一种变量监控。限值监控的详细实施示例见应用说明 A.7。
 
 NOTE 6: While the SEMI E5 standard allows SV’s to be lists, such variable lists are not allowed under this capability.
 
+> 注 6： 虽然 SEMI E5 标准允许 SV 列表，但本功能不允许此类变量列表。
+
 4.2.4.3.1 Monitoring Limit Characteristics — A limit is defined by a set of attributes that include the variable (VID) to which the limit corresponds, the units of that variable, the maximum and minimum possible values of the limit (LIMITMAX and LIMITMIN) and the specific borders of the limit (UPPERDB and LOWERDB). See Figure 4.2.2. There is a limitation to the values of UPPERDB and LOWERDB which may be stated as:
+
+> 监控限值特征 - 限值由一组属性定义，其中包括限值对应的变量 (VID)、变量的单位、限值的最大值和最小值（LIMITMAX 和 LIMITMIN）以及限值的具体边界（UPPERDB 和 LOWERDB）。见图 4.2.2。UPPERDB 和 LOWERDB 的值有一个限制，可以表述为
 
 LIMITMAX ≥ UPPERDB ≥ LOWERDB ≥ LIMITMIN
 
+> LIMITMAX ≥ UPPERDB ≥ LOWERDB ≥ LIMITMIN
+
 A limit divides the possible range of variable values into two parts, the upper zone and the lower zone. At any time, the monitored variable is considered to be in one and only one of these zones. However, as Figure 4.2.2 shows, these two zones have an area of overlap. This is called the deadband.
+
+> 限值将变量值的可能范围分为两部分，即上限值和下限值。在任何时候，受监控变量都会被认为处于其中一个区域。但是，如图 4.2.2 所示，这两个区域有一个重叠区域。这就是所谓的死区。
 
 ![1687245436723](image/SEMIE30文档记录/1687245436723.png)
 
 ![1687245449300](image/SEMIE30文档记录/1687245449300.png)
+
+The deadband is a key concept of limits monitoring, especially for floating point variables. Its purpose is to prevent a phenomenon known as chattering — the repeated changing of zones due to small, rapid fluctuations in variable value while near the zone boundary. In practice, the value of a variable must reach the opposite boundary of the deadband before a zone transition can occur. Thus, if a variable’s value reaches the UPPERDB and transitions into the upper zone, it will not return to the lower zone until it falls back to the LOWERDB. The difference between UPPERDB and LOWERDB should always be greater than the typical amplitude of those fluctuations deemed to be insignificant. In some cases, the width of the deadband may set to zero (i.e., UPPERDB = LOWERDB). At first glance, this would seem to make indeterminate the current zone when an integer value sits on the limit. This is not the case, however, when movement of the value is considered. To illustrate, an example is given, assuming that UPPERDB = LOWERDB = 100. The list shows consecutive readings of the variable and the resultant zone:
+
+> 死区是限值监控的一个关键概念，尤其适用于浮点变量。其目的是防止一种被称为 "颤振 "的现象，即在接近区域边界时，由于变量值的微小快速波动而导致区域反复变化。在实际操作中，变量值必须达到死区的相反边界，才能发生区段转换。因此，如果一个变量的值达到 UPPERDB 并过渡到上区，那么它在跌回 LOWERDB 之前不会返回下区。UPPERDB 和 LOWERDB 之间的差值应始终大于那些被视为不显著波动的典型振幅。在某些情况下，死区的宽度可能设置为零（即 UPPERDB = LOWERDB）。乍一看，当一个整数值位于限值上时，这似乎会使当前区段变得不确定。但是，如果考虑到数值的移动，情况就不是这样了。举例说明，假设 UPPERDB = LOWERDB = 100。列表显示了变量的连续读数和由此产生的区段：
+
+99   Lower Zone (Initial Reading)
+101  Upper Zone (Zone Transition)
+100  Lower Zone (Zone Transition)
+100  Lower Zone
+99   Lower Zone
+100  Upper Zone (Zone Transition)
+
+Transition from one zone into another generates a collection event, as might be reported via S6,F11. The host has the option of receiving notification by enabling event reporting for the event. For each variable that has monitoring capability, one CEID is reserved to indicate zone transitions for that variable. To aid in the determination of the nature of a transition event, three DVVAL’s have been defined:
+
+> 从一个区段进入另一个区段会产生一个收集事件，可通过 S6,F11 报告。主机可选择通过启用事件报告功能来接收通知。对于每个具有监控功能的变量，都保留了一个 CEID，用于指示该变量的区段转换。为了帮助确定过渡事件的性质，定义了三个 DVVAL：
+
+LimitVariable — The VID of the monitored variable to which the collection event refers.
+
+> LimitVariable - 收集事件指向的受监控变量的 VID
+
+EventLimit — Contains the LIMITID of the limit reached or crossed by LimitVariable.
+
+> EventLimit - 包含 LimitVariable 达到或超过的限制的 LIMITID。
+
+TransitionType — Defines the direction of the zone transition which has occurred: 0 = transition from lower to upper zone, 1 = transition from upper to lower zone.
+
+> TransitionType - 定义已发生的区段转换的方向： 0 = 从下区过渡到上区，1 = 从上区过渡到下区。
+
+Sampling frequency is an important element of limits monitoring and should be considered during equipment specification. If changes in variable value are relatively fast compared to sampling frequency, it is possible for some zone transitions to be missed or for multiple zone transitions to occur between readings. Since it is possible for zone transitions to occur “simultaneously” or for limits to be identically defined, the DVVAL EventLimit has been defined to allow for a list of multiple zone transitions of a variable to be reported with a single collection event.
+
+> 采样频率是限值监测的一个重要因素，应在设备规格制定过程中加以考虑。如果与采样频率相比，变量值的变化相对较快，则有可能漏掉某些区段的转换或在读数之间发生多个区段的转换。由于区域转换有可能 "同时 "发生，或者限值定义相同，因此定义了 DVVAL EventLimit（DVVAL 事件限值），以便通过单个采集事件报告变量的多个区域转换列表。
+
+It also should be emphasized that a single CEID is used to report transitions in both directions across a limit. Thus, reporting for one direction but not the other cannot be configured.
+
+> 还需要强调的是，单个 CEID 用于报告跨限值的双向转换。因此，不能只报告一个方向而不报告另一个方向。
+
+The functionality of each limit for each variable can be described with the state model shown in Figure 4.2.3. Below, the three states are described more fully, followed by a table defining the transitions.
+
+> 图 4.2.3 所示的状态模型可以描述每个变量的每个限值的功能。下面将对这三种状态进行更全面的描述，并用表格对转换进行定义。
+
+![1691993270223](image/SEMIE30文档记录/1691993270223.png)
+
+ABOVE LIMIT
+A variable is considered to be above a limit when its value increases to equal or exceed the upper boundary of the deadband, UPPERDB. The significance attached to this state is a function of the host’s usage.
+
+> 超出限值
+> 当一个变量的值增加到等于或超过死区的上边界 UPPERDB 时，就认为该变量超过了限值。这种状态的重要性取决于主机的使用情况。
+
+BELOW LIMIT
+A variable is considered to be below a limit when its value decreases to equal or fall below the lower boundary of the deadband, LOWERDB. The significance attached to this state is a function of the host’s usage.
+
+> 低于限值
+> 当变量值下降到等于或低于死区下限 LOWERDB 时，该变量将被视为低于限值。这种状态的重要性取决于主机的使用情况。
+
+NO ZONE
+In some circumstances it is possible for the variable value to be in neither the upper zone nor the lower zone. This may occur upon definition of a new limit or upon equipment startup when the value of the variable lies in the deadband. In this case, the active state of the limit is considered to be NO ZONE. The limit shall remain in this state until the variable value reaches either boundary of the deadband.
+
+> 无区域
+> 在某些情况下，变量值可能既不在上区，也不在下区。这种情况可能发生在定义新限值或设备启动时，变量值位于死区。在这种情况下，限值的活动状态被视为 "无区域"。限值应保持此状态，直至变量值到达死区的任一边界。
+
+4.2.4.3.2 Modification of Limit Values — Values for the monitoring limits on any monitored variable may be modified by the host using the message transaction S2,F45/F46 (Define Variable Limit Attributes). The equipment must reject any S2,F45 message which contains limit information which conflicts with the following rules:
+
+> 4.2.4.3.2 修改限值 - 主机可通过报文事务 S2,F45/F46（定义变量限值属性）修改任何受监控变 量的监控限值。如果 S2,F45 报文中包含的限值信息与以下规则相冲突，设备必须予以拒绝：
+
+- LIMITMAX≥UPPERDB≥LOWERDB≥LIMITMIN;
+- If either UPPERDB or LOWERDB is defined, both must be defined; if either UPPERDB or LOWERDB is undefined, both must be undefined.
+
+> - limitmax ≥ upperdb ≥ lowerdb ≥ limitmin；
+> - 如果 UPPERDB 或 LOWERDB 已定义，则两者都必须定义；如果 UPPERDB 或 LOWERDB 未定义，则两者都必须未定义。
+
+The first rule is defined and graphically depicted in Figure 4.2.2. The second rule refers to the host’s ability to turn any limit “on” or “off”. While a minimum of seven limits must be available for each monitored variable, it will be common for the host application to require less than seven or even none of the limits be used. The limits not needed can be disabled by leaving the values for UPPERDB and LOWERDB “undefined”. Limits may be disabled for a VID or for all monitored VIDs by using zero length lists in the S2,F45 message.
+
+> 第一条规则的定义和图示见图 4.2.2。第二条规则是指主机可以 "打开 "或 "关闭 "任何限值。虽然每个受监控变量必须至少有七个限值，但主机应用程序通常会要求少于七个限值，甚至不使用任何限值。可以通过将 UPPERDB 和 LOWERDB 的值保留为 "未定义 "来禁用不需要的限制。通过在 S2,F45 报文中使用零长度列表，可以禁用一个 VID 或所有受监控 VID 的限制。
+
+All monitored variables must be one of three types: integer, floating point, or Boolean. This may be accomplished by using the following formats: 11, 20, 3(), 4(), 5().
+
+> 所有监控变量必须是三种类型之一：整数、浮点或布尔。这可以通过使用以下格式来实现： 11, 20, 3(), 4(), 5().
+
+NOTE 7: The binary format is not allowed. If the ASCII format is used, the equipment shall perform a conversion into one of the numeric types before performing any value comparisons, both for limit validations and zone transitions.
+
+> 注 7： 不允许使用二进制格式。如果使用 ASCII 格式，设备在进行任何数值比较（包括限值验证和区段转换）之前，应将其转换为数字类型之一。
+
+4.2.4.3.3 Limit Values Request — The host may request the current limit values for a specified VID using the message transaction S2,F47/F48 (Variable Limit Attribute Request).
+
+> 4.2.4.3.3 限值请求 - 主机可使用报文事务 S2,F47/F48（变量限值属性请求）请求指定 VID 的当前限值。
+
+4.2.4.4  Requirements
+
+- A minimum of seven limits per monitored variable must be available.
+- One CEID per monitored variable must be supplied for zone transition reporting.
+- All limit definitions must be kept in non-volatile storage.
+- The equipment must enforce the limit validation rules defined above.
+- The specification and documentation of which variables may be monitored with this capability is the responsibility of the equipment manufacturer based on the specific instance of equipment. This subject also may be addressed by equipment models of classes of semiconductor equipment.
+
+> - 每个监控变量必须至少有七个限值。
+> - 每个监控变量必须提供一个 CEID 用于区段转换报告。
+> - 所有限值定义必须保存在非易失性存储器中。
+> - 设备必须执行上述定义的限值验证规则。
+> - 设备制造商有责任根据设备的具体情况，说明和记录哪些变量可使用此功能进行监控。半导体设备类别的设备模型也可解决这一问题。
+
+![1691993539674](image/SEMIE30文档记录/1691993539674.png)
