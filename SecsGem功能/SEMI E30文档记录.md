@@ -1742,3 +1742,32 @@ NOTE 7: The binary format is not allowed. If the ASCII format is used, the equip
 > - 设备制造商有责任根据设备的具体情况，说明和记录哪些变量可使用此功能进行监控。半导体设备类别的设备模型也可解决这一问题。
 
 ![1691993539674](image/SEMIE30文档记录/1691993539674.png)
+
+4.2.4.5 Scenario
+
+````mermaid
+sequenceDiagram
+participant Host
+participant Equipment
+
+      rect rgb(158, 118, 221)
+          Note over Host,Equipment: 主机定义极限特性
+          Note left of Host: 多块请求
+          Host ->> Equipment : S2F39
+          Note right of Equipment : 同意多块
+          Equipment ->> Host : S2F40
+          Note left of Host: 主机定义新的变量极限特性
+          Host ->> Equipment : S2F45
+          Note right of Equipment : 设备确认收到
+          Equipment ->> Host : S2F46
+      end
+    
+      rect rgb(195, 221, 139)
+          Note over Host,Equipment: 主机查询设备当前的极限
+          Note left of Host: 主机查询当前设备极限的定义
+          Host ->> Equipment : S2F47
+          Note right of Equipment : 设备发送包含变量极限特性的报告
+          Equipment ->> Host : S2F48
+      end
+
+````
