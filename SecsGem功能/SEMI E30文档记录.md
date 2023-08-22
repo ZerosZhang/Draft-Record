@@ -1887,3 +1887,298 @@ CPNAME = AbortLevel, CPVAL = 1 means terminate current cycle at the next “safe
 - The Enhanced Remote Command is used to address size, complexity, or the need to target a specific sub- system within the equipment, (i.e., processing station, port, exchange station, material handler, chamber).
 
 > 增强型远程指令用于解决设备的规模、复杂性或针对特定子系统的需求（如处理站、端口、交换站、物料处理机、舱室）。
+
+### 4.5  Equipment Constants
+
+4.5.1 Purpose — This capability provides a method for the host to read and to change the value of selected equipment constants on the equipment.
+
+4.5.2  Definitions — None.
+
+4.5.3  Description — This capability allows the host to reconfigure equipment constants to support a variety of situations. The following functions are included: Host Sends Equipment Constants — Allows the host to change the value of one or more equipment constants. Host Equipment Constant Request — Allows the host to determine the current value of equipment constants.
+
+Host Equipment Constant Namelist Request — Allows the host to retrieve basic information about the equipment constants available at the equipment.
+
+4.5.4  Requirements
+
+- Equipment constants must be stored in non-volatile memory.
+- The equipment must be in a “safe” condition to accept new constant(s) settings as defined by the equipment manufacturer.
+- The equipment must provide a collection event to alert the host whenever an equipment constant is changed by the operator. Information indicating which constant was changed shall be available for the event report.
+
+### 4.6 Process Program Management
+
+Process programs and recipes must be managed through interaction between the equipment and the host system.
+
+> 工艺程序和配方必须通过设备与主机系统之间的互动来管理。
+
+4.6.1 Purpose — Process program management provides a means to transfer process programs or recieps, and to share the management of those process programs or recipes, between the host and equipment.
+
+> 4.6.1 目的
+> 工艺程序管理提供了一种在主机和设备之间传输工艺程序或配方以及共享这些工艺程序或配方的管理的方法。
+
+4.6.2  Definitions
+PPError - A text data value with information about verification errors of a process program that failed verification. If the equipment provides an event for recipe verification and/or recipe verification failure, then PPError shall be a DVVAL. Otherwise, PPError shall be an SV.
+
+PPFormat - A variable (SV) indicating the type or types of process programs and recipes that are supported.
+1 = Unformatted process programs
+2 = Formatted process programs
+3 = Both unformatted and formatted process programs
+4 = Execution recipes
+
+4.6.2.1 Definitions for Process Programs
+
+Process Program — A process program is the pre-planned and reusable portion of the set of instructions, settings, and parameters under control of the equipment that determine the processing environment seen by the manufactured object and that may be subject to change between runs or processing cycles.
+
+Process Program Identifier — A text string (PPID) used to identify a process program.
+
+Formatted Process Program — A process program that
+is presented as an ordered sequence of command codes
+with their associated parameters as dictated by S7,F23,
+and S7,F26. Where formatted process programs are
+supported, equipment must also provide information
+sufficient to allow a user at the host to create, display,
+modify, and partially verify their contents (for example,
+that information provided in S7,F22).
+Unformatted Process Program — An unformatted
+process program is transferred without structure as the
+single data item PPBODY (refer to SEMI E5 for a
+complete description of PPBODY).
+Process Program Change Event — The collection
+event associated with the occurrence of the creation,
+modification, or deletion of a process program by the
+operator.
+PPChangeName — A data value (DVVAL) containing
+the PPID of the process program affected by the event
+Process Program Change Event. See SEMI E5 for a full
+definition of this variable data item.
+PPChangeStatus — The action taken on the process
+program named by PPChangeName. This variable is
+valid for the collection event Process Program Change
+Event. See SEMI E5 for a full definition of this variable
+data item.
+PPExecName — The status variable containing the
+PPID(s) of the currently selected process program(s).
+See SEMI E5 for a full definition of this variable data
+item.
+PP-SELECT — The remote command used to select
+one or more process programs for execution. The
+process programs are specified by PPID via the
+command parameter list.
+Process Program Verification — Verification is syntax
+checking of a process program. Verification ensures
+only that a process program is structured correctly. It
+does not ensure that the program has the correct
+parameters to run a particular process or product (see
+Process Program Validation). Equipment supporting
+unformatted process programs should provide a variable
+DVVAL PPError that provides information to the user
+concerning the error or errors when an attempt to verify
+a process program fails.
+NOTE 14: It may not be possible for the equipment to verify
+unformatted process programs other than to check the size of
+the program and internal program checksums. Equipment has
+no standard means of indicating the type of error encountered
+in an unformatted process program.
+Process Program Validation — Validation is type-and-
+range checking of parameters in a process program, and
+is performed after verification.
+4.6.2.2  Definitions for Recipes
+Execution recipe — A type of recipe stored by the
+equipment for purposes of editing, verification, and
+execution.
+For complete definitions of execution recipes and their
+standard attributes, see SEMI E42, Section 6.
+Execution Recipe Change Event — The collection event
+associated with the occurrence of the modification or
+deletion of an execution  recipe stored by the equipment.
+Note 15: A recipe is modified whenever its body is changed.
+New Execution Recipe Event — The collection event
+associated with the creation of a new execution recipe at
+the equipment.
+Object form recipe — A recipe with body in a proprietary
+format that may be presented without structure.
+RcpChangeName — A data value (DVVAL) containing
+the identifier of the recipe affected by the event Execution
+Recipe Change Event or New Execution Recipe Event.
+See the SEMI E5 Standard for a full definition of this
+variable data item.
+RcpChangeStatus — The action taken on the recipe
+named by RcpChangeName. This variable is valid for the
+collection event Execution Recipe Change Event or New
+Execution Recipe Event.  See the SEMI E5 Standard for
+a full definition of this variable data item.
+RcpExecName — The status variable containing the
+specifiers of the currently selected recipe(s). See the
+SEMI E5 Standard for a full definition of this variable
+data item.
+RCP-SELECT — The remote command used to select
+one or more recipes for execution.  See Section 4.4.3.
+
+Recipe Attribute — Information about the recipe that is
+transferred with the recipe as a name/value pair. The
+value may be a single item or a list.
+Recipe — A recipe contains both a set of instructions,
+settings, and parameters that the equipment uses to
+determine the processing environment (its body or
+process program) and a set of attributes that provide
+information about the recipe, such as the date and time
+the body was last changed.
+SEMI E42 defines two types of recipes: managed
+recipes and execution recipes. For purposes of GEM,
+the term recipe refers to an execution recipe only.
+Recipe identifier — A recipe identifier is a formatted
+text string (RCPID) used to identify the recipe.
+Recipe specifier — A formatted text string (RCPSPEC)
+used in messages to indicate a specific recipe.  A recipe
+specifier includes the recipe identifier. It may also
+include additional information, such as the name of the
+specific component of the equipment where the recipe is
+to be executed (e.g. a process chamber) and the name of
+a recipe repository on the host.
+Recipe Verification — Verification is syntax checking of
+a recipe’s body. Verification ensures that a recipe body is
+structured correctly and has the correct syntax. It may
+also provide a check of semantics.   It does not ensure that
+the body has the correct parameters to run a particular
+process or product (see Recipe Validation).
+NOTE 16: Unverified recipes shall be verified upon download.
+Recipe Validation — Validation is type-and-range
+checking of parameters in a recipe, and is performed
+when the recipe is selected for execution.  The recipe may
+be correct in its syntax and semantics but should fail
+validation if it can not be executed with the current
+equipment configuration.
+Source form recipe — A recipe with a body that is
+presented as an ordered sequence of text.  A source form
+recipe may be created and edited off-line to the
+equipment. Definition of syntax requirements shall be
+documented, in order to allow proper off-line editing.
+Variable Parameters — Variable parameters are recipe
+parameters that are defined in the body of the recipe and
+whose run-time values may be set outside of the recipe
+when the recipe is selected for execution and/or when
+processing is started.   Both the host and the operator may
+specify new settings as a parameter name/value pair.
+Variable Parameter Definition — A variable parameter
+definition has three parts: the name of the variable
+parameter, its default setting, and restrictions on the
+run-time value selected.  Variable parameter definitions
+are stored in the recipe attribute “Parameters”.
+4.6.3  Description
+4.6.3.1 Process Program Description
+Process programs allow the equipment’s process, and/or
+the parameters used by that process, to be set and
+modified by the engineer to achieve different results.
+Different process programs maybe required for different
+products, while often the same process program will be
+used for all lots of a given product. The engineer must
+be able to create such programs, to modify current
+programs, and to delete programs from equipment
+storage.
+For the host to ensure that the proper process programs
+are in place at the equipment, there must be a means of
+transferring them from equipment to host and from host
+to equipment. The host also may need to delete process
+programs from the equipment’s storage to make room
+for a process program to be downloaded. In addition,
+the host must be kept informed whenever a local change
+occurs in the contents or status of a process program.
+Both formatted and unformatted process programs may
+be uploaded and downloaded. This capability provides
+for both host- and equipment-initiated transfers. The
+equipment-initiated transfer may be used at the request
+of the process engineer or operator at the equipment.
+If a process program exists with the same PPID as the
+one given in the SECS-II message, the old process
+program must be replaced. The PPID in the e process
+program in non-volatile storage.
+4.6.3.2 Recipe Description
+Specifications in Section 4.6.3.1 apply to recipes as well
+as process programs, with the following  differences:
+• A recipe contains a body corresponding to a
+process program.  In addition, it contains attributes
+defined for execution recipes in SEMI E42, Section
+6. Recipe attributes are transferred whenever the
+recipe is downloaded or uploaded.
+• The same SECS-II messages are used for all
+execution recipes, regardless of the internal
+structure of the recipe body.
+• If an execution recipe already exists with the same
+identifier as the one given in the SECS-II message,
+the downloaded recipe shall be rejected (not stored)
+unless the host has specified a “forced overwrite”
+in the data  item RCPOWCODE.
+• A recipe currently being edited shall be protected
+from inadvertent change or overwriting by a recipe
+with the same identifier that is downloaded during
+this time. If the downloaded recipe is accepted
+(stored), the equipment shall require the operator
+
+either to save the edited recipe to a new (unused)
+identifier or to discard it.
+• For the equipment to initiate either an upload or
+download of a recipe, it shall request the host to
+initiate an upload or download procedure. In
+addition, it may be necessary to also specify the
+name of the repository (recipe namespace) at the
+host.
+4.6.4  Requirements
+• The equipment manufacturer shall provide a method
+to create, modify, and delete process programs or
+recipes. This method shall exist on either the
+equipment or on a separate computing system.
+• A CEID shall be defined for a collection event for
+the creation, the deletion, or the modification
+(completion of an editing session) of a process
+program (Process Program Change Event). For
+recipes, there are two separate CEIDs and collection
+events, one for the creation of a new recipe (New
+Execution Recipe Event) and one when a recipe is
+changed or deleted (Execution Recipe Change
+Event).   A New  Execution Recipe Event shall occur
+whenever a new recipe  identifier is created through
+download, edit, copy, or rename operations. A
+Execution Recipe Change Event shall occur
+whenever the body of an existing recipe is modified.
+• The name (identifier) that the engineer or operator
+uses to refer to the process program or recipe is the
+same as the identifier used by the host.
+• Upon request from the host or operator, the
+equipment shall perform the following actions with
+regard to process programs and recipes stored in
+non-volatile storage: upload, download, delete, and
+list current equipment process program or recipe
+directory.
+• The equipment shall be able to store in non-volatile
+memory the number of process programs or recipes
+sufficient to execute three unique process cycles.  For
+example, if a wire-bonder requires both an “ALIGN”
+process program and a “BOND” process program for
+a full process cycle, then it must provide non-volatile
+storage for at least three pairs of process programs.
+These stored process programs or recipes may not be
+modified in any way by the execution process, nor
+may the execution process be affected by the
+modification of any process program or recipes in
+storage, either by downloading or by local editing,
+while that process program or recipes is being
+executed.
+The equipment must provide verification and
+validation of all downloaded process programs and
+recipes.
+• Stream 7 provides for formatted and unformatted
+process programs, while Stream 15 provides for
+recipes.  The equipment must support at least one of
+these three methods.
+• The equipment supplier shall document any
+restrictions on the length or test format of PPID.
+The maximum length allowed by equipment may be
+less than that allowed by SECS-II.
+
+• Where recipes are supported, the following
+requirements also apply:
+• The variable PPFormat shall be provided to
+indicate to the user the messages supported by
+the equipment.
+• The recipe and its attributes shall comply to the
+requirements for  execution recipes as defined
+in SEMI E42, Section 6.
