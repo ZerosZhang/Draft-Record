@@ -1128,7 +1128,8 @@ Event data collection may be broken into two logical parts: host notification wh
 > 1. 事件发生时的事件通知
 > 2. 事件通知时发送数据的动态配置
 
-4.2.1.1 Event Notification
+#### 4.2.1.1 Event Notification
+
 This section describes the method of notifying the host when equipment collection events occur.
 
 > 4.2.11 事件通知
@@ -1250,7 +1251,7 @@ participant Equipment
       Equipment ->> Host : S6F16
 ```
 
-4.2.1.2 Dynamic Event Report Configuration
+#### 4.2.1.2 Dynamic Event Report Configuration
 
 > 事件报告动态配置
 
@@ -1371,7 +1372,7 @@ participant Equipment
     end
 ```
 
-4.2.2 Variable Data Collection
+#### 4.2.2 Variable Data Collection
 
 > 数据变量收集
 
@@ -1422,7 +1423,7 @@ participant Equipment
       Equipment ->> Host : S6F20
 ```
 
-4.2.3 Trace Data Collection
+#### 4.2.3 Trace Data Collection
 
 > 追踪数据采集
 
@@ -1534,7 +1535,7 @@ participant Equipment
 
 ```
 
-4.2.4 Limits Monitoring
+#### 4.2.4 Limits Monitoring
 
 This capability relates to the monitoring of selected equipment variables and has three primary aspects:
 — Defines a standard set of monitoring zones and limits.
@@ -1542,6 +1543,7 @@ This capability relates to the monitoring of selected equipment variables and ha
 — Empowers the host to modify the values of the variable limit attributes for these same selected equipment variables.
 
 > 限值监控
+>
 > 这种功能和设备变量的监控有关，主要在三个方面
 >
 > 1. 定义一套标准的监测和极限
@@ -1771,3 +1773,68 @@ participant Equipment
       end
 
 ````
+
+#### 4.2.5 Status Data Collection
+
+#### 4.2.6 On-line Identification
+
+### 4.3 Alarm Management
+
+### 4.4 Remote Control
+
+4.4.1 Purpose — This capability provides the host with a level of control over equipment operations.
+
+> 目的 - 该功能可让主机对设备运行进行一定程度的控制
+
+4.4.2  Definitions
+
+Host Command Parameter (CPNAME/ CPVAL/CEPVAL) — A parameter name/value associated with a particular host command (S2,F41/S2,F49). The equipment manufacturer must provide unique names (CPNAMEs) for any supported command parameters. Command parameters are not specified in this document but are left to equipment manufacturers to define. Equipment models of specific classes of semiconductor equipment also may address this issue. Note that if there are no associated parameters a zero-length list is sent. The data item CEPVAL, which can be defined as a list, allows grouping of related parameters within a main parameter. If the CEPVAL is defined as a single (non-list) item, then it is the equivalent of a CPVAL.
+
+The uses of OBJSPEC in the header structure of the S2,F49 Enhanced Remote Command allows the equipment supplier to define a set of unique identifiers for different objects within the equipment such as: equipment sub-systems, sub-system components, processing stations, ports, and exchange stations.
+
+4.4.3 Description — The equipment responds to host commands that provide the following functions relative to individual equipment implementations:
+
+- Start processing
+- Select a process program or recipe
+- Stop processing
+- Temporarily suspend processing
+- Resume processing
+- Abort processing
+
+Additional commands may be implemented by the equipment manufacturer (e.g., vent chamber, clear material, open door).
+
+Remote commands shall be interpreted as “request action be initiated” rather than “do action.” The equipment may then respond via S2,F42/S2,F50 with HCACK = 4 if the command “is going to be performed.”  This alleviates any transaction timeouts for commands that may take a long time to perform. The completion of the action initiated by the remote command (i.e., HCACK = 0 or 4) must result in either a state transition or other action that generates a collection event upon normal/abnormal completion.
+
+The format for all remote commands is ASCII, with a maximum length of 20 characters. The character set is restricted to the printable characters (hexadecimal 21 through 7E). Note that spaces are not allowed.
+
+The following remote commands (RCMDs), if implemented on the equipment, shall be supported as described below (see Section 3.4 for a description of Equipment Processing States).
+
+NOTE 12: The terms “current cycle” and “safe break point” used below are to be defined by the supplier or within the models of classes of semiconductor equipment.
+
+START — This command is available to the host when a process program or recipe has been selected and the equipment is in the “ready” processing state. The START command instructs the equipment to initiate processing. Variable parameter settings may be included as name/value command parameters CPNAME/CPVAL/CEPVAL.
+
+PP-SELECT — This command instructs the equipment to make the requested process program(s) available in the execution area. The process programs (PPIDs) are specified via the command parameter list. A status variable (PPExecName) contains the PPID of the process program(s) currently selected.
+
+RCP-SELECT — This command uses the Enhanced Remote Command S2,F49 to instruct the equipment to prepare the requested recipes for execution in the execution area. The recipes and variable parameters are specified via command parameter lists. Each recipe specification may be accompanied by new variable parameter settings, if any, in the command parameter list. A status variable RcpExecName contains the recipe specifiers or identifiers of the recipes currently selected.
+
+STOP — Command to complete the current cycle, stop in a safe condition and return to the “idle” processing state. Stop has the intent of stopping the process. The equipment is not required to support the continuation of processing. Stop leaves material either fully processed or partially processed so that the processing can be later completed. For example, for a single wafer process tool, five wafers have been processed while the remaining wafers remain unprocessed.
+
+PAUSE — Command to suspend processing temporarily at the next safe break point. Pause has the intent of resuming the process at the same point where it was paused. The process may be RESUMED, STOPPED, or ABORTED while in a PAUSED condition. RESUME shall be able to continue the process from the same point where it was paused.
+
+RESUME — Command to resume processing from the point where the process was paused.
+
+ABORT — Command to terminate the current cycle prior to its completion. Abort has the intent of immediately stopping the process and is used because of abnormal conditions. Abort makes no guarantee about the subsequent condition of material. In the above example, the wafers being processed at the time of the abort may not be completely processed. Other AbortLevels > 1 may be defined by the manufacturer or addressed by models of specific classes of semiconductor equipment.
+
+CPNAME = AbortLevel, CPVAL = 1 means terminate current cycle at the next “safe break point,” retrieve all material, stop in a safe condition and return to the idle state in the processing state machine.
+
+4.4.4  Requirements
+
+- The following Remote Commands, as defined under Descriptions, must be implemented on equipment to satisfy minimum requirements for this capability:
+  - START
+  - STOP
+
+- The RCMD value for all commands supported on the equipment must be recognized if sent with all upper-case characters (e.g., “STOP”, “START”, “PP-SELECT”, “PAUSE”, etc.). In addition to accepting strings with all upper-case characters, the equipment can optionally accept strings with all lower-case characters or mixed-case strings. The equipment documentation should describe whether or not the optional lower-case or mixed-case strings are supported.
+
+- Stream 2 currently provides for Host Command Send and Enhanced Remote Command. The equipment shall support one or both methods, based on appropriateness.
+
+- The Enhanced Remote Command is used to address size, complexity, or the need to target a specific sub- system within the equipment, (i.e., processing station, port, exchange station, material handler, chamber).
