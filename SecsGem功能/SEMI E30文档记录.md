@@ -1790,9 +1790,16 @@ participant Equipment
 
 Host Command Parameter (CPNAME/ CPVAL/CEPVAL) — A parameter name/value associated with a particular host command (S2,F41/S2,F49). The equipment manufacturer must provide unique names (CPNAMEs) for any supported command parameters. Command parameters are not specified in this document but are left to equipment manufacturers to define. Equipment models of specific classes of semiconductor equipment also may address this issue. Note that if there are no associated parameters a zero-length list is sent. The data item CEPVAL, which can be defined as a list, allows grouping of related parameters within a main parameter. If the CEPVAL is defined as a single (non-list) item, then it is the equivalent of a CPVAL.
 
+> 主机命令参数(CPNAME/CPVAL/CEPVAL)
+> 与特定主机命令S2F41/S2F49相关的参数名称和参数值。设备制造商必须为任何支持的命令参数提供唯一的名称CPNAME。本文件未对命令参数进行规定，而是由设备制造商自行定义。特定类别半导体设备的设备型号也可以解决这一问题。请注意，如果没有相关参数，将发送一个零长度列表。数据项CEPVAL可以定义为一个列表，允许在一个主要参数中对相关参数进行分组。如果CEPVAL被定义为单个项（非列表），则相当于CPVAL。
+
 The uses of OBJSPEC in the header structure of the S2,F49 Enhanced Remote Command allows the equipment supplier to define a set of unique identifiers for different objects within the equipment such as: equipment sub-systems, sub-system components, processing stations, ports, and exchange stations.
 
+> 在S2F49增强型远程命令的标头结构中使用OBJSPEC，允许设备供应商为设备内的不同对象定义一组唯一标识符，如：设备子系统，子系统组件，处理站，端口和交换站。
+
 4.4.3 Description — The equipment responds to host commands that provide the following functions relative to individual equipment implementations:
+
+> 描述 - 设备响应主机命令，这些命令提供以下与设备实现有关的功能
 
 - Start processing
 - Select a process program or recipe
@@ -1801,40 +1808,82 @@ The uses of OBJSPEC in the header structure of the S2,F49 Enhanced Remote Comman
 - Resume processing
 - Abort processing
 
+> - 启动程序
+> - 选择加工程序或配方
+> - 停止程序
+> - 暂停中止程序
+> - 恢复程序
+> - 中止处理
+
 Additional commands may be implemented by the equipment manufacturer (e.g., vent chamber, clear material, open door).
+
+> 设备制造商还可以执行其他指令（如通风室，清除材料，开门）
 
 Remote commands shall be interpreted as “request action be initiated” rather than “do action.” The equipment may then respond via S2,F42/S2,F50 with HCACK = 4 if the command “is going to be performed.”  This alleviates any transaction timeouts for commands that may take a long time to perform. The completion of the action initiated by the remote command (i.e., HCACK = 0 or 4) must result in either a state transition or other action that generates a collection event upon normal/abnormal completion.
 
+> 远程命令应被解释为"要求开始行动"，而不是"执行行动"。如果命令"将被执行"，设备可以通过S2F42/S2F50以HCACK=4响应。这样就可以减少可能需要很长事件才能执行的命令的事务超时。远程命令启动的操作完成后（HCACK=0/4），必须进行状态转换或其他操作，以便在正常/非正常完成时生成收集事件。
+
 The format for all remote commands is ASCII, with a maximum length of 20 characters. The character set is restricted to the printable characters (hexadecimal 21 through 7E). Note that spaces are not allowed.
+
+> 所有远程命令的格式均为ASCII，最大长度为20个字符。字符集仅限于可打印字符。请注意，不允许使用空格。
 
 The following remote commands (RCMDs), if implemented on the equipment, shall be supported as described below (see Section 3.4 for a description of Equipment Processing States).
 
+> 以下远程命令（RCMID）如果在设备上执行，应支持下文所述。
+
 NOTE 12: The terms “current cycle” and “safe break point” used below are to be defined by the supplier or within the models of classes of semiconductor equipment.
+
+> 注12：下面使用的术语"电流周期"和"安全断点"应由供应商定义或在半导体设备等级模型中定义
 
 START — This command is available to the host when a process program or recipe has been selected and the equipment is in the “ready” processing state. The START command instructs the equipment to initiate processing. Variable parameter settings may be included as name/value command parameters CPNAME/CPVAL/CEPVAL.
 
+> START - 当选择了处理程序或配方且设备处于"准备就绪"处理状态时，主机可使用此命令。START命令指示设备启动处理。变量参数设置可作为名称/值命令参数CPNAME/CPVAL/CEPVAL。
+
 PP-SELECT — This command instructs the equipment to make the requested process program(s) available in the execution area. The process programs (PPIDs) are specified via the command parameter list. A status variable (PPExecName) contains the PPID of the process program(s) currently selected.
+
+> PP-SELECT - 该命令指示设备在执行区域内提供所请求的工艺程序。通过命令参数列表指定工艺程序PPID。状态变量PPExecName包含当前所选工艺程序的PPID。
 
 RCP-SELECT — This command uses the Enhanced Remote Command S2,F49 to instruct the equipment to prepare the requested recipes for execution in the execution area. The recipes and variable parameters are specified via command parameter lists. Each recipe specification may be accompanied by new variable parameter settings, if any, in the command parameter list. A status variable RcpExecName contains the recipe specifiers or identifiers of the recipes currently selected.
 
+> RCP-SELECT - 该命令使用增强型远程命令S2F49指示设备准备所需的配方，以便在程序区域执行。配方和变量参数通过命令参数列表指定。如果命令参数列表中存在新的变量参数设置，则每个配方指定都可能伴随着新的变量参数设置。状态变量RcpExecName包含当前所选配方
+
 STOP — Command to complete the current cycle, stop in a safe condition and return to the “idle” processing state. Stop has the intent of stopping the process. The equipment is not required to support the continuation of processing. Stop leaves material either fully processed or partially processed so that the processing can be later completed. For example, for a single wafer process tool, five wafers have been processed while the remaining wafers remain unprocessed.
+
+> STOP - 完成当前循环、在安全条件下停止并返回 "空闲 "处理状态的命令。停止的目的是停止处理过程。设备无需支持继续加工。停止时，材料要么已完全加工，要么已部分加工，以便随后完成加工。例如，对于单晶圆制程工具而言，五个晶圆已处理完毕，而其余晶圆仍未处理。
 
 PAUSE — Command to suspend processing temporarily at the next safe break point. Pause has the intent of resuming the process at the same point where it was paused. The process may be RESUMED, STOPPED, or ABORTED while in a PAUSED condition. RESUME shall be able to continue the process from the same point where it was paused.
 
+> PAUSE - 在下一个安全中断点暂时中止处理的命令。暂停的目的是在暂停的同一位置恢复进程。在暂停状态下，进程可被恢复、停止或中止。恢复（RESUME）应能从暂停的原点继续执行流程。
+
 RESUME — Command to resume processing from the point where the process was paused.
+
+> RESUME - 从进程暂停处恢复处理的命令。
 
 ABORT — Command to terminate the current cycle prior to its completion. Abort has the intent of immediately stopping the process and is used because of abnormal conditions. Abort makes no guarantee about the subsequent condition of material. In the above example, the wafers being processed at the time of the abort may not be completely processed. Other AbortLevels > 1 may be defined by the manufacturer or addressed by models of specific classes of semiconductor equipment.
 
+> ABORT - 在当前循环结束前终止该循环的命令。终止的目的是立即停止流程，用于异常情况。中止不保证材料的后续状态。在上述示例中，终止时正在处理的晶圆可能尚未完全处理完毕。其他 AbortLevels > 1 可能由制造商定义，或由特定类别半导体设备的型号解决。
+
 CPNAME = AbortLevel, CPVAL = 1 means terminate current cycle at the next “safe break point,” retrieve all material, stop in a safe condition and return to the idle state in the processing state machine.
+
+> CPNAME = AbortLevel, CPVAL = 1 表示在下一个 "安全中断点 "终止当前循环，检索所有材料，在安全条件下停止并返回处理状态机的空闲状态。
 
 4.4.4  Requirements
 
 - The following Remote Commands, as defined under Descriptions, must be implemented on equipment to satisfy minimum requirements for this capability:
-  - START
-  - STOP
+
+> 必须在设备上执行 "说明 "中定义的以下远程命令，才能满足此功能的最低要求：
+
+- START
+- STOP
 
 - The RCMD value for all commands supported on the equipment must be recognized if sent with all upper-case characters (e.g., “STOP”, “START”, “PP-SELECT”, “PAUSE”, etc.). In addition to accepting strings with all upper-case characters, the equipment can optionally accept strings with all lower-case characters or mixed-case strings. The equipment documentation should describe whether or not the optional lower-case or mixed-case strings are supported.
 
+> 设备支持的所有命令的 RCMD 值必须以全部大写字符（如 "STOP"、"START"、"PP-SELECT"、"PAUSE "等）发送才能被识别。除接受全大写字符串外，设备还可选择接受全小写字符串或混合大小写字符串。设备文档应说明是否支持可选的小写字符串或混合字符串。
+
 - Stream 2 currently provides for Host Command Send and Enhanced Remote Command. The equipment shall support one or both methods, based on appropriateness.
 
+> stream 2 目前提供主机命令发送和增强型远程命令。设备应根据适用性支持一种或两种方法。
+
 - The Enhanced Remote Command is used to address size, complexity, or the need to target a specific sub- system within the equipment, (i.e., processing station, port, exchange station, material handler, chamber).
+
+> 增强型远程指令用于解决设备的规模、复杂性或针对特定子系统的需求（如处理站、端口、交换站、物料处理机、舱室）。
