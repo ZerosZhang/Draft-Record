@@ -2004,37 +2004,71 @@ Note 15: A recipe is modified whenever its body is changed.
 
 New Execution Recipe Event — The collection event associated with the creation of a new execution recipe at the equipment.
 
+> 新执行配方事件 - 与在设备上创建新执行配方相关的收集事件。
+
 Object form recipe — A recipe with body in a proprietary format that may be presented without structure.
+
+> 配方里的对象 - 以专有格式提供的食谱，其正文可能没有结构。
 
 RcpChangeName — A data value (DVVAL) containing the identifier of the recipe affected by the event Execution Recipe Change Event or New Execution Recipe Event. See the SEMI E5 Standard for a full definition of this variable data item.
 
+> RcpChangeName - 数据值 (DVVAL)，包含受执行配方更改事件或新执行配方事件影响的配方标识符。有关此变量数据项的完整定义，请参阅 SEMI E5 标准。
+
 RcpChangeStatus — The action taken on the recipe named by RcpChangeName. This variable is valid for the collection event Execution Recipe Change Event or New Execution Recipe Event.  See the SEMI E5 Standard for a full definition of this variable data item.
+
+> RcpChangeStatus - 对 RcpChangeName 命名的配方采取的操作。该变量对收集事件 "执行配方更改事件 "或 "新执行配方事件 "有效。 有关此变量数据项的完整定义，请参阅 SEMI E5 标准。
 
 RcpExecName — The status variable containing the specifiers of the currently selected recipe(s). See the SEMI E5 Standard for a full definition of this variable data item.
 
+> RcpExecName - 状态变量，包含当前所选配方的参数。有关此变量数据项的完整定义，请参见 SEMI E5 标准。
+
 RCP-SELECT — The remote command used to select one or more recipes for execution.  See Section 4.4.3.
+
+> RCP-SELECT - 用于选择执行一个或多个配方的远程命令。 参见第 4.4.3 节。
 
 Recipe Attribute — Information about the recipe that is transferred with the recipe as a name/value pair. The value may be a single item or a list.
 
+> 配方属性 - 配方的相关信息，以名称/值对的形式与配方一起传输。值可以是单个项目或列表。
+
 Recipe — A recipe contains both a set of instructions, settings, and parameters that the equipment uses to determine the processing environment (its body or process program) and a set of attributes that provide information about the recipe, such as the date and time the body was last changed.
+
+> 配方 - 配方既包括设备用于确定处理环境（其主体或处理程序）的一组指令、设置和参数，也包括提供配方相关信息的一组属性，如主体最后更改的日期和时间。
 
 SEMI E42 defines two types of recipes: managed recipes and execution recipes. For purposes of GEM, the term recipe refers to an execution recipe only.
 
+> SEMI E42 定义了两类配方：管理配方和执行配方。在 GEM 中，配方一词仅指执行配方。
+
 Recipe identifier — A recipe identifier is a formatted text string (RCPID) used to identify the recipe.
+
+> 配方标识符 - 配方标识符是用于标识配方的格式化文本字符串 (RCPID)。
 
 Recipe specifier — A formatted text string (RCPSPEC) used in messages to indicate a specific recipe.  A recipe specifier includes the recipe identifier. It may also include additional information, such as the name of the specific component of the equipment where the recipe is to be executed (e.g. a process chamber) and the name of a recipe repository on the host.
 
+> 配方说明符 - 信息中用于表示特定配方的格式化文本字符串 (RCPSPEC)。 配方说明符包括配方标识符。它还可能包括其他信息，如要执行配方的设备特定组件的名称（如流程室）和主机上配方存储库的名称。
+
 Recipe Verification — Verification is syntax checking of a recipe’s body. Verification ensures that a recipe body is structured correctly and has the correct syntax. It may also provide a check of semantics.   It does not ensure that the body has the correct parameters to run a particular process or product (see Recipe Validation).
+
+> 配方验证 - 验证是对配方正文的语法检查。验证可确保配方正文结构正确、语法正确。还可对语义进行检查。  它不能确保正文具有运行特定流程或产品的正确参数（请参阅配方验证）。
 
 NOTE 16: Unverified recipes shall be verified upon download.
 
+> 注 16：未经验证的配方应在下载时进行验证。
+
 Recipe Validation — Validation is type-and-range checking of parameters in a recipe, and is performed when the recipe is selected for execution. The recipe may be correct in its syntax and semantics but should fail validation if it can not be executed with the current equipment configuration.
+
+> 配方验证 - 验证是对配方中参数的类型和范围检查，在选择执行配方时进行。配方的语法和语义可能是正确的，但如果在当前设备配置下无法执行，则无法通过验证。
 
 Source form recipe — A recipe with a body that is presented as an ordered sequence of text.  A source form recipe may be created and edited off-line to the equipment. Definition of syntax requirements shall be documented, in order to allow proper off-line editing.
 
+> 源格式菜谱 - 以有序文本序列形式呈现的带正文的菜谱。 源格式配方可在设备上离线创建和编辑。语法要求的定义应记录在案，以便进行适当的离线编辑。
+
 Variable Parameters — Variable parameters are recipe parameters that are defined in the body of the recipe and whose run-time values may be set outside of the recipe when the recipe is selected for execution and/or when processing is started. Both the host and the operator may specify new settings as a parameter name/value pair.
 
+> 可变参数 - 可变参数是在配方正文中定义的配方参数，在选择执行配方和/或开始处理时，可在配方外设置其运行时值。主机和操作员均可将新设置指定为参数名/值对。
+
 Variable Parameter Definition — A variable parameter definition has three parts: the name of the variable parameter, its default setting, and restrictions on the run-time value selected.  Variable parameter definitions are stored in the recipe attribute “Parameters”.
+
+> 变量参数定义 - 变量参数定义由三部分组成：变量参数名称、默认设置和对所选运行时值的限制。 变量参数定义存储在配方属性 "参数 "中。
 
 4.6.3  Description
 
@@ -2042,32 +2076,88 @@ Variable Parameter Definition — A variable parameter definition has three part
 
 Process programs allow the equipment’s process, and/or the parameters used by that process, to be set and modified by the engineer to achieve different results. Different process programs maybe required for different products, while often the same process program will be used for all lots of a given product. The engineer must be able to create such programs, to modify current programs, and to delete programs from equipment storage.
 
+> 工艺程序允许工程师设置和修改设备的工艺和/或该工艺所使用的参数，以实现不同的结果。不同的产品可能需要不同的工艺程序，而某一产品的所有批次往往使用相同的工艺程序。工程师必须能够创建此类程序、修改当前程序以及从设备存储中删除程序。
+
 For the host to ensure that the proper process programs are in place at the equipment, there must be a means of transferring them from equipment to host and from host to equipment. The host also may need to delete process programs from the equipment’s storage to make room for a process program to be downloaded. In addition, the host must be kept informed whenever a local change occurs in the contents or status of a process program.
+
+> 为了确保设备上有适当的工艺程序，主机必须有办法将这些程序从设备传输到主机，以及从主机传输到设备。主机还可能需要删除设备存储中的流程程序，以便为下载流程程序腾出空间。此外，每当工艺程序的内容或状态发生局部变化时，主机都必须及时得到通知。
 
 Both formatted and unformatted process programs may be uploaded and downloaded. This capability provides for both host- and equipment-initiated transfers. The equipment-initiated transfer may be used at the request of the process engineer or operator at the equipment.
 
+> 可上传和下载格式化和未格式化的流程程序。这种功能既可用于主机传输，也可用于设备启动的传输。设备启动的传输可应工艺工程师或设备操作员的要求使用。
+
 If a process program exists with the same PPID as the one given in the SECS-II message, the old process program must be replaced. The PPID in the e process program in non-volatile storage.
+
+> 如果存在与 SECS-II 报文中给出的 PPID 相同的流程程序，则必须替换旧流程程序。e 进程程序中的 PPID 保存在非易失性存储器中。
 
 4.6.3.2 Recipe Description
 
 Specifications in Section 4.6.3.1 apply to recipes as well as process programs, with the following  differences:
 
+> 第 4.6.3.1 节中的规范既适用于配方，也适用于工艺程序，但有以下区别：
+
 - A recipe contains a body corresponding to a process program.  In addition, it contains attributes defined for execution recipes in SEMI E42, Section 6. Recipe attributes are transferred whenever the recipe is downloaded or uploaded.
+
+> - 配方包含与流程程序相对应的主体。 此外，它还包含 SEMI E42 第 6 节中为执行配方定义的属性。无论何时下载或上传配方，配方属性都会传输。
+
 - The same SECS-II messages are used for all execution recipes, regardless of the internal structure of the recipe body.
+
+> - 无论配方主体的内部结构如何，所有执行配方都使用相同的 SECS-II 报文。
+
 - If an execution recipe already exists with the same identifier as the one given in the SECS-II message, the downloaded recipe shall be rejected (not stored) unless the host has specified a “forced overwrite” in the data  item RCPOWCODE.
+
+> - 如果已经存在与 SECS-II 报文中给出的标识符相同的执行配方，下载的配方将被拒绝（不存储）， 除非主机在数据项 RCPOWCODE 中指定了 "强制覆盖"。
+
 - A recipe currently being edited shall be protected from inadvertent change or overwriting by a recipe with the same identifier that is downloaded during this time. If the downloaded recipe is accepted (stored), the equipment shall require the operator either to save the edited recipe to a new (unused) identifier or to discard it.
+
+> - 当前正在编辑的配方应受到保护，以免被在此期间下载的具有相同标识符的配方无意更改或覆盖。如果接受（存储）了下载的配方，设备应要求操作员将已编辑的配方保存到一个新的（未使用的）标识符或将其丢弃。
+
 - For the equipment to initiate either an upload or download of a recipe, it shall request the host to initiate an upload or download procedure. In addition, it may be necessary to also specify the name of the repository (recipe namespace) at the host.
+
+> - 设备要启动配方的上传或下载，应要求主机启动上传或下载程序。此外，可能还需要在主机上指定储存库（配方命名空间）的名称。
 
 4.6.4  Requirements
 
 - The equipment manufacturer shall provide a method to create, modify, and delete process programs or recipes. This method shall exist on either the equipment or on a separate computing system.
+
+> - 设备制造商应提供创建、修改和删除工艺程序或配方的方法。该方法应存在于设备或单独的计算系统中。
+
 - A CEID shall be defined for a collection event for the creation, the deletion, or the modification (completion of an editing session) of a process program (Process Program Change Event). For recipes, there are two separate CEIDs and collection events, one for the creation of a new recipe (New Execution Recipe Event) and one when a recipe is changed or deleted (Execution Recipe Change Event).   A New  Execution Recipe Event shall occur whenever a new recipe  identifier is created through download, edit, copy, or rename operations. A Execution Recipe Change Event shall occur whenever the body of an existing recipe is modified.
+
+> - 应为创建、删除或修改（完成编辑会话）流程程序的收集事件（流程程序更改事件）定义一个 CEID。对于配方，有两个独立的 CEID 和收集事件，一个用于创建新配方（新执行配方事件），另一个用于更改或删除配方（执行配方更改事件）。  当通过下载、编辑、复制或重命名操作创建新配方标识符时，应发生新执行配方事件。每当修改现有配方的主体时，就会发生执行配方更改事件。
+
 - The name (identifier) that the engineer or operator uses to refer to the process program or recipe is the same as the identifier used by the host.
+
+> - 工程师或操作员用于指代流程程序或配方的名称（标识符）与主机使用的标识符相同。
+
 - Upon request from the host or operator, the equipment shall perform the following actions with regard to process programs and recipes stored in non-volatile storage: upload, download, delete, and list current equipment process program or recipe directory.
+
+> - 根据主机或操作员的要求，设备应对存储在非易失性存储器中的工艺程序和配方执行以下操作：上传、下载、删除和列出当前设备工艺程序或配方目录。
+
 - The equipment shall be able to store in non-volatile memory the number of process programs or recipes sufficient to execute three unique process cycles.  For example, if a wire-bonder requires both an “ALIGN” process program and a “BOND” process program for a full process cycle, then it must provide non-volatile storage for at least three pairs of process programs. These stored process programs or recipes may not be modified in any way by the execution process, nor may the execution process be affected by the modification of any process program or recipes in storage, either by downloading or by local editing, while that process program or recipes is being executed.
+
+> - 设备应能在非易失性存储器中存储足够执行三个独特工艺循环的工艺程序或配方。 例如，如果焊线机在一个完整的工艺循环中需要 "对齐 "工艺程序和 "粘合 "工艺程序，则必须提供至少三对工艺程序的非易失性存储器。执行过程不得以任何方式修改这些存储的工艺程序或配方，也不得在执行过程中通过下载或本地编辑修改存储的任何工艺程序或配方而影响执行过程。
+
 - The equipment must provide verification and validation of all downloaded process programs and recipes.
+
+> - 设备必须对所有下载的工艺程序和配方进行验证和确认。
+
 - Stream 7 provides for formatted and unformatted process programs, while Stream 15 provides for recipes.  The equipment must support at least one of these three methods.
+
+> - 数据流 7 适用于格式化和未格式化的工艺程序，而数据流 15 适用于配方。 设备必须至少支持这三种方法中的一种。
+
 - The equipment supplier shall document any restrictions on the length or test format of PPID. The maximum length allowed by equipment may be less than that allowed by SECS-II.
+
+> - 设备供应商应记录对 PPID 长度或测试格式的任何限制。设备允许的最大长度可能小于 SECS-II 允许的长度。
+
 - Where recipes are supported, the following requirements also apply:
+
+> - 在支持配方的情况下，以下要求也同样适用：
+
 - The variable PPFormat shall be provided to indicate to the user the messages supported by the equipment.
+
+> - 应提供 PPFormat 变量，向用户说明设备支持的信息。
+
 - The recipe and its attributes shall comply to the requirements for  execution recipes as defined in SEMI E42, Section 6.
+
+> - 配方及其属性应符合 SEMI E42 第 6 节中定义的执行配方要求。
