@@ -2185,3 +2185,65 @@ Port — A point or area on the equipment at which a change in equipment ownersh
 4.7.4  Requirements — The equipment must supply two CEIDs, one to report when material is sent from any port and the other to report when material is received at any port.
 
 > 设备必须提供两个 CEID，一个用于在任何端口发送物料时报告，另一个用于在任何端口接收物料时报告。
+
+4.8 Equipment Terminal Services
+
+> 设备终端服务
+
+Equipment Terminal Services allows the host to display information on the equipment’s display device or the operator of the equipment to send information to the host.
+
+> 设备终端服务允许主机在设备的显示设备上显示信息，或允许设备操作员向主机发送信息。
+
+4.8.1  Purpose — Equipment Terminal Services allows the factory operators to exchange information with the host from their equipment workstations.
+
+> 设备终端服务允许工厂操作员通过其设备工作站与主机交换信息。
+
+4.8.2  Definitions —Message Recognition: a positive action by the equipment operator indicating the operator has viewed the text of a host initiated message.
+
+> 信息识别：设备操作员的一个积极动作，表明操作员已查看主机发起的信息文本。
+
+4.8.3  Detailed Description — The equipment must be capable of displaying information passed to it by the host for the operator’s attention. The information, or an indication of a message, must remain on the equipment’s display until the operator indicates message recognition. Message recognition results in a collection event that informs the host that the operator has actually viewed the information. The equipment must be capable of passing information to the host that has been entered from the operator’s equipment console. This information is intended for host applications and is not processed by the equipment. The equipment has no responsibility for interpreting any of the data passed to or from the host using this method.
+
+> 设备必须能够显示主机传递给它的信息，以引起操作员的注意。信息或信息指示必须保留在设备的显示屏上，直到操作员表示信息已被识别。信息识别会导致收集事件，通知主机操作员已实际查看信息。设备必须能够将从操作员设备控制台输入的信息传递给主机。这些信息仅供主机应用，设备不会对其进行处理。设备不负责解释使用此方法传入或传出主机的任何数据。
+
+4.8.4  Requirements
+
+- Any new Terminal Display message sent by the host shall overwrite an unrecognized message at the same equipment terminal.
+
+> 主机发送的任何新终端显示信息都将覆盖同一设备终端上未识别的信息。
+
+- The equipment must provide a display device capable of displaying at least 160 characters to the operator.
+
+> 设备必须提供能向操作员显示至少 160 个字符的显示装置。
+
+- The equipment must provide a mechanism for displaying information sent to it by the host.
+
+> 设备必须提供一种机制，用于显示主机发送给它的信息。
+
+- The equipment must provide an indicator to notify the operator when an unrecognized message is present.
+
+> 设备必须提供一个指示器，在出现无法识别的信息时通知操作员。
+
+- The equipment must provide a mechanism for the operator to indicate message recognition (e.g., push button, terminal function).
+
+> 设备必须为操作员提供一个指示信息识别的机制（如按钮、终端功能）。
+
+- The equipment must provide a means for alpha numeric data entry that can be used by the operator.
+
+> 设备必须提供操作员可使用的字母数字数据输入方法。
+
+- The equipment must support operator entry of at least 160 characters per message.
+
+> 设备必须支持操作员输入每条信息至少 160 个字符。
+
+- The equipment must have a mechanism to send operator-entered messages to the host.
+
+> 设备必须具备向主机发送操作员输入信息的机制。
+
+- The equipment must support single-block messages as a minimum. Support of multi-block messages is optional.
+
+> 设备必须至少支持单块报文。多区块报文的支持为可选项。
+
+- A Terminal Display message received by the equipment with a zero length TEXT data item shall be accepted and replace any previous unrecognized message, but shall not itself be considered an unrecognized message. This provides a method of clearing an unrecognized message and turning off the unrecognized message indicator.
+
+> 设备收到的带有零长度 TEXT 数据项的终端显示报文应被接受并取代之前的任何未识别报文，但其本身不应被视为未识别报文。这提供了一种清除未识别报文并关闭未识别报文指示器的方法。
