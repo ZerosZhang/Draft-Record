@@ -2161,3 +2161,27 @@ Specifications in Section 4.6.3.1 apply to recipes as well as process programs, 
 - The recipe and its attributes shall comply to the requirements for  execution recipes as defined in SEMI E42, Section 6.
 
 > - 配方及其属性应符合 SEMI E42 第 6 节中定义的执行配方要求。
+
+### 4.7  Material Movement
+
+The material movement capability includes the physical transfer of material (WIP, tools, expendable materials, etc.) between equipment, buffers, and storage facilities. The transfer of material can be performed by operators, AGV robots, tracks, or dedicated fixed material handling equipment.
+
+> 材料移动能力包括在设备、缓冲区和存储设施之间进行材料（在制品、工具、消耗性材料等）的物理转移。物料转移可由操作员、AGV 机器人、轨道或专用固定物料搬运设备完成。
+
+4.7.1 Purpose — This capability is limited in implementation, serving to notify the host of the appearance or removal of material at the equipment’s ports.
+
+> 4.7.1 用途 - 此功能在实施中是有限的，其作用是通知主机在设备端口出现或移除物料。
+
+4.7.2  Definitions
+
+Port — A point or area on the equipment at which a change in equipment ownership of material may occur.
+
+> 端口 - 设备上的一个点或区域，在该点或区域上，设备对物料的所有权可能会发生变化。
+
+4.7.3  Description — This capability consists of alerting the host whenever material is sent or received from any of the ports on the equipment. Event-specific information, such as port identification and material identification, also may be useful, but definition of these and other related DVVAL’s are left to the implementation.
+
+> 描述--该功能包括每当从设备上的任何端口发送或接收材料时向主机发出警报。特定事件信息（如端口标识和物料标识）也可能有用，但这些信息和其他相关 DVVAL 的定义将留待实施时确定。
+
+4.7.4  Requirements — The equipment must supply two CEIDs, one to report when material is sent from any port and the other to report when material is received at any port.
+
+> 设备必须提供两个 CEID，一个用于在任何端口发送物料时报告，另一个用于在任何端口接收物料时报告。
