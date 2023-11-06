@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.2" halcon_version="18.11.0.1">
+<procedure name="cross_correction">
+<interface>
+<io>
+<par name="InputImage" base_type="iconic" dimension="0"/>
+</io>
+<oo>
+<par name="OutputImage" base_type="iconic" dimension="0"/>
+</oo>
+<ic>
+<par name="Left" base_type="ctrl" dimension="0"/>
+<par name="Right" base_type="ctrl" dimension="0"/>
+<par name="Up" base_type="ctrl" dimension="0"/>
+<par name="Down" base_type="ctrl" dimension="0"/>
+</ic>
+<oc>
+<par name="Result" base_type="ctrl" dimension="0"/>
+</oc>
+</interface>
+<body>
+<l>try</l>
+<l>    get_image_size (InputImage, Width, Height)</l>
+<l>    copy_image (InputImage, OutputImage)</l>
+<c>    </c>
+<l>    LeftRow := Left[0]</l>
+<l>    LeftCol := Left[1]</l>
+<c>    </c>
+<l>    RightRow := Right[0]</l>
+<l>    RightCol := Right[1]</l>
+<c>    </c>
+<l>    UpRow := Up[0]</l>
+<l>    UpCol := Up[1]</l>
+<c>    </c>
+<l>    DownRow := Down[0]</l>
+<l>    DownCol := Down[1]</l>
+<c>    </c>
+<l>    gen_rectangle1 (Rectangle1, LeftRow-5, LeftCol-5, LeftRow+5, LeftCol+5)</l>
+<l>    gen_rectangle1 (Rectangle2, RightRow-5, RightCol-5, RightRow+5, RightCol+5)</l>
+<l>    gen_rectangle1 (Rectangle3, UpRow-5, UpCol-5, UpRow+5, UpCol+5)</l>
+<l>    gen_rectangle1 (Rectangle4, DownRow-5, DownCol-5, DownRow+5, DownCol+5)</l>
+<c>    </c>
+<l>    intensity (Rectangle1, OutputImage, Mean1, _)</l>
+<l>    intensity (Rectangle2, OutputImage, Mean2, _)</l>
+<l>    intensity (Rectangle3, OutputImage, Mean3, _)</l>
+<l>    intensity (Rectangle4, OutputImage, Mean4, _)</l>
+<c>    *上下对应Y   左右对应X</c>
+<l>    XIncrement := (Mean1 - Mean2) / (RightCol - LeftCol)</l>
+<l>    YIncrement := (Mean3 - Mean4) / (DownRow - UpRow)</l>
+<c>    </c>
+<l>    dev_update_off ()    </l>
+<c>    * 简单的横向平面矫正</c>
+<l>    Increment := 0</l>
+<l>    tuple_gen_sequence (0, Height-1, 1, RowTemp)</l>
+<l>    for Index := 0 to Width-1 by 1</l>
+<l>        tuple_gen_const (Height, Index, ColTemp)</l>
+<l>        get_grayval (OutputImage, RowTemp, ColTemp, Grayval)</l>
+<l>        PixelNew := Grayval + Increment</l>
+<l>        Increment := Increment + XIncrement</l>
+<l>        set_grayval (OutputImage, RowTemp, ColTemp, PixelNew)</l>
+<l>    endfor</l>
+<c>    </c>
+<c>    * 简单的纵向平面矫正</c>
+<l>    Increment := 0</l>
+<l>    tuple_gen_sequence (0, Width-1, 1, ColTemp)</l>
+<l>    for Index := 0 to Height-1 by 1</l>
+<l>        tuple_gen_const (Width, Index, RowTemp)</l>
+<l>        get_grayval (OutputImage, RowTemp, ColTemp, Grayval)</l>
+<l>        PixelNew := Grayval + Increment</l>
+<l>        Increment := Increment + YIncrement</l>
+<l>        set_grayval (OutputImage, RowTemp, ColTemp, PixelNew)</l>
+<l>    endfor</l>
+<l>    dev_update_on()</l>
+<c>    </c>
+<l>    Result := 0</l>
+<l>catch (ex)</l>
+<l>    Result := ex</l>
+<l>endtry</l>
+</body>
+<docu id="cross_correction">
+<parameters>
+<parameter id="Down"/>
+<parameter id="InputImage"/>
+<parameter id="Left"/>
+<parameter id="OutputImage"/>
+<parameter id="Result"/>
+<parameter id="Right"/>
+<parameter id="Up"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>
