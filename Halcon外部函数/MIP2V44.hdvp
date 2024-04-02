@@ -54,8 +54,8 @@
 <l>    affine_trans_image (Image, RotateImage, HomMat2D, 'constant', 'false')</l>
 <c>    </c>
 <c>    * 十字校正</c>
-<l>    Horizontal_Distance := 600</l>
-<l>    Vertical_Distance := 400</l>
+<l>    Horizontal_Distance := 300</l>
+<l>    Vertical_Distance := 200</l>
 <l>    Correction_Size := 4</l>
 <l>    Left := [CenterRow, CenterColumn - Horizontal_Distance]</l>
 <l>    Right := [CenterRow, CenterColumn + Horizontal_Distance]</l>
@@ -66,8 +66,10 @@
 <l>        throw ([10002, '十字校正失败'])</l>
 <l>    endif</l>
 <c>    </c>
+<l>    write_image (CorrectionImage, 'tiff', 0, 'C:/Users/zeros/Downloads/2.tiff')</l>
+<c>    </c>
 <c>    * 计算翘曲度</c>
-<l>    PixelScale := 0.05</l>
+<l>    PixelScale := 0.1</l>
 <l>    _distance1 := 38 / PixelScale / 2.0</l>
 <l>    _distance2 := 64 / PixelScale / 2.0</l>
 <l>    _distance3 := 75 / PixelScale / 2.0</l>
