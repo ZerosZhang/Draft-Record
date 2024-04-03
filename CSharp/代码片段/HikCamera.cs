@@ -29,7 +29,7 @@ namespace BasicDemo
 
         // ch:用于从驱动获取图像的缓存 | en:Buffer for getting image from driver
         private static Object BufForDriverLock = new Object();
-        CImage m_pcImgForDriver  = null;        // 图像信息
+        CImage m_pcImgForDriver = null;        // 图像信息
         CFrameSpecInfo m_pcImgSpecInfo = null; // 图像的水印信息
         CSaveImageParam m_pcSaveParam = new CSaveImageParam(); // 保存到缓存的参数信息
 
@@ -519,6 +519,7 @@ namespace BasicDemo
 
             // ch:开始采集 | en:Start Grabbing
             nRet = m_MyCamera.StartGrabbing();
+            
             if (CErrorDefine.MV_OK != nRet)
             {
                 m_bGrabbing = false;
