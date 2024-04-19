@@ -10,3 +10,8 @@ public static void Dump(this object _item)
 {
     Console.WriteLine(_item);
 }
+
+public static void Dump(this string _item)
+{
+    Console.WriteLine(_item);
+}
