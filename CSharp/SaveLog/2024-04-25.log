@@ -1,0 +1,392 @@
+2024年04月25日 10:55:08  Info
+----Message：删除c:\Users\zeros\Documents\【项目文件夹】\【常用】草稿文档\CSharp\SaveLog目录下30天前的数据
+----删除0个子文件夹，0个子文件
+2024年04月25日 10:55:08  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 10:55:08  Info
+----Message：【单元测试】信息日志
+2024年04月25日 10:55:08  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 10:55:08  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 10:55:09  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 10:55:09  Info
+----Message：【单元测试】信息日志
+2024年04月25日 10:55:09  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 10:55:09  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 10:55:09  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 10:55:09  Info
+----Message：【单元测试】信息日志
+2024年04月25日 10:55:09  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 10:55:09  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 10:55:10  Debug
+----Message：格式输出 byte 数组
+----|  DEC |  HEX |       Bin |
+----| ---- | ---- | --------- |
+----|    1 |   01 | 0000-0001 |
+----|   35 |   23 | 0010-0011 |
+----|   69 |   45 | 0100-0101 |
+----|  103 |   67 | 0110-0111 |
+----|  137 |   89 | 1000-1001 |
+----|  171 |   AB | 1010-1011 |
+----|  205 |   CD | 1100-1101 |
+----|  239 |   EF | 1110-1111 |
+----|    0 |   00 | 0000-0000 |
+----|  255 |   FF | 1111-1111 |
+2024年04月25日 10:55:39  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 10:55:39  Info
+----Message：【单元测试】信息日志
+2024年04月25日 10:55:39  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 10:55:39  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 10:55:39  Error
+----Message：注册日志保存到本地文件失败，日志将不会保存在本地
+----异常调用函数: Register_SaveLogToFile
+2024年04月25日 11:04:35  Info
+----Message：删除c:\Users\zeros\Documents\【项目文件夹】\【常用】草稿文档\CSharp\SaveLog目录下30天前的数据
+----删除0个子文件夹，0个子文件
+2024年04月25日 11:04:35  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 11:04:35  Info
+----Message：【单元测试】信息日志
+2024年04月25日 11:04:35  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 11:04:35  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 11:04:35  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 11:04:35  Info
+----Message：【单元测试】信息日志
+2024年04月25日 11:04:36  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 11:04:36  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 11:04:36  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 11:04:36  Info
+----Message：【单元测试】信息日志
+2024年04月25日 11:04:36  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 11:04:36  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 11:04:36  Debug
+----Message：格式输出 byte 数组
+----|  DEC |  HEX |       Bin |
+----| ---- | ---- | --------- |
+----|    1 |   01 | 0000-0001 |
+----|   35 |   23 | 0010-0011 |
+----|   69 |   45 | 0100-0101 |
+----|  103 |   67 | 0110-0111 |
+----|  137 |   89 | 1000-1001 |
+----|  171 |   AB | 1010-1011 |
+----|  205 |   CD | 1100-1101 |
+----|  239 |   EF | 1110-1111 |
+----|    0 |   00 | 0000-0000 |
+----|  255 |   FF | 1111-1111 |
+2024年04月25日 11:04:36  Debug
+----Message：格式输出 uint 数组
+----|              DEC |              HEX |                                     Bin |
+----| ---------------- | ---------------- | --------------------------------------- |
+----|                1 |      00 00 00 01 | 0000-0000 0000-0000 0000-0000 0000-0001 |
+----|               35 |      00 00 00 23 | 0000-0000 0000-0000 0000-0000 0010-0011 |
+----|               69 |      00 00 00 45 | 0000-0000 0000-0000 0000-0000 0100-0101 |
+----|              103 |      00 00 00 67 | 0000-0000 0000-0000 0000-0000 0110-0111 |
+----|              137 |      00 00 00 89 | 0000-0000 0000-0000 0000-0000 1000-1001 |
+----|              171 |      00 00 00 AB | 0000-0000 0000-0000 0000-0000 1010-1011 |
+----|              205 |      00 00 00 CD | 0000-0000 0000-0000 0000-0000 1100-1101 |
+----|              239 |      00 00 00 EF | 0000-0000 0000-0000 0000-0000 1110-1111 |
+----|                0 |      00 00 00 00 | 0000-0000 0000-0000 0000-0000 0000-0000 |
+----|       4294967295 |      FF FF FF FF | 1111-1111 1111-1111 1111-1111 1111-1111 |
+2024年04月25日 11:11:33  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:11:33  Debug
+----Message：【客户端】发送字符串【Hello 0】至远程地址【127.0.0.1】
+2024年04月25日 11:11:35  Debug
+----Message：【客户端】接收字符串【Reply 1A】来自远程地址【127.0.0.1】
+2024年04月25日 11:11:35  Debug
+----Message：等待长度为4的字节数组理论耗时2秒，实际耗时：1963ms
+2024年04月25日 11:11:35  Debug
+----Message：【客户端】发送字符串【Hello 1】至远程地址【127.0.0.1】
+2024年04月25日 11:11:40  Error
+----Message：【客户端】发送字符串消息【Hello 1】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(String _message, String _end_string, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 275
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:11:40  Debug
+----Message：等待长度为4的字节数组超时，理论耗时5秒，实际耗时：5087ms
+2024年04月25日 11:11:40  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:11:40  Debug
+----Message：【客户端】发送字符串【Hello 2】至远程地址【127.0.0.1】
+2024年04月25日 11:11:42  Debug
+----Message：【客户端】取消操作...
+2024年04月25日 11:11:42  Error
+----Message：【客户端】发送字符串消息【Hello 2】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(String _message, String _end_string, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 275
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:11:43  Debug
+----Message：操作取消，理论耗时2秒，实际耗时：2099ms
+2024年04月25日 11:11:43  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:11:43  Debug
+----Message：【客户端】发送字符串【Hello 3】至远程地址【127.0.0.1】
+2024年04月25日 11:11:44  Debug
+----Message：【客户端】接收字符串【Reply 1 A】来自远程地址【127.0.0.1】
+2024年04月25日 11:11:44  Debug
+----Message：等待长度为4的字节数组理论耗时1秒，实际耗时：1060ms
+2024年04月25日 11:11:44  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:23:59  Info
+----Message：删除c:\Users\zeros\Documents\【项目文件夹】\【常用】草稿文档\CSharp\SaveLog目录下30天前的数据
+----删除0个子文件夹，0个子文件
+2024年04月25日 11:23:59  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 11:23:59  Info
+----Message：【单元测试】信息日志
+2024年04月25日 11:23:59  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 11:23:59  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 11:24:00  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 11:24:00  Info
+----Message：【单元测试】信息日志
+2024年04月25日 11:24:00  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 11:24:00  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 11:24:00  Debug
+----Message：【单元测试】调试日志
+2024年04月25日 11:24:00  Info
+----Message：【单元测试】信息日志
+2024年04月25日 11:24:00  Warning
+----Message：【单元测试】报警日志
+2024年04月25日 11:24:00  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年04月25日 11:24:00  Debug
+----Message：格式输出 byte 数组
+----|  DEC |  HEX |       Bin |
+----| ---- | ---- | --------- |
+----|    1 |   01 | 0000-0001 |
+----|   35 |   23 | 0010-0011 |
+----|   69 |   45 | 0100-0101 |
+----|  103 |   67 | 0110-0111 |
+----|  137 |   89 | 1000-1001 |
+----|  171 |   AB | 1010-1011 |
+----|  205 |   CD | 1100-1101 |
+----|  239 |   EF | 1110-1111 |
+----|    0 |   00 | 0000-0000 |
+----|  255 |   FF | 1111-1111 |
+2024年04月25日 11:24:01  Debug
+----Message：格式输出 uint 数组
+----|              DEC |              HEX |                                     Bin |
+----| ---------------- | ---------------- | --------------------------------------- |
+----|                1 |      00 00 00 01 | 0000-0000 0000-0000 0000-0000 0000-0001 |
+----|               35 |      00 00 00 23 | 0000-0000 0000-0000 0000-0000 0010-0011 |
+----|               69 |      00 00 00 45 | 0000-0000 0000-0000 0000-0000 0100-0101 |
+----|              103 |      00 00 00 67 | 0000-0000 0000-0000 0000-0000 0110-0111 |
+----|              137 |      00 00 00 89 | 0000-0000 0000-0000 0000-0000 1000-1001 |
+----|              171 |      00 00 00 AB | 0000-0000 0000-0000 0000-0000 1010-1011 |
+----|              205 |      00 00 00 CD | 0000-0000 0000-0000 0000-0000 1100-1101 |
+----|              239 |      00 00 00 EF | 0000-0000 0000-0000 0000-0000 1110-1111 |
+----|                0 |      00 00 00 00 | 0000-0000 0000-0000 0000-0000 0000-0000 |
+----|       4294967295 |      FF FF FF FF | 1111-1111 1111-1111 1111-1111 1111-1111 |
+2024年04月25日 11:24:01  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:24:01  Debug
+----Message：【客户端】发送字符串【Hello 0】至远程地址【127.0.0.1】
+2024年04月25日 11:24:03  Debug
+----Message：【客户端】接收字符串【Reply 1A】来自远程地址【127.0.0.1】
+2024年04月25日 11:24:03  Debug
+----Message：发送Hello 0，等待末尾为A的字符串回复，理论耗时2秒，实际耗时：2003ms
+2024年04月25日 11:24:03  Debug
+----Message：【客户端】发送字符串【Hello 1】至远程地址【127.0.0.1】
+2024年04月25日 11:24:08  Error
+----Message：【客户端】发送字符串消息【Hello 1】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(String _message, String _end_string, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 275
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:24:08  Debug
+----Message：发送Hello 1，等待末尾为A的字符串回复超时，理论耗时5秒，实际耗时：5117ms
+2024年04月25日 11:24:08  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:24:08  Debug
+----Message：【客户端】发送字符串【Hello 2】至远程地址【127.0.0.1】
+2024年04月25日 11:24:10  Debug
+----Message：【客户端】取消操作...
+2024年04月25日 11:24:10  Error
+----Message：【客户端】发送字符串消息【Hello 2】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(String _message, String _end_string, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 275
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:24:10  Debug
+----Message：发送Hello 2，等待操作取消，理论耗时2秒，实际耗时：2101ms
+2024年04月25日 11:24:10  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:24:10  Debug
+----Message：【客户端】发送字符串【Hello 3】至远程地址【127.0.0.1】
+2024年04月25日 11:24:11  Debug
+----Message：【客户端】接收字符串【Reply 1 A】来自远程地址【127.0.0.1】
+2024年04月25日 11:24:11  Debug
+----Message：发送Hello 3，等待末尾为A的字符串回复，理论耗时1秒，实际耗时：1167ms
+2024年04月25日 11:24:12  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:27:41  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:27:41  Debug
+----Message：【客户端】发送字节消息【00】至远程地址【127.0.0.1】
+2024年04月25日 11:27:43  Debug
+----Message：【客户端】接收字节消息【01 02 03 04】来自远程地址【127.0.0.1】
+2024年04月25日 11:27:43  Debug
+----Message：等待长度为4的字节数组理论耗时2秒，实际耗时：1916ms
+2024年04月25日 11:27:43  Debug
+----Message：【客户端】发送字节消息【01】至远程地址【127.0.0.1】
+2024年04月25日 11:27:48  Error
+----Message：【客户端】发送字节消息【01】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:27:48  Debug
+----Message：等待长度为4的字节数组超时，理论耗时5秒，实际耗时：5180ms
+2024年04月25日 11:27:48  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:27:48  Debug
+----Message：【客户端】发送字节消息【02】至远程地址【127.0.0.1】
+2024年04月25日 11:27:50  Debug
+----Message：【客户端】取消操作...
+2024年04月25日 11:27:50  Error
+----Message：【客户端】发送字节消息【02】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:27:50  Debug
+----Message：操作取消，理论耗时2秒，实际耗时：2088ms
+2024年04月25日 11:27:50  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:27:50  Debug
+----Message：【客户端】发送字节消息【00】至远程地址【127.0.0.1】
+2024年04月25日 11:27:51  Debug
+----Message：【客户端】接收字节消息【01 02 03 04】来自远程地址【127.0.0.1】
+2024年04月25日 11:27:51  Debug
+----Message：等待长度为4的字节数组理论耗时1秒，实际耗时：1051ms
+2024年04月25日 11:27:51  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:37  Debug
+----Message：【服务器】开启监听...
+2024年04月25日 11:36:38  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:36:38  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:38  Debug
+----Message：【客户端】发送字节消息【00】至远程地址【127.0.0.1】
+2024年04月25日 11:36:38  Debug
+----Message：【服务器】接收字节消息【00】至远程地址【127.0.0.1】
+2024年04月25日 11:36:38  Debug
+----Message：正常接收数据，实际耗时：146ms
+2024年04月25日 11:36:38  Debug
+----Message：---------------------------------------------
+2024年04月25日 11:36:38  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:38  Debug
+----Message：【服务器】远程地址【127.0.0.1】断开连接，重新开启监听
+2024年04月25日 11:36:38  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:36:38  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:38  Debug
+----Message：---------------------------------------------
+2024年04月25日 11:36:38  Debug
+----Message：【客户端】发送字节消息【01】至远程地址【127.0.0.1】
+2024年04月25日 11:36:38  Debug
+----Message：【服务器】接收字节消息【01】至远程地址【127.0.0.1】
+2024年04月25日 11:36:38  Debug
+----Message：重连后接收数据，实际耗时：35ms
+2024年04月25日 11:36:38  Debug
+----Message：---------------------------------------------
+2024年04月25日 11:36:38  Debug
+----Message：【客户端】发送字节消息【03】至远程地址【127.0.0.1】
+2024年04月25日 11:36:38  Debug
+----Message：【服务器】接收字节消息【03】至远程地址【127.0.0.1】
+2024年04月25日 11:36:39  Debug
+----Message：【客户端】取消操作...
+2024年04月25日 11:36:39  Debug
+----Message：【服务器】远程地址【127.0.0.1】断开连接，重新开启监听
+2024年04月25日 11:36:39  Error
+----Message：【客户端】发送字节消息【03】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:36:40  Debug
+----Message：操作取消，理论耗时1秒，实际耗时：1067ms
+2024年04月25日 11:36:40  Debug
+----Message：---------------------------------------------
+2024年04月25日 11:36:40  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:36:40  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:40  Debug
+----Message：【客户端】发送字节消息【04】至远程地址【127.0.0.1】
+2024年04月25日 11:36:40  Debug
+----Message：【服务器】接收字节消息【04】至远程地址【127.0.0.1】
+2024年04月25日 11:36:45  Debug
+----Message：【服务器】远程地址【127.0.0.1】断开连接，重新开启监听
+2024年04月25日 11:36:45  Error
+----Message：【客户端】发送字节消息【04】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository_WPF\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年04月25日 11:36:45  Debug
+----Message：操作超时，理论耗时5秒，实际耗时：5204ms
+2024年04月25日 11:36:45  Debug
+----Message：---------------------------------------------
+2024年04月25日 11:36:45  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:45  Debug
+----Message：【服务器】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:45  Warning
+----Message：【服务器】结束监听
+2024年04月25日 11:36:45  Debug
+----Message：客户端主动断开
+2024年04月25日 11:36:45  Debug
+----Message：---------------------------------------------
+2024年04月25日 11:36:45  Debug
+----Message：【服务器】开启监听...
+2024年04月25日 11:36:45  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年04月25日 11:36:45  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:45  Debug
+----Message：【服务器】断开远程地址【127.0.0.1】连接...
+2024年04月25日 11:36:45  Warning
+----Message：【服务器】结束数据接收
+2024年04月25日 11:36:45  Debug
+----Message：服务器主动断开
+2024年04月25日 11:36:46  Debug
+----Message：---------------------------------------------
