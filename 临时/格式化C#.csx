@@ -1,28 +1,9 @@
-public class BooleanConverter<T> : IValueConverter
+public static void Range(bool checkedExpression, string parameterName, string message)
 {
-    public T TrueValue { get; set; }
-
-    public T FalseValue { get; set; }
-
-    protected BooleanConverter(T trueValue, T falseValue)
+    if (!checkedExpression)
     {
-        TrueValue = trueValue;
-        FalseValue = falseValue;
-    }
-
-    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return BooleanConverter<T>.ConvertBooleanToType(value, TrueValue, FalseValue);
-    }
-
-    internal static T ConvertBooleanToType(object value, T trueValue, T falseValue)
-    {
-        bool flag = ValidateArgument.NotNullOrEmptyCast<bool>(value, "value");
-        return flag ? trueValue : falseValue;
-    }
-
-    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return value is T flag && EqualityComparer<T>.Default.Equals(flag, TrueValue);
+        throw new ArgumentOutOfRangeException(parameterName, message);
     }
 }
+
+EqualityComparer<T>.Default.Equals(flag, TrueValue)
