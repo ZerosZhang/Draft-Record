@@ -8,7 +8,9 @@
 <TabItem Height="30" FontSize="16" Header="日志显示">
     <ListView x:Name="LogListView" BorderBrush="Transparent" FontFamily="微软雅黑">
         <ListView.ContextMenu>
-            <ContextMenu> <MenuItem Header="清空日志" /> </ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="清空日志" />
+            </ContextMenu>
         </ListView.ContextMenu>
         <ListView.ItemTemplate>
             <DataTemplate>
