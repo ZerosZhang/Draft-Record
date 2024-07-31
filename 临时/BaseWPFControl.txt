@@ -1,0 +1,6 @@
+BaseWPFControl
+using BaseTool;
+using BaseWPFControl;
+
+xmlns:BaseWPFControl="clr-namespace:BaseWPFControl;assembly=BaseWPFControl"
+BaseWPFControl:Dialog
