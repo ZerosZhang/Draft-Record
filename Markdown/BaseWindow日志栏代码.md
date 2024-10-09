@@ -30,3 +30,5 @@
 </TabItem>
 <TabItem Height="30" FontSize="16" Header="数据显示" />
 ```
+
+![alt text](Clip_2024-10-04_10-03-59.png)
