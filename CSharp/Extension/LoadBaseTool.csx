@@ -1,4 +1,7 @@
 #r "BaseTool\BaseTool.dll"
+using System.Threading;
+using System.IO;
+using BaseTool;
 
 /// <summary>
 /// 打印可迭代对象，如数组，列表，使用", "分隔每个元素
