@@ -1,0 +1,236 @@
+2024年10月18日 08:53:31  Info
+----Message：删除c:\Users\zeros\Documents\【项目文件夹】\【常用】草稿文档\CSharp\01_导入外部引用\SaveLog目录下30天前的数据
+----删除0个子文件夹，0个子文件
+2024年10月18日 08:53:31  Debug
+----Message：【单元测试】调试日志
+2024年10月18日 08:53:31  Info
+----Message：【单元测试】信息日志
+2024年10月18日 08:53:31  Warning
+----Message：【单元测试】报警日志
+2024年10月18日 08:53:31  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年10月18日 08:53:33  Error
+----Message：注册日志保存到数据库失败，日志将不会保存在数据库中
+----异常调用函数: Register_SaveLogToSQL
+2024年10月18日 08:53:35  Debug
+----Message：【单元测试】调试日志
+2024年10月18日 08:53:37  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 08:53:39  Error
+----Message：【客户端】连接远程地址【127.0.0.1】失败：中文提示 :  连接数据库过程中发生错误，检查服务器是否正常连接字符串是否正确，错误信息：Unable to connect to any of the specified MySQL hosts.DbType="MySql";ConfigId="".
+English Message : Connection open error . Unable to connect to any of the specified MySQL hosts.DbType="MySql";ConfigId="" 
+----SqlSugar.SqlSugarException: 中文提示 :  连接数据库过程中发生错误，检查服务器是否正常连接字符串是否正确，错误信息：Unable to connect to any of the specified MySQL hosts.DbType="MySql";ConfigId="".
+----English Message : Connection open error . Unable to connect to any of the specified MySQL hosts.DbType="MySql";ConfigId="" 
+----   at SqlSugar.SplitInsertable`1.ExecuteCommand()
+----   at BaseTool.BaseLogManager.SendLog(LogLevel _level, String _message, String _description, Boolean _show_log) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseLogManager.cs:line 238
+----   at BaseTool.BaseSocketClient.Connect() in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 74
+----异常调用函数: Connect
+2024年10月18日 09:10:27  Info
+----Message：删除c:\Users\zeros\Documents\【项目文件夹】\【常用】草稿文档\CSharp\01_导入外部引用\SaveLog目录下30天前的数据
+----删除0个子文件夹，0个子文件
+2024年10月18日 09:10:27  Debug
+----Message：【单元测试】调试日志
+2024年10月18日 09:10:27  Info
+----Message：【单元测试】信息日志
+2024年10月18日 09:10:27  Warning
+----Message：【单元测试】报警日志
+2024年10月18日 09:10:27  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年10月18日 09:10:27  Debug
+----Message：【单元测试】调试日志
+2024年10月18日 09:10:28  Info
+----Message：【单元测试】信息日志
+2024年10月18日 09:10:28  Warning
+----Message：【单元测试】报警日志
+2024年10月18日 09:10:28  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年10月18日 09:10:28  Debug
+----Message：【单元测试】调试日志
+2024年10月18日 09:10:28  Info
+----Message：【单元测试】信息日志
+2024年10月18日 09:10:28  Warning
+----Message：【单元测试】报警日志
+2024年10月18日 09:10:28  Error
+----Message：【单元测试】错误日志
+----异常调用函数: MoveNext
+2024年10月18日 09:10:29  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:29  Debug
+----Message：【客户端】发送字符串【Hello 0】至远程地址【127.0.0.1】
+2024年10月18日 09:10:31  Debug
+----Message：【客户端】接收字符串【Reply 1A】来自远程地址【127.0.0.1】
+2024年10月18日 09:10:31  Debug
+----Message：发送Hello 0，等待末尾为A的字符串回复，理论耗时2秒，实际耗时：2166ms
+2024年10月18日 09:10:31  Debug
+----Message：【客户端】发送字符串【Hello 1】至远程地址【127.0.0.1】
+2024年10月18日 09:10:36  Error
+----Message：【客户端】发送字符串消息【Hello 1】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(String _message, String _end_string, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 277
+----异常调用函数: SendMessage_WaitReply
+2024年10月18日 09:10:36  Debug
+----Message：发送Hello 1，等待末尾为A的字符串回复超时，理论耗时5秒，实际耗时：5230ms
+2024年10月18日 09:10:36  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:36  Debug
+----Message：【客户端】发送字符串【Hello 2】至远程地址【127.0.0.1】
+2024年10月18日 09:10:38  Debug
+----Message：【客户端】取消操作...
+2024年10月18日 09:10:38  Error
+----Message：【客户端】发送字符串消息【Hello 2】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(String _message, String _end_string, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 277
+----异常调用函数: SendMessage_WaitReply
+2024年10月18日 09:10:39  Debug
+----Message：发送Hello 2，等待操作取消，理论耗时2秒，实际耗时：2204ms
+2024年10月18日 09:10:39  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:39  Debug
+----Message：【客户端】发送字符串【Hello 3】至远程地址【127.0.0.1】
+2024年10月18日 09:10:40  Debug
+----Message：【客户端】接收字符串【Reply 1 A】来自远程地址【127.0.0.1】
+2024年10月18日 09:10:40  Debug
+----Message：发送Hello 3，等待末尾为A的字符串回复，理论耗时1秒，实际耗时：1045ms
+2024年10月18日 09:10:40  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年10月18日 09:10:40  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:40  Debug
+----Message：【客户端】发送字节消息【00】至远程地址【127.0.0.1】
+2024年10月18日 09:10:42  Debug
+----Message：【客户端】接收字节消息【01 02 03 04】来自远程地址【127.0.0.1】
+2024年10月18日 09:10:42  Debug
+----Message：等待长度为4的字节数组理论耗时2秒，实际耗时：2005ms
+2024年10月18日 09:10:42  Debug
+----Message：【客户端】发送字节消息【01】至远程地址【127.0.0.1】
+2024年10月18日 09:10:47  Error
+----Message：【客户端】发送字节消息【01】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年10月18日 09:10:47  Debug
+----Message：等待长度为4的字节数组超时，理论耗时5秒，实际耗时：5166ms
+2024年10月18日 09:10:48  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:48  Debug
+----Message：【客户端】发送字节消息【02】至远程地址【127.0.0.1】
+2024年10月18日 09:10:50  Debug
+----Message：【客户端】取消操作...
+2024年10月18日 09:10:50  Error
+----Message：【客户端】发送字节消息【02】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年10月18日 09:10:50  Debug
+----Message：操作取消，理论耗时2秒，实际耗时：2247ms
+2024年10月18日 09:10:50  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:50  Debug
+----Message：【客户端】发送字节消息【00】至远程地址【127.0.0.1】
+2024年10月18日 09:10:51  Debug
+----Message：【客户端】接收字节消息【01 02 03 04】来自远程地址【127.0.0.1】
+2024年10月18日 09:10:51  Debug
+----Message：等待长度为4的字节数组理论耗时1秒，实际耗时：1073ms
+2024年10月18日 09:10:51  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年10月18日 09:10:51  Debug
+----Message：【服务器】开启监听...
+2024年10月18日 09:10:52  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:52  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年10月18日 09:10:52  Debug
+----Message：【客户端】发送字节消息【00】至远程地址【127.0.0.1】
+2024年10月18日 09:10:52  Debug
+----Message：【服务器】接收字节消息【00】至远程地址【127.0.0.1】
+2024年10月18日 09:10:52  Debug
+----Message：正常接收数据，实际耗时：283ms
+2024年10月18日 09:10:52  Debug
+----Message：---------------------------------------------
+2024年10月18日 09:10:52  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年10月18日 09:10:52  Debug
+----Message：【服务器】远程地址【127.0.0.1】断开连接，重新开启监听
+2024年10月18日 09:10:53  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:53  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年10月18日 09:10:53  Debug
+----Message：---------------------------------------------
+2024年10月18日 09:10:53  Debug
+----Message：【客户端】发送字节消息【01】至远程地址【127.0.0.1】
+2024年10月18日 09:10:53  Debug
+----Message：【服务器】接收字节消息【01】至远程地址【127.0.0.1】
+2024年10月18日 09:10:53  Debug
+----Message：重连后接收数据，实际耗时：46ms
+2024年10月18日 09:10:53  Debug
+----Message：---------------------------------------------
+2024年10月18日 09:10:53  Debug
+----Message：【客户端】发送字节消息【03】至远程地址【127.0.0.1】
+2024年10月18日 09:10:53  Debug
+----Message：【服务器】接收字节消息【03】至远程地址【127.0.0.1】
+2024年10月18日 09:10:54  Debug
+----Message：【客户端】取消操作...
+2024年10月18日 09:10:54  Debug
+----Message：【服务器】远程地址【127.0.0.1】断开连接，重新开启监听
+2024年10月18日 09:10:54  Error
+----Message：【客户端】发送字节消息【03】错误：取消等待回复
+----System.Net.Sockets.SocketException (10053): 你的主机中的软件中止了一个已建立的连接。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年10月18日 09:10:54  Debug
+----Message：操作取消，理论耗时1秒，实际耗时：1105ms
+2024年10月18日 09:10:55  Debug
+----Message：---------------------------------------------
+2024年10月18日 09:10:55  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:10:55  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年10月18日 09:10:55  Debug
+----Message：【客户端】发送字节消息【04】至远程地址【127.0.0.1】
+2024年10月18日 09:10:55  Debug
+----Message：【服务器】接收字节消息【04】至远程地址【127.0.0.1】
+2024年10月18日 09:11:00  Error
+----Message：【客户端】发送字节消息【04】错误：接收回复超时
+----System.Net.Sockets.SocketException (10060): 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。
+----   at System.Net.Sockets.Socket.Receive(Byte[] buffer, Int32 offset, Int32 size, SocketFlags socketFlags)
+----   at BaseTool.BaseSocketClient.SendMessage_WaitReply(Byte[] _data, Int32 _reply_length, Int32 _milliseconds) in C:\Users\zeros\Documents\VisualStudioCode\ToolsRepository V4.0\BaseTool\BaseSocketClient.cs:line 201
+----异常调用函数: SendMessage_WaitReply
+2024年10月18日 09:11:00  Debug
+----Message：【服务器】远程地址【127.0.0.1】断开连接，重新开启监听
+2024年10月18日 09:11:00  Debug
+----Message：操作超时，理论耗时5秒，实际耗时：5357ms
+2024年10月18日 09:11:00  Debug
+----Message：---------------------------------------------
+2024年10月18日 09:11:00  Debug
+----Message：【客户端】断开远程地址【127.0.0.1】连接...
+2024年10月18日 09:11:00  Debug
+----Message：【服务器】断开远程地址【127.0.0.1】连接...
+2024年10月18日 09:11:00  Warning
+----Message：【服务器】结束监听
+2024年10月18日 09:11:00  Debug
+----Message：客户端主动断开
+2024年10月18日 09:11:00  Debug
+----Message：---------------------------------------------
+2024年10月18日 09:11:00  Debug
+----Message：【服务器】开启监听...
+2024年10月18日 09:11:00  Debug
+----Message：【客户端】连接远程地址【127.0.0.1】成功...
+2024年10月18日 09:11:00  Debug
+----Message：【服务器】接收远程地址【127.0.0.1】连接...
+2024年10月18日 09:11:01  Debug
+----Message：【服务器】断开远程地址【127.0.0.1】连接...
+2024年10月18日 09:11:01  Warning
+----Message：【服务器】结束数据接收
+2024年10月18日 09:11:01  Debug
+----Message：服务器主动断开
+2024年10月18日 09:11:01  Debug
+----Message：---------------------------------------------
