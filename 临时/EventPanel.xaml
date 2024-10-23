@@ -1,0 +1,50 @@
+<Grid Margin="10">
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="400"/>
+        <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+
+    <StackPanel x:Name="EventPanel"
+                Grid.Column="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                d:DataContext="{d:DesignInstance BaseHSMSTool:Event}">
+        <StackPanel.Resources>
+            <Style TargetType="BaseWPFControl:ConfigControl">
+                <Setter Property="LeftWidth"
+                        Value="120"/>
+                <Setter Property="RightWidth"
+                        Value="400"/>
+            </Style>
+            <System:Double x:Key="DefaultControlWidth">120</System:Double>
+        </StackPanel.Resources>
+        <BaseWPFControl:ConfigControl ConfigName="事件ID">
+            <TextBox Text="{Binding ID}"
+                     Width="200"/>
+        </BaseWPFControl:ConfigControl>
+        <BaseWPFControl:ConfigControl ConfigName="事件名称">
+            <TextBox Text="{Binding Name}"
+                     Width="200"/>
+        </BaseWPFControl:ConfigControl>
+        <BaseWPFControl:ConfigControl ConfigName="是否启用">
+            <CheckBox IsChecked="{Binding Enable}"/>
+        </BaseWPFControl:ConfigControl>
+        <BaseWPFControl:ConfigControl ConfigName="事件描述">
+            <TextBox Style="{StaticResource BigTextBox}"
+                     Width="300"
+                     Height="100"
+                     Text="{Binding Description}"/>
+        </BaseWPFControl:ConfigControl>
+        <BaseWPFControl:ConfigControl ConfigName="关联报告ID">
+            <TextBox Text="{Binding LinkedReportIDList, Converter={StaticResource ListConverter}}"
+                     Width="200"
+                     ToolTip="多个关联报告使用逗号分割"/>
+        </BaseWPFControl:ConfigControl>
+
+        <Separator Style="{StaticResource BlankSeparatorStyle}"
+                   Height="20"/>
+        <Button Content="测试触发"
+                Click="Button_TriggerEvent_Click"/>
+    </StackPanel>
+</Grid>
