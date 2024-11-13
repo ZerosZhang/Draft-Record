@@ -1,8 +1,8 @@
-# SEMI E5
+# SEMI E5 文件翻译
 
-## 第一章：Introduction
+## 介绍
 
-### 1.1 Intent
+### 目的
 
 The SEMI Equipment Communications Standard Part 2 (SECS-II) defines the details of the interpretation of messages exchanged between intelligent equipment and a host. This specification has been developed in cooperation with the Japan Electronic Industry Development Association Committee 12 on Equipment Communications.
 
