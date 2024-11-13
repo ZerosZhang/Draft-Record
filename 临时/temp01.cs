@@ -54,18 +54,21 @@ public async Task<uint> TriggerEvent(Event _event)
         }
 
         // 判断 S6F12 的数据项格式是否满足要求
-        if (_s6f12_message.DataItem is not SECSItem _item)
+        if (_s6f12_message.DataItem is not SECSItem _s6f12_item)
         {
             Send_S9F7_Illegal_Data(_s6f12_message, out _);
             throw new Exception($"S6F12 数据项解析失败");
         }
-        if (_item[0] is not { Type: SECSItemType.Binary } _commack)
+        if (_s6f12_item is not { Type: SECSItemType.Binary } _commack)
         {
             Send_S9F7_Illegal_Data(_s6f12_message, out _);
             throw new Exception($"S6F12 数据项格式并非预定义");
         }
 
-        if (_commack != (Binary)0) { throw new Exception("S6F12的响应码非0"); }
+        if (_commack != (Binary)0) 
+        { 
+            throw new Exception("S6F12的响应码非0"); 
+        }
 
         return BaseAction.ResultOK;
     }

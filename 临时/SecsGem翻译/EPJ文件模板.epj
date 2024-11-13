@@ -39,7 +39,7 @@
 2039=NVSPath,The directory path where Non-volatile storage files are stored.,,EC,A,,1,0,A,A,A C:\CIMConnectProjects\Equipment1\Nvs,NVSPath
 2040=RecipeHandling,Process program (recipe) handling type (0=None 1=File-Based 2=Value-Based).,,EC,U4,,1,0,U4 0,U4 2,U4 1,RecipeHandling
 2041=RecipeType,The file format of recipe files. Possible values are 0=binary and 1=ASCII. Used when file-based recipe handling is enabled.,,EC,U4,,1,0,U4 0,U4 1,U4 0,RecipeType
-2042=RecipePath,The directory path where recipe files are stored. Used when file-based recipe handling is enabled.,,EC,A,,1,0,A,A,A C:\CIMConnectProjects\Equipment1\Recipes,RecipePath
+2042=RecipeRPath,The directory path where recipe files are stored. Used when file-based recipe handling is enabled.,,EC,A,,1,0,A,A,A C:\CIMConnectProjects\Equipment1\Recipes,RecipePath
 2048=RecipeExtension,The extension associated with recipe files. Used when file-based recipe handling is enabled.,,EC,A,,1,0,A,A,A *,RecipeExtension
 2057=ResyncNVS,1 = undefined events are removed from EVENTSENABLED and undefined alarms are removed from ALARMSENABLED at startup. 0 = ignore undefined events and alarms.,,EC,U1,,1,0,,,U1 1,ResyncNVS
 301003=S1F3WaitForGetValue,This value represents a threshold for how long to wait on any data registered for a GetValue callback when gathering S1F3 data. The last known value is used if the limit is reached. If the value is 0 it will wait 200msec.,ms,EC,U4,,1,0,,,U4 0,S1F3WaitForGetValue
