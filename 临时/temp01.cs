@@ -65,9 +65,9 @@ public async Task<uint> TriggerEvent(Event _event)
             throw new Exception($"S6F12 数据项格式并非预定义");
         }
 
-        if (_commack != (Binary)0) 
-        { 
-            throw new Exception("S6F12的响应码非0"); 
+        if (_commack != (Binary)0)
+        {
+            throw new Exception("S6F12的响应码非0");
         }
 
         return BaseAction.ResultOK;
