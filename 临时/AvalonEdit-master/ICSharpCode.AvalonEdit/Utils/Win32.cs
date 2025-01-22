@@ -20,7 +20,7 @@ namespace ICSharpCode.AvalonEdit.Utils
 		}
 
 		/// <summary>
-		/// Creates an invisible Win32 caret for the specified Visual with the specified size (coordinates local to the owner visual).
+		/// 使用指定的大小为指定的视觉效果创建一个无形的 Win32 Caret（所有者Visual与本地协调）。
 		/// </summary>
 		public static bool CreateCaret(Visual owner, Size size)
 		{

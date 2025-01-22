@@ -924,54 +924,86 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Ej5lkbV3y4MbqfMNqc3i" name="AvalonEdit">
-    <mxGraphModel dx="1581" dy="1010" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#99CCFF" math="0" shadow="0">
+    <mxGraphModel dx="2227" dy="1137" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#99CCFF" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-4" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Consolas;fontSize=16;startSize=14;endArrow=open;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" edge="1" parent="1" source="DBbRrXYUWdq5ZGJAclsj-1" target="DBbRrXYUWdq5ZGJAclsj-3">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-4" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Consolas;fontSize=16;startSize=14;endArrow=open;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" parent="1" source="DBbRrXYUWdq5ZGJAclsj-1" target="DBbRrXYUWdq5ZGJAclsj-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-1" value="TextEditor ControlTemplate" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-1" value="TextEditor ControlTemplate" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;" parent="1" vertex="1">
           <mxGeometry x="-355.36" y="-29" width="175.36" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-6" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Consolas;fontSize=16;startSize=14;endArrow=open;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" edge="1" parent="1" source="DBbRrXYUWdq5ZGJAclsj-3" target="DBbRrXYUWdq5ZGJAclsj-5">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-6" value="" style="edgeStyle=none;curved=1;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Consolas;fontSize=16;startSize=14;endArrow=open;endSize=14;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;" parent="1" source="DBbRrXYUWdq5ZGJAclsj-3" target="DBbRrXYUWdq5ZGJAclsj-5" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-3" value="Border" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-3" value="Border" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="-108" y="-29" width="117" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-5" value="ScrollViewer" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-5" value="ScrollViewer" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="80" y="-29" width="117" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-7" value="所有的内容都保存在ScrollViewer中？" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-7" value="所有的内容都保存在ScrollViewer中？" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#f8cecc;strokeColor=#b85450;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" parent="1" vertex="1">
           <mxGeometry x="-355.36" y="87" width="140" height="49" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-8" value="Content=&quot;{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextArea}&quot;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-8" value="Content=&quot;{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextArea}&quot;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" parent="1" vertex="1">
           <mxGeometry x="-355.36" y="36" width="553.36" height="37" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-9" value="ScrollViewer的内容来自于TextEditor的TextArea属性中" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-9" value="ScrollViewer的内容来自于TextEditor的TextArea属性中" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" parent="1" vertex="1">
           <mxGeometry x="-169" y="87" width="367" height="49" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-10" value="TextArea ControlTemplate" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-10" value="TextArea ControlTemplate" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;fillColor=#d5e8d4;strokeColor=#82b366;align=left;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="-355.36" y="174" width="430" height="159" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-11" value="DockPanel" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;align=left;verticalAlign=top;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-11" value="DockPanel" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;align=left;verticalAlign=top;" parent="1" vertex="1">
           <mxGeometry x="-335.36" y="205" width="390" height="108" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-13" value="ItemsControl&lt;br&gt;显示行号" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-13" value="ItemsControl&lt;br&gt;显示行号" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="-306.36" y="238" width="123" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-17" value="ContentPresenter&lt;br&gt;输入框" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-17" value="ContentPresenter&lt;br&gt;输入框" style="whiteSpace=wrap;html=1;fontFamily=Consolas;rounded=1;fontSize=16;" parent="1" vertex="1">
           <mxGeometry x="-138.36" y="238" width="166" height="55" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-19" value="ContentPresenter的内容来自于TextArea的TextView属性" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-19" value="ContentPresenter的内容来自于TextArea的TextView属性" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;fontFamily=Consolas;" parent="1" vertex="1">
           <mxGeometry x="94" y="179" width="140" height="160" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-20" value="TextEditor" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-20" value="TextEditor" style="rounded=1;whiteSpace=wrap;html=1;fontFamily=Consolas;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
           <mxGeometry x="-355.36" y="416" width="89.36" height="41" as="geometry" />
         </mxCell>
-        <mxCell id="DBbRrXYUWdq5ZGJAclsj-25" value="属性：&lt;div&gt;01. Document&lt;br&gt;02. Options&lt;/div&gt;&lt;div&gt;03. Text&lt;/div&gt;&lt;div&gt;04. TextArea&lt;/div&gt;&lt;div&gt;05. ScrollViewer&lt;/div&gt;&lt;div&gt;06. Syntax Highlighting&lt;/div&gt;&lt;div&gt;07. WordWrap&lt;/div&gt;&lt;div&gt;08. WordWrap&lt;/div&gt;&lt;div&gt;09. IsReadOnly&lt;/div&gt;&lt;div&gt;10. IsModified&lt;/div&gt;&lt;div&gt;11. ShowLineNumbers&lt;/div&gt;&lt;div&gt;12. LineNumbersForeground&lt;/div&gt;&lt;div&gt;13. ScrollBarVisibility&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;align=left;verticalAlign=middle;fontFamily=Consolas;fontSize=12;spacingRight=2;spacingLeft=40;" vertex="1" parent="1">
+        <mxCell id="DBbRrXYUWdq5ZGJAclsj-25" value="属性：&lt;div&gt;01. Document&lt;br&gt;02. Options&lt;/div&gt;&lt;div&gt;03. Text&lt;/div&gt;&lt;div&gt;04. TextArea&lt;/div&gt;&lt;div&gt;05. ScrollViewer&lt;/div&gt;&lt;div&gt;06. Syntax Highlighting&lt;/div&gt;&lt;div&gt;07. WordWrap&lt;/div&gt;&lt;div&gt;08. WordWrap&lt;/div&gt;&lt;div&gt;09. IsReadOnly&lt;/div&gt;&lt;div&gt;10. IsModified&lt;/div&gt;&lt;div&gt;11. ShowLineNumbers&lt;/div&gt;&lt;div&gt;12. LineNumbersForeground&lt;/div&gt;&lt;div&gt;13. ScrollBarVisibility&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;align=left;verticalAlign=middle;fontFamily=Consolas;fontSize=12;spacingRight=2;spacingLeft=40;" parent="1" vertex="1">
           <mxGeometry x="-230.36" y="416" width="466.36" height="256" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-13" style="edgeStyle=elbowEdgeStyle;shape=connector;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=14;endArrow=classicThin;endSize=14;flowAnimation=0;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;elbow=vertical;endFill=1;" edge="1" parent="1" source="-GGc6UaAietgeuxrdypK-2" target="-GGc6UaAietgeuxrdypK-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-16" style="edgeStyle=elbowEdgeStyle;shape=connector;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=default;align=center;verticalAlign=middle;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=12;fontColor=default;labelBackgroundColor=default;startSize=14;endArrow=classicThin;endSize=14;flowAnimation=0;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;elbow=vertical;exitX=0.5;exitY=1;exitDx=0;exitDy=0;endFill=1;" edge="1" parent="1" source="-GGc6UaAietgeuxrdypK-2" target="-GGc6UaAietgeuxrdypK-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-2" value="RepoNode" style="whiteSpace=wrap;html=1;rounded=1;align=center;verticalAlign=middle;fontFamily=Consolas;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="-359" y="723" width="85.45" height="32.36" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-3" value="有三种节点&lt;div&gt;1. 连接节点&lt;/div&gt;&lt;div&gt;2. 叶节点&lt;/div&gt;&lt;div&gt;3. 功能节点&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;fontColor=#000000;darkOpacity=0.05;fillColor=#FFF9B2;strokeColor=none;fillStyle=solid;direction=west;gradientDirection=north;gradientColor=#FFF2A1;shadow=1;size=20;pointerEvents=1;rounded=1;align=left;verticalAlign=middle;fontFamily=Consolas;fontSize=12;spacingLeft=31;" vertex="1" parent="1">
+          <mxGeometry x="-76" y="774.64" width="140" height="76" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-4" value="Left" style="whiteSpace=wrap;html=1;rounded=1;align=center;verticalAlign=middle;fontFamily=Consolas;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="-444.45" y="833" width="85.45" height="32.36" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-6" value="Right" style="whiteSpace=wrap;html=1;rounded=1;align=center;verticalAlign=middle;fontFamily=Consolas;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="-273.54999999999995" y="833" width="85.45" height="32.36" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-7" value="Length" style="whiteSpace=wrap;html=1;rounded=1;align=center;verticalAlign=middle;fontFamily=Consolas;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="-188.09999999999997" y="720" width="85.45" height="32.36" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-8" value="Height" style="whiteSpace=wrap;html=1;rounded=1;align=center;verticalAlign=middle;fontFamily=Consolas;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="-188.10000000000002" y="755.36" width="85.45" height="32.36" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-9" value="Content" style="whiteSpace=wrap;html=1;rounded=1;align=center;verticalAlign=middle;fontFamily=Consolas;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="-188.10000000000002" y="791" width="85.45" height="32.36" as="geometry" />
+        </mxCell>
+        <mxCell id="-GGc6UaAietgeuxrdypK-19" value="重要的概念：&lt;div&gt;1. Rope&amp;lt;T&amp;gt;&lt;/div&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#dae8fc;strokeColor=#6c8ebf;fillStyle=solid;direction=west;gradientDirection=north;shadow=1;size=20;pointerEvents=1;rounded=1;align=left;verticalAlign=middle;fontFamily=Consolas;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;fontSize=12;labelBackgroundColor=none;spacingLeft=40;" vertex="1" parent="1">
+          <mxGeometry x="-444.45" y="910" width="587.45" height="160" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

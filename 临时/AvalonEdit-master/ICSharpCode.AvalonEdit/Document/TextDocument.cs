@@ -1,22 +1,4 @@
-﻿// Copyright (c) 2014 AlphaSierraPapa for the SharpDevelop Team
-// 
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this
-// software and associated documentation files (the "Software"), to deal in the Software
-// without restriction, including without limitation the rights to use, copy, modify, merge,
-// publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
-// to whom the Software is furnished to do so, subject to the following conditions:
-// 
-// The above copyright notice and this permission notice shall be included in all copies or
-// substantial portions of the Software.
-// 
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-// INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-// PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
-// FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-// DEALINGS IN THE SOFTWARE.
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -44,13 +26,13 @@ namespace ICSharpCode.AvalonEdit.Document
 		Thread owner = Thread.CurrentThread;
 
 		/// <summary>
-		/// Verifies that the current thread is the documents owner thread.
-		/// Throws an <see cref="InvalidOperationException"/> if the wrong thread accesses the TextDocument.
+		/// 验证当前线程是否为文档的所有者线程。
+		/// 如果错误的线程访问TextDocument，则抛出<see cref="InvalidOperationException"/>。
 		/// </summary>
 		/// <remarks>
-		/// <para>The TextDocument class is not thread-safe. A document instance expects to have a single owner thread
-		/// and will throw an <see cref="InvalidOperationException"/> when accessed from another thread.
-		/// It is possible to change the owner thread using the <see cref="SetOwnerThread"/> method.</para>
+		/// <para>TextDocument类不是线程安全的。文档实例期望有一个单一的所有者线程，
+		/// 并且当从另一个线程访问时将抛出<see cref="InvalidOperationException"/>。
+		/// 可以使用<see cref="SetOwnerThread"/>方法更改所有者线程。</para>
 		/// </remarks>
 		public void VerifyAccess()
 		{
@@ -59,15 +41,12 @@ namespace ICSharpCode.AvalonEdit.Document
 		}
 
 		/// <summary>
-		/// Transfers ownership of the document to another thread. This method can be used to load
-		/// a file into a TextDocument on a background thread and then transfer ownership to the UI thread
-		/// for displaying the document.
+		/// 将文档的所有权转移到另一个线程。此方法可用于在后台线程中将文件加载到TextDocument中，然后将所有权转移到UI线程以显示文档。
 		/// </summary>
 		/// <remarks>
 		/// <inheritdoc cref="VerifyAccess"/>
 		/// <para>
-		/// The owner can be set to null, which means that no thread can access the document. But, if the document
-		/// has no owner thread, any thread may take ownership by calling <see cref="SetOwnerThread"/>.
+		/// 所有者可以设置为null，这意味着没有线程可以访问文档。但是，如果文档没有所有者线程，任何线程都可以通过调用<see cref="SetOwnerThread"/>来获取所有权。
 		/// </para>
 		/// </remarks>
 		public void SetOwnerThread(Thread newOwner)
