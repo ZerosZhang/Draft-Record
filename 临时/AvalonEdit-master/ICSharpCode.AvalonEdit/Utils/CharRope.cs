@@ -46,10 +46,9 @@ namespace ICSharpCode.AvalonEdit.Utils
 		/// </remarks>
 		public static string ToString(this Rope<char> rope, int startIndex, int length)
 		{
-			if (rope == null)
-				throw new ArgumentNullException("rope");
+            ArgumentNullException.ThrowIfNull(rope);
 #if DEBUG
-			if (length < 0)
+            if (length < 0)
 				throw new ArgumentOutOfRangeException("length", length, "Value must be >= 0");
 #endif
 			if (length == 0)

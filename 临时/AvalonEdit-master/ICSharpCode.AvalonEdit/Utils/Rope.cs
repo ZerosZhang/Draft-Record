@@ -296,7 +296,7 @@ namespace ICSharpCode.AvalonEdit.Utils
             VerifyArrayWithRange(array, arrayIndex, count);
             if (count > 0)
             {
-                root = root.StoreElements(index, array, arrayIndex, count);
+                root = root.StoreElements(index, count, array, arrayIndex);
                 OnChanged();
             }
         }
@@ -318,70 +318,6 @@ namespace ICSharpCode.AvalonEdit.Utils
             newRope.RemoveRange(0, index);
             return newRope;
         }
-
-        /*
-		#region Equality
-		/// <summary>
-		/// Gets whether the two ropes have the same content.
-		/// Runs in O(N + M).
-		/// </summary>
-		/// <remarks>
-		/// This method counts as a read access and may be called concurrently to other read accesses.
-		/// </remarks>
-		public bool Equals(Rope other)
-		{
-			if (other == null)
-				return false;
-			// quick detection for ropes that are clones of each other:
-			if (other.root == this.root)
-				return true;
-			if (other.Length != this.Length)
-				return false;
-			using (RopeTextReader a = new RopeTextReader(this, false)) {
-				using (RopeTextReader b = new RopeTextReader(other, false)) {
-					int charA, charB;
-					do {
-						charA = a.Read();
-						charB = b.Read();
-						if (charA != charB)
-							return false;
-					} while (charA != -1);
-					return true;
-				}
-			}
-		}
-		
-		/// <summary>
-		/// Gets whether two ropes have the same content.
-		/// Runs in O(N + M).
-		/// </summary>
-		public override bool Equals(object obj)
-		{
-			return Equals(obj as Rope);
-		}
-		
-		/// <summary>
-		/// Calculates the hash code of the rope's content.
-		/// Runs in O(N).
-		/// </summary>
-		/// <remarks>
-		/// This method counts as a read access and may be called concurrently to other read accesses.
-		/// </remarks>
-		public override int GetHashCode()
-		{
-			int hashcode = 0;
-			using (RopeTextReader reader = new RopeTextReader(this, false)) {
-				unchecked {
-					int val;
-					while ((val = reader.Read()) != -1) {
-						hashcode = hashcode * 31 + val;
-					}
-				}
-			}
-			return hashcode;
-		}
-		#endregion
-		 */
 
         /// <summary>
         /// Concatenates two ropes. The input ropes are not modified.
@@ -837,7 +773,7 @@ namespace ICSharpCode.AvalonEdit.Utils
         {
             VerifyRange(index, count);
             VerifyArrayWithRange(array, arrayIndex, count);
-            this.root.CopyTo(index, array, arrayIndex, count);
+            this.root.CopyTo(index, count, array, arrayIndex);
         }
 
         /// <summary>
@@ -879,7 +815,7 @@ namespace ICSharpCode.AvalonEdit.Utils
         public T[] ToArray()
         {
             T[] arr = new T[this.Length];
-            this.root.CopyTo(0, arr, 0, arr.Length);
+            this.root.CopyTo(0, arr.Length, arr, 0);
             return arr;
         }
 

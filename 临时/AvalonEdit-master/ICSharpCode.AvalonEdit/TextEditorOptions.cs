@@ -22,10 +22,11 @@ using System.Reflection;
 
 namespace ICSharpCode.AvalonEdit
 {
-	/// <summary>
-	/// A container for the text editor options.
-	/// </summary>
-	[Serializable]
+    /// <summary>
+    /// A container for the text editor options.
+    /// 文本编辑器选项的容器。
+    /// </summary>
+    [Serializable]
 	public class TextEditorOptions : INotifyPropertyChanged
 	{
 		#region ctor
@@ -479,10 +480,11 @@ namespace ICSharpCode.AvalonEdit
 
 		bool allowToggleOverstrikeMode = false;
 
-		/// <summary>
-		/// Gets/Sets if the user is allowed to enable/disable overstrike mode.
-		/// </summary>
-		[DefaultValue(false)]
+        /// <summary>
+        /// Gets/Sets if the user is allowed to enable/disable overstrike mode.
+        /// 获取/设置是否允许用户启用/禁用重打模式。
+        /// </summary>
+        [DefaultValue(false)]
 		public bool AllowToggleOverstrikeMode {
 			get { return allowToggleOverstrikeMode; }
 			set {

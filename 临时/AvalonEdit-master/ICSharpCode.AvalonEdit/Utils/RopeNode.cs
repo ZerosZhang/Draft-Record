@@ -85,9 +85,10 @@ class RopeNode<T>
             Debug.Assert(Math.Abs(this.Balance) <= 1);
 
             // this is an additional invariant that forces the tree to combine small leafs to prevent excessive memory usage:
+            //这是一个额外的不变量，强制树组合小叶子以防止过多的内存使用：
             Debug.Assert(length > NodeSize);
             // note that this invariant ensures that all nodes except for the empty rope's single node have at least length 1
-
+            // 请注意，这个不变量确保除了空绳的单个节点之外的所有节点的长度至少为 1
             if (isShared)
                 Debug.Assert(left.isShared && right.isShared);
             left.CheckInvariants();
@@ -155,7 +156,7 @@ class RopeNode<T>
             return emptyRopeNode;
         }
         RopeNode<T> node = CreateNodes(length);
-        return node.StoreElements(0, arr, index, length);
+        return node.StoreElements(0, length, arr, index);
     }
 
     /// <summary>
@@ -324,7 +325,7 @@ class RopeNode<T>
             if (this.left.isShared)
             {
                 this.contents = new T[NodeSize];
-                left.CopyTo(0, this.contents, 0, lengthOnLeftSide);
+                left.CopyTo(0, lengthOnLeftSide, this.contents, 0);
             }
             else
             {
@@ -341,7 +342,7 @@ class RopeNode<T>
 #endif
             }
             this.left = null;
-            right.CopyTo(0, this.contents, lengthOnLeftSide, this.right.length);
+            right.CopyTo(0, this.right.length, this.contents, lengthOnLeftSide);
             this.right = null;
         }
     }
@@ -350,7 +351,7 @@ class RopeNode<T>
     /// Copies from the array to this node.
     /// 从数组复制到该节点。Array To Rope
     /// </summary>
-    internal RopeNode<T> StoreElements(int index, T[] array, int arrayIndex, int count)
+    internal RopeNode<T> StoreElements(int index, int count, T[] array, int arrayIndex)
     {
         RopeNode<T> result = this.CloneIfShared();
         // result cannot be function node after a call to Clone()
@@ -364,17 +365,17 @@ class RopeNode<T>
             // concat node:
             if (index + count <= result.left.length)
             {
-                result.left = result.left.StoreElements(index, array, arrayIndex, count);
+                result.left = result.left.StoreElements(index, count, array, arrayIndex);
             }
             else if (index >= this.left.length)
             {
-                result.right = result.right.StoreElements(index - result.left.length, array, arrayIndex, count);
+                result.right = result.right.StoreElements(index - result.left.length, count, array, arrayIndex);
             }
             else
             {
                 int amountInLeft = result.left.length - index;
-                result.left = result.left.StoreElements(index, array, arrayIndex, amountInLeft);
-                result.right = result.right.StoreElements(0, array, arrayIndex + amountInLeft, count - amountInLeft);
+                result.left = result.left.StoreElements(index, amountInLeft, array, arrayIndex);
+                result.right = result.right.StoreElements(0, count - amountInLeft, array, arrayIndex + amountInLeft);
             }
             result.Rebalance(); // tree layout might have changed if function nodes were replaced with their content
         }
@@ -385,14 +386,14 @@ class RopeNode<T>
     /// Copies from this node to the array.
     /// 从该节点复制到数组。Rope To Array
     /// </summary>
-    internal void CopyTo(int index, T[] array, int arrayIndex, int count)
+    internal void CopyTo(int index, int count, T[] array, int arrayIndex)
     {
         if (height == 0)
         {
             if (this.contents == null)
             {
                 // function node
-                this.GetContentNode().CopyTo(index, array, arrayIndex, count);
+                this.GetContentNode().CopyTo(index, count, array, arrayIndex);
             }
             else
             {
@@ -405,17 +406,17 @@ class RopeNode<T>
             // concat node
             if (index + count <= this.left.length)
             {
-                this.left.CopyTo(index, array, arrayIndex, count);
+                this.left.CopyTo(index, count, array, arrayIndex);
             }
             else if (index >= this.left.length)
             {
-                this.right.CopyTo(index - this.left.length, array, arrayIndex, count);
+                this.right.CopyTo(index - this.left.length, count, array, arrayIndex);
             }
             else
             {
                 int amountInLeft = this.left.length - index;
-                this.left.CopyTo(index, array, arrayIndex, amountInLeft);
-                this.right.CopyTo(0, array, arrayIndex + amountInLeft, count - amountInLeft);
+                this.left.CopyTo(index, amountInLeft, array, arrayIndex);
+                this.right.CopyTo(0, count - amountInLeft, array, arrayIndex + amountInLeft);
             }
         }
     }
@@ -470,7 +471,7 @@ class RopeNode<T>
             // left is guaranteed to be leaf node after cloning:
             // - it cannot be function node (due to clone)
             // - it cannot be concat node (too short)
-            right.CopyTo(0, left.contents, left.length, right.length);
+            right.CopyTo(0, right.length, left.contents, left.length);
             left.length += right.length;
             return left;
         }
@@ -763,6 +764,10 @@ sealed class FunctionNode<T> : RopeNode<T>
                     // ResultNode is another function node.
                     // We want to guarantee that GetContentNode() never returns function nodes, so we have to
                     // go down further in the tree.
+
+                    // ResultNode 是另一个函数节点。
+                    // 我们想要保证 GetContentNode() 永远不会返回函数节点，所以我们必须
+                    // 在树中继续向下移动。
                     this.cachedResults = resultNode.GetContentNode();
                 }
                 else
